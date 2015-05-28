@@ -1,0 +1,30 @@
+{
+  "name": "fbjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build",
+    "prepublish": "npm run build"
+  },
+  "author": "",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "babel": "^5.4.7",
+    "del": "^1.2.0",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.1.0",
+    "gulp-flatten": "0.0.4",
+    "jest-cli": "^0.4.5",
+    "run-sequence": "^1.1.0"
+  },
+  "files": [
+    "LICENSE",
+    "PATENTS",
+    "README.md",
+    "index.js",
+    "lib/",
+    "scripts/"
+  ]
+}
