@@ -7,6 +7,7 @@ var runSequence = require('run-sequence');
 
 var babelPluginDEV = require('./scripts/babel/dev-expression');
 var babelPluginRequires = require('./scripts/babel/rewrite-requires');
+var gulpModuleMap = require('./scripts/gulp/module-map.js');
 
 var paths = {
   src: ['src/**/*.js', '!src/**/__tests__/**/*.js'],
@@ -32,6 +33,7 @@ gulp.task('clean', function(cb) {
 gulp.task('lib', function() {
   return gulp
     .src(paths.src)
+    .pipe(gulpModuleMap('./module_map.json'))
     .pipe(babel(babelOpts))
     .pipe(flatten())
     .pipe(gulp.dest(paths.lib));
