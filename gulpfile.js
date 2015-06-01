@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
-var babelCore = require('babel');
 var flatten = require('gulp-flatten');
 var del = require('del');
 var runSequence = require('run-sequence');
@@ -10,12 +9,19 @@ var babelPluginRequires = require('./scripts/babel/rewrite-requires');
 var gulpModuleMap = require('./scripts/gulp/module-map.js');
 
 var paths = {
-  src: ['src/**/*.js', '!src/**/__tests__/**/*.js'],
+  src: [
+    'src/**/*.js',
+    '!src/**/__tests__/**/*.js',
+    '!src/**/__mocks__/**/*.js'
+  ],
   lib: 'lib'
 };
 
 var babelOpts = {
   nonStandard: true,
+  blacklist: [
+    'spec.functionName'
+  ],
   optional: [
     'es7.trailingFunctionCommas'
   ],
@@ -26,6 +32,11 @@ var babelOpts = {
   }
 };
 
+var moduleMapOpts = {
+  moduleMapFile: './module_map.json',
+  prefix: 'fbjs/lib/'
+};
+
 gulp.task('clean', function(cb) {
   del(['lib/'], cb);
 });
@@ -33,7 +44,7 @@ gulp.task('clean', function(cb) {
 gulp.task('lib', function() {
   return gulp
     .src(paths.src)
-    .pipe(gulpModuleMap('./module_map.json'))
+    .pipe(gulpModuleMap(moduleMapOpts))
     .pipe(babel(babelOpts))
     .pipe(flatten())
     .pipe(gulp.dest(paths.lib));
@@ -47,4 +58,4 @@ gulp.task('build', function(cb) {
   runSequence('clean', 'lib', cb);
 });
 
-gulp.task('default', ['lib']);
+gulp.task('default', ['build', 'watch']);
