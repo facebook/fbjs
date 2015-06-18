@@ -1,3 +1,14 @@
+/**
+ * Copyright 2013-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
 module.exports = function(babel) {
   var t = babel.types;
 
@@ -19,20 +30,20 @@ module.exports = function(babel) {
     Identifier: {
       enter: function(node, parent) {
         // Do nothing when testing
-        if (process.env.NODE_ENV === "test") {
-          return;
+        if (process.env.NODE_ENV === 'test') {
+          return undefined;
         }
         // replace __DEV__ with process.env.NODE_ENV !== 'production'
         if (this.isIdentifier({name: '__DEV__'})) {
           return DEV_EXPRESSION;
         }
-      }
+      },
     },
     CallExpression: {
       exit: function(node, parent) {
         // Do nothing when testing
-        if (process.env.NODE_ENV === "test") {
-          return;
+        if (process.env.NODE_ENV === 'test') {
+          return undefined;
         }
         if (this.get('callee').isIdentifier({name: 'invariant'})) {
           // Turns this code:
@@ -67,7 +78,7 @@ module.exports = function(babel) {
                       node.callee,
                       [t.literal(false)].concat(node.arguments.slice(1))
                     )
-                  )
+                  ),
                 ]),
                 t.blockStatement([
                   t.expressionStatement(
@@ -75,9 +86,9 @@ module.exports = function(babel) {
                       node.callee,
                       [t.literal(false)]
                     )
-                  )
+                  ),
                 ])
-              )
+              ),
             ])
           );
         } else if (this.get('callee').isIdentifier({name: 'warning'})) {
@@ -100,12 +111,12 @@ module.exports = function(babel) {
             t.blockStatement([
               t.expressionStatement(
                 node
-              )
+              ),
             ])
           );
         }
-      }
-    }
+      },
+    },
   });
-  
-}
+
+};
