@@ -28,7 +28,7 @@
     "README.md",
     "index.js",
     "lib/",
-    "module_map.json",
+    "module-map.json",
     "scripts/"
   ],
   "jest": {

@@ -33,7 +33,7 @@ var babelOpts = {
 };
 
 var moduleMapOpts = {
-  moduleMapFile: './module_map.json',
+  moduleMapFile: './module-map.json',
   prefix: 'fbjs/lib/'
 };
 
