@@ -58,4 +58,4 @@ gulp.task('build', function(cb) {
   runSequence('clean', 'lib', cb);
 });
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build']);
