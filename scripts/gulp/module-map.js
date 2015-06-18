@@ -1,9 +1,20 @@
+/**
+ * Copyright 2013-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
 var gutil = require('gulp-util');
 var through = require('through2');
 var fs = require('fs');
 var path = require('path');
 
-var PM_REGEXP = /\n \* \@providesModule (\S+)\n/
+var PM_REGEXP = /\n \* \@providesModule (\S+)\n/;
 
 var PLUGIN_NAME = 'module-map';
 
@@ -56,7 +67,7 @@ module.exports = function(opts) {
       // Rewrite path here since we don't need the full path anymore.
       prev[curr] = prefix + path.basename(moduleMap[curr], '.js');
       return prev;
-    }, {})
+    }, {});
     fs.writeFile(moduleMapFile, JSON.stringify(map, null, 2), 'utf-8', function() {
       // avoid calling cb with fs.write callback data
       cb();
@@ -64,4 +75,4 @@ module.exports = function(opts) {
   }
 
   return through.obj(transform, flush);
-}
+};
