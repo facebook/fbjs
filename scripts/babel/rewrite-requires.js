@@ -15,7 +15,8 @@ module.exports = function(babel) {
   return new babel.Transformer('fbjs.rewrite-requires', {
     CallExpression: {
       exit: function(node, parent) {
-        if (this.get('callee').isIdentifier({name: 'require'})) {
+        if (this.get('callee').isIdentifier({name: 'require'}) &&
+            node.arguments[0].type === 'Literal') {
           // Turns this code:
           //
           // var Foo = require('Foo');
