@@ -36,14 +36,17 @@ var CSSCore = {
       'multiple classes.', className
     );
 
-    if (className) {
-      if (element.classList) {
-        element.classList.add(className);
-      } else if (!CSSCore.hasClass(element, className)) {
-        element.className = element.className + ' ' + className;
-      }
+    if (! className) {
+      return element;
     }
-    return element;
+
+    if (element.classList) {
+      element.classList.add(className);
+    }
+
+    if (!CSSCore.hasClass(element, className)) {
+      element.className = element.className + ' ' + className;
+    }
   },
 
   /**
@@ -60,16 +63,21 @@ var CSSCore = {
       'multiple classes.', className
     );
 
-    if (className) {
-      if (element.classList) {
-        element.classList.remove(className);
-      } else if (CSSCore.hasClass(element, className)) {
-        element.className = element.className
-          .replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1')
-          .replace(/\s+/g, ' ') // multiple spaces to one
-          .replace(/^\s*|\s*$/g, ''); // trim the ends
-      }
+    if (! className) {
+      return element;
     }
+
+    if (element.classList) {
+      element.classList.remove(className);
+    }
+
+    if (CSSCore.hasClass(element, className)) {
+      element.className = element.className
+        .replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1')
+        .replace(/\s+/g, ' ') // multiple spaces to one
+        .replace(/^\s*|\s*$/g, ''); // trim the ends
+    }
+
     return element;
   },
 
