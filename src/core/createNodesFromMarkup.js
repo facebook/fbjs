@@ -56,18 +56,21 @@ function createNodesFromMarkup(markup, handleScript) {
   var nodeName = getNodeName(markup);
 
   var wrap = nodeName && getMarkupWrap(nodeName);
-  if (wrap) {
-    node.innerHTML = wrap[1] + markup + wrap[2];
 
-    var wrapDepth = wrap[0];
-    while (wrapDepth--) {
-      node = node.lastChild;
-    }
-  } else {
+  if (! wrap) {
     node.innerHTML = markup;
   }
 
+  node.innerHTML = wrap[1] + markup + wrap[2];
+
+  var wrapDepth = wrap[0];
+
+  while (wrapDepth--) {
+    node = node.lastChild;
+  }
+
   var scripts = node.getElementsByTagName('script');
+
   if (scripts.length) {
     invariant(
       handleScript,
@@ -77,9 +80,11 @@ function createNodesFromMarkup(markup, handleScript) {
   }
 
   var nodes = createArrayFromMixed(node.childNodes);
+
   while (node.lastChild) {
     node.removeChild(node.lastChild);
   }
+
   return nodes;
 }
 

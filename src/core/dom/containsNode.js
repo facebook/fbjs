@@ -24,19 +24,29 @@ var isTextNode = require('isTextNode');
 function containsNode(outerNode, innerNode) {
   if (!outerNode || !innerNode) {
     return false;
-  } else if (outerNode === innerNode) {
+  }
+
+  if (outerNode === innerNode) {
     return true;
-  } else if (isTextNode(outerNode)) {
-    return false;
-  } else if (isTextNode(innerNode)) {
-    return containsNode(outerNode, innerNode.parentNode);
-  } else if (outerNode.contains) {
-    return outerNode.contains(innerNode);
-  } else if (outerNode.compareDocumentPosition) {
-    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
-  } else {
+  }
+
+  if (isTextNode(outerNode)) {
     return false;
   }
+
+  if (isTextNode(innerNode)) {
+    return containsNode(outerNode, innerNode.parentNode);
+  }
+
+  if (outerNode.contains) {
+    return outerNode.contains(innerNode);
+  }
+
+  if (outerNode.compareDocumentPosition) {
+    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
+  }
+
+  return false;
 }
 
 module.exports = containsNode;
