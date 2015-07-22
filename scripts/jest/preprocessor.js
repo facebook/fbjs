@@ -10,10 +10,7 @@ var babelOpts = {
   optional: [
     'es7.trailingFunctionCommas'
   ],
-  plugins: [babelPluginRequires],
-  _moduleMap: {
-    'Promise': 'promise'
-  }
+  plugins: [babelPluginRequires]
 };
 
 module.exports = {
