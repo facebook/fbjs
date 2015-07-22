@@ -3,6 +3,7 @@
   "version": "0.1.0-alpha.1",
   "description": "",
   "main": "index.js",
+  "repository": "facebook/fbjs",
   "scripts": {
     "test": "NODE_ENV=test jest",
     "build": "gulp build",
