@@ -61,6 +61,7 @@
     ]
   },
   "dependencies": {
+    "es6-map": "^0.1.1",
     "promise": "^7.0.3",
     "whatwg-fetch": "^0.9.0"
   }
