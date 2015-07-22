@@ -26,9 +26,8 @@ var babelOpts = {
     'es7.trailingFunctionCommas'
   ],
   plugins: [babelPluginDEV, babelPluginRequires],
-  // NOTE: we don't need this here but it's available as an example for consumers
   _moduleMap: {
-    // 'everySet': 'lodash'
+    'Promise': 'promise'
   }
 };
 

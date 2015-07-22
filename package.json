@@ -50,5 +50,8 @@
     "unmockedModulePathPatterns": [
       ""
     ]
+  },
+  "dependencies": {
+    "promise": "^7.0.3"
   }
 }
