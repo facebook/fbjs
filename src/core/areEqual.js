@@ -109,4 +109,3 @@ function eq(a: any, b: any, aStack: Array<any>, bStack: Array<any>): boolean {
 }
 
 module.exports = areEqual;
-

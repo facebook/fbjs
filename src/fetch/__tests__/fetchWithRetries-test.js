@@ -5,11 +5,11 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @emails oncall+relay
  */
 
 'use strict';
-
-jest.mock('warning');
 
 describe('fetchWithRetries', () => {
   var fetch;
@@ -26,6 +26,12 @@ describe('fetchWithRetries', () => {
     fetch = require('fetch');
     fetchWithRetries = require('fetchWithRetries');
     handleNext = jest.genMockFunction();
+
+    spyOn(console, 'error').andCallFake(message => {
+      expect(message).toBe(
+        'Warning: fetchWithRetries: HTTP timeout, retrying.'
+      );
+    });
   });
 
   it('sends a request to the given URI', () => {

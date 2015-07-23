@@ -56,7 +56,7 @@ var markupWrap = {
   'th': trWrap,
 };
 
-// Initilize the SVG elements since we know they'll always need to be wrapped
+// Initialize the SVG elements since we know they'll always need to be wrapped
 // consistently. If they are created inside a <div> they will be initialized in
 // the wrong namespace (and will not display).
 var svgElements = [
@@ -65,19 +65,15 @@ var svgElements = [
   'defs',
   'ellipse',
   'g',
-  'image',
   'line',
   'linearGradient',
-  'mask',
   'path',
-  'pattern',
   'polygon',
   'polyline',
   'radialGradient',
   'rect',
   'stop',
   'text',
-  'tspan',
 ];
 svgElements.forEach((nodeName) => {
   markupWrap[nodeName] = svgWrap;
