@@ -48,10 +48,20 @@
       "<rootDir>/src"
     ],
     "unmockedModulePathPatterns": [
-      ""
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/__forks__/",
+      "<rootDir>/src/core/",
+      "<rootDir>/src/functional/",
+      "<rootDir>/src/key-mirror/",
+      "<rootDir>/src/performance/",
+      "<rootDir>/src/polyfill/",
+      "<rootDir>/src/request/",
+      "<rootDir>/src/stubs/",
+      "<rootDir>/src/utils/"
     ]
   },
   "dependencies": {
-    "promise": "^7.0.3"
+    "promise": "^7.0.3",
+    "whatwg-fetch": "^0.9.0"
   }
 }
