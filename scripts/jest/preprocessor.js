@@ -8,6 +8,7 @@ var assign = require('object-assign');
 var babelOpts = {
   nonStandard: true,
   optional: [
+    'es7.objectRestSpread',
     'es7.trailingFunctionCommas'
   ],
   plugins: [babelPluginRequires]

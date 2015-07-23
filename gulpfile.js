@@ -23,6 +23,7 @@ var babelOpts = {
     'spec.functionName'
   ],
   optional: [
+    'es7.objectRestSpread',
     'es7.trailingFunctionCommas'
   ],
   plugins: [babelPluginDEV, babelPluginRequires],
