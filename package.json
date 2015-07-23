@@ -28,6 +28,7 @@
     "PATENTS",
     "README.md",
     "index.js",
+    "flow/",
     "lib/",
     "module-map.json",
     "scripts/"
