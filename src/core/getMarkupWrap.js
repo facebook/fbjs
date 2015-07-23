@@ -65,15 +65,19 @@ var svgElements = [
   'defs',
   'ellipse',
   'g',
+  'image',
   'line',
   'linearGradient',
+  'mask',
   'path',
+  'pattern',
   'polygon',
   'polyline',
   'radialGradient',
   'rect',
   'stop',
   'text',
+  'tspan',
 ];
 svgElements.forEach((nodeName) => {
   markupWrap[nodeName] = svgWrap;
