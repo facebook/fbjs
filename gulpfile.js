@@ -1,3 +1,4 @@
+var assign = require('object-assign');
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var flatten = require('gulp-flatten');
@@ -5,8 +6,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 
 var babelPluginDEV = require('./scripts/babel/dev-expression');
-var babelPluginRequires = require('./scripts/babel/rewrite-requires');
-var babelPluginFlowComments = require('babel-plugin-flow-comments');
+var babelDefaultOptions = require('./scripts/babel/default-options');
 var gulpModuleMap = require('./scripts/gulp/module-map.js');
 
 var paths = {
@@ -18,27 +18,14 @@ var paths = {
   lib: 'lib'
 };
 
-var babelOpts = {
-  nonStandard: true,
-  blacklist: [
-    'flow',
-    'spec.functionName'
-  ],
-  optional: [
-    'es7.objectRestSpread',
-    'es7.trailingFunctionCommas'
-  ],
-  plugins: [
-    babelPluginDEV,
-    babelPluginRequires,
-    babelPluginFlowComments
-  ],
-  _moduleMap: {
-    'es6-map': 'es6-map',
-    'promise': 'promise',
-    'whatwg-fetch': 'whatwg-fetch'
-  }
-};
+var babelOpts = assign({}, babelDefaultOptions, {
+  blacklist: babelDefaultOptions.blacklist.concat([
+    'flow'
+  ]),
+  plugins: babelDefaultOptions.plugins.concat([
+    babelPluginDEV
+  ])
+});
 
 var moduleMapOpts = {
   moduleMapFile: './module-map.json',
