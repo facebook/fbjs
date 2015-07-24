@@ -6,6 +6,7 @@ var runSequence = require('run-sequence');
 
 var babelPluginDEV = require('./scripts/babel/dev-expression');
 var babelPluginRequires = require('./scripts/babel/rewrite-requires');
+var babelPluginFlowComments = require('babel-plugin-flow-comments');
 var gulpModuleMap = require('./scripts/gulp/module-map.js');
 
 var paths = {
@@ -20,13 +21,18 @@ var paths = {
 var babelOpts = {
   nonStandard: true,
   blacklist: [
+    'flow',
     'spec.functionName'
   ],
   optional: [
     'es7.objectRestSpread',
     'es7.trailingFunctionCommas'
   ],
-  plugins: [babelPluginDEV, babelPluginRequires],
+  plugins: [
+    babelPluginDEV,
+    babelPluginRequires,
+    babelPluginFlowComments
+  ],
   _moduleMap: {
     'es6-map': 'es6-map',
     'promise': 'promise',

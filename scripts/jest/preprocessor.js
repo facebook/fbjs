@@ -3,6 +3,7 @@
 
 var babel = require('babel');
 var babelPluginRequires = require('../babel/rewrite-requires');
+var babelPluginFlowComments = require('babel-plugin-flow-comments');
 var assign = require('object-assign');
 
 var babelOpts = {
@@ -11,7 +12,7 @@ var babelOpts = {
     'es7.objectRestSpread',
     'es7.trailingFunctionCommas'
   ],
-  plugins: [babelPluginRequires]
+  plugins: [babelPluginRequires, babelPluginFlowComments]
 };
 
 module.exports = {
