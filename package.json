@@ -52,7 +52,6 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/src/(?!(__forks__/fetch.js$|fetch/))"
-
     ]
   },
   "dependencies": {
