@@ -13,7 +13,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "babel": "^5.4.7",
-    "babel-plugin-flow-comments": "^1.0.7",
+    "babel-plugin-flow-comments": "^1.0.9",
     "del": "^1.2.0",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",

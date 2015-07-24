@@ -17,6 +17,9 @@ module.exports = {
   blacklist: [
     'spec.functionName'
   ],
+  loose: [
+    'es6.classes'
+  ],
   optional: [
     'es7.objectRestSpread',
     'es7.trailingFunctionCommas'
