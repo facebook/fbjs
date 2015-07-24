@@ -20,10 +20,7 @@ module.exports = {
   loose: [
     'es6.classes'
   ],
-  optional: [
-    'es7.objectRestSpread',
-    'es7.trailingFunctionCommas'
-  ],
+  stage: 1,
   plugins: [babelPluginRequires, babelPluginFlowComments],
   _moduleMap: {
     'es6-map': 'es6-map',
