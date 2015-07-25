@@ -27,9 +27,35 @@ module.exports = function(babel) {
   var t = babel.types;
 
   /**
-   * Transforms `require('Foo')`.
+   * Transforms `require('Foo')` and `require.requireActual('Foo')`.
    */
   function transformRequireCall(context, call) {
+    if (
+      !t.isIdentifier(call.callee, {name: 'require'}) &&
+      !(
+        t.isMemberExpression(call.callee) &&
+        t.isIdentifier(call.callee.object, {name: 'require'}) &&
+        t.isIdentifier(call.callee.property, {name: 'requireActual'})
+      )
+    ) {
+      return;
+    }
+    var moduleArg = call.arguments[0];
+    if (moduleArg && moduleArg.type === 'Literal') {
+      var module = mapModule(context, moduleArg.value);
+      if (module) {
+        return t.callExpression(
+          call.callee,
+          [t.literal(module)]
+        );
+      }
+    }
+  }
+
+  /**
+   * Transforms `require.requireActual('Foo')`.
+   */
+  function transformRequireActualCall(context, call) {
     if (!t.isIdentifier(call.callee, {name: 'require'})) {
       return;
     }
