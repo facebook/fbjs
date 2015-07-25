@@ -23,7 +23,7 @@ module.exports = {
   stage: 1,
   plugins: [babelPluginModules, babelPluginFlowComments],
   _moduleMap: {
-    'es6-map': 'es6-map',
+    'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
     'whatwg-fetch': 'whatwg-fetch'
   }
