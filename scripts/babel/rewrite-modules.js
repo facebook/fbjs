@@ -9,10 +9,12 @@
 
 'use strict';
 
+/**
+ * Rewrites module string literals according to the `_moduleMap` babel option.
+ * This allows other npm packages to be published and used directly without
+ * being a part of the same build.
+ */
 function mapModule(context, module) {
-  // Look in options passed to babel for `_moduleMap` which contains a map of
-  // replacements. This allows other packages to be published to npm and used
-  // directly without being a part of the same build.
   var moduleMap = context.state.opts._moduleMap || {};
   if (moduleMap.hasOwnProperty(module)) {
     return moduleMap[module];
