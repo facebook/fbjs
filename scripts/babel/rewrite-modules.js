@@ -55,25 +55,6 @@ module.exports = function(babel) {
   }
 
   /**
-   * Transforms `require.requireActual('Foo')`.
-   */
-  function transformRequireActualCall(context, call) {
-    if (!t.isIdentifier(call.callee, {name: 'require'})) {
-      return;
-    }
-    var moduleArg = call.arguments[0];
-    if (moduleArg && moduleArg.type === 'Literal') {
-      var module = mapModule(context, moduleArg.value);
-      if (module) {
-        return t.callExpression(
-          t.identifier('require'),
-          [t.literal(module)]
-        );
-      }
-    }
-  }
-
-  /**
    * Transforms either individual or chained calls to `jest.dontMock('Foo')`,
    * `jest.mock('Foo')`, and `jest.genMockFromModule('Foo')`.
    */
