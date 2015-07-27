@@ -47,14 +47,14 @@ function fetchWithRetries(
   var nonNullFetchTimeout = fetchTimeout || DEFAULT_FETCH_TIMEOUT;
   var nonNullRetryDelays = retryDelays || DEFAULT_RETRY_DELAYS;
 
-  // How many attempts were made to send the data to the server
+  // How many attempts were made to send the data to the server.
   var requestsAttempted = 0;
   var requestStartTime = 0;
   return new Promise((resolve, reject) => {
     /**
      * Sends a request to the server that will timeout after
      * `RelayNetworkConfig.fetchTimeout`.
-     * If the request fails or times out a new request might be scheduled
+     * If the request fails or times out a new request might be scheduled.
      */
     function sendTimedRequest(): void {
       requestsAttempted++;
@@ -78,12 +78,12 @@ function fetchWithRetries(
       request.then(response => {
         clearTimeout(requestTimeout);
         if (isRequestAlive) {
-          // We got a response, we can clear the timeout
+          // We got a response, we can clear the timeout.
           if (response.status >= 200 && response.status < 300) {
             // Got a response code that indicates success, resolve the promise.
             resolve(response);
           } else if (shouldRetry(requestsAttempted)) {
-            // Fetch was not successful, retrying
+            // Fetch was not successful, retrying.
             // TODO(#7595849): Only retry on transient HTTP errors.
             warning(false, 'fetchWithRetries: HTTP error, retrying.'),
             retryRequest();
@@ -104,7 +104,7 @@ function fetchWithRetries(
 
     /**
      * Schedules another run of sendTimedRequest based on how much time has
-     * passed between the time the last request was sent and now
+     * passed between the time the last request was sent and now.
      */
     function retryRequest(): void {
       var retryDelay = nonNullRetryDelays[requestsAttempted - 1];
@@ -114,7 +114,7 @@ function fetchWithRetries(
     }
 
     /**
-     * Checks if another attempt should be doen to send a request to the server
+     * Checks if another attempt should be done to send a request to the server.
      */
     function shouldRetry(attempt: number): boolean {
       return (
