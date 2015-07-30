@@ -15,13 +15,11 @@ var paths = {
     '!src/**/__tests__/**/*.js',
     '!src/**/__mocks__/**/*.js'
   ],
-  lib: 'lib'
+  lib: 'lib',
+  flowInclude: 'flow/include'
 };
 
 var babelOpts = assign({}, babelDefaultOptions, {
-  blacklist: babelDefaultOptions.blacklist.concat([
-    'flow'
-  ]),
   plugins: babelDefaultOptions.plugins.concat([
     babelPluginDEV
   ])
@@ -33,7 +31,7 @@ var moduleMapOpts = {
 };
 
 gulp.task('clean', function(cb) {
-  del(['lib/'], cb);
+  del([paths.lib, paths.flowInclude], cb);
 });
 
 gulp.task('lib', function() {
@@ -45,12 +43,19 @@ gulp.task('lib', function() {
     .pipe(gulp.dest(paths.lib));
 });
 
+gulp.task('flow', function() {
+  return gulp
+    .src(paths.src)
+    .pipe(flatten())
+    .pipe(gulp.dest(paths.flowInclude));
+})
+
 gulp.task('watch', function() {
-  gulp.watch(paths.src, ['lib']);
+  gulp.watch(paths.src, ['lib', 'flow']);
 });
 
 gulp.task('build', function(cb) {
-  runSequence('clean', 'lib', cb);
+  runSequence('clean', ['lib', 'flow'], cb);
 });
 
 gulp.task('default', ['build']);
