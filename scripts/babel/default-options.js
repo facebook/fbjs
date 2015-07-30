@@ -10,7 +10,6 @@
 'use strict';
 
 var babelPluginModules = require('../babel/rewrite-modules');
-var babelPluginFlowComments = require('babel-plugin-flow-comments');
 
 module.exports = {
   nonStandard: true,
@@ -21,7 +20,7 @@ module.exports = {
     'es6.classes'
   ],
   stage: 1,
-  plugins: [babelPluginModules, babelPluginFlowComments],
+  plugins: [babelPluginModules],
   _moduleMap: {
     'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
