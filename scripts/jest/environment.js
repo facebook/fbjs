@@ -1,3 +1,3 @@
-Object.assign = require('core-js/library/fn/object/assign');
+require('core-js/es6');
 
 __DEV__ = true;
