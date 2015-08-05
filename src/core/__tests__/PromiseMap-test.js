@@ -9,6 +9,8 @@
  * @emails oncall+jsinfra
  */
 
+/*eslint-disable fb-www/promise-termination */
+
 'use strict';
 
 jest.dontMock('PromiseMap');

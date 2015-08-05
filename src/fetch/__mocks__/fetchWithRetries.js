@@ -9,6 +9,18 @@
 
 'use strict';
 
-module.exports = jest.genMockFunction().mockImplementation(
-  require.requireActual('fetchWithRetries')
-);
+var Deferred = require.requireActual('Deferred');
+
+function fetchWithRetries(...args): Promise {
+  var deferred = new Deferred();
+  fetchWithRetries.mock.calls.push(args);
+  fetchWithRetries.mock.deferreds.push(deferred);
+  return deferred.getPromise();
+}
+
+fetchWithRetries.mock = {
+  calls: [],
+  deferreds: [],
+};
+
+module.exports = fetchWithRetries;

@@ -9,6 +9,8 @@
  * @providesModule getMarkupWrap
  */
 
+/*eslint-disable fb-www/unsafe-html */
+
 var ExecutionEnvironment = require('ExecutionEnvironment');
 
 var invariant = require('invariant');

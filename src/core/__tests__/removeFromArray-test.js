@@ -24,6 +24,6 @@ describe('removeFromArray', function() {
   it('should work when the given value is not in the array', function() {
     var a = [1, 2];
     removeFromArray(a, 3);
-    expect(a).toEqual([1,2]);
+    expect(a).toEqual([1, 2]);
   });
 });

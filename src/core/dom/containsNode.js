@@ -12,7 +12,7 @@
 
 var isTextNode = require('isTextNode');
 
-/*jslint bitwise:true */
+/*eslint-disable no-bitwise */
 
 /**
  * Checks if a given DOM node contains or is another DOM node.

@@ -85,8 +85,7 @@ function eq(a: any, b: any, aStack: Array<any>, bStack: Array<any>): boolean {
         return false;
       }
     }
-  }
-  else {
+  } else {
     if (a.constructor !== b.constructor) {
       return false;
     }

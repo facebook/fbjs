@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-/*jslint evil: true, sub: true */
+/*eslint-disable fb-www/unsafe-html*/
 
 var ExecutionEnvironment = require('ExecutionEnvironment');
 
