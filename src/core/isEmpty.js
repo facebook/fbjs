@@ -9,6 +9,8 @@
  * @providesModule isEmpty
  */
 
+/*eslint-disable no-unused-vars */
+
 /**
  * Mimics empty from PHP.
  */

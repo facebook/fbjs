@@ -43,20 +43,20 @@ describe('areEqual', function() {
 
   it('works with string object and primitive comparisons', () => {
     // Identical string primitives are equal
-    expect(areEqual("Curly", "Curly")).toBe(true);
+    expect(areEqual('Curly', 'Curly')).toBe(true);
     // String objects with identical primitive values are equal
-    expect(areEqual(String("Curly"), String("Curly"))).toBe(true);
+    expect(areEqual(String('Curly'), String('Curly'))).toBe(true);
     // String primitives and their corresponding object wrappers are equal
-    expect(areEqual(String("Curly"), "Curly")).toBe(true);
+    expect(areEqual(String('Curly'), 'Curly')).toBe(true);
     // Commutative equality is implemented for string objects and primitives
-    expect(areEqual("Curly", String("Curly"))).toBe(true);
+    expect(areEqual('Curly', String('Curly'))).toBe(true);
     // String primitives with different values are not equal
-    expect(areEqual("Curly", "Larry")).toBe(false);
+    expect(areEqual('Curly', 'Larry')).toBe(false);
     // String objects with different primitive values are not equal
-    expect(areEqual(String("Curly"), String("Larry"))).toBe(false);
+    expect(areEqual(String('Curly'), String('Larry'))).toBe(false);
     // String objects and objects with a custom `toString` method are not equal
-    expect(areEqual(String("Curly"), {toString: function(){ return "Curly"; }}))
-    .toBe(false);
+    expect(areEqual(String('Curly'), {toString() { return 'Curly'; }}))
+      .toBe(false);
   });
 
   it('works with number object and primitive comparisons.', () => {
@@ -75,7 +75,7 @@ describe('areEqual', function() {
     // Number objects with different primitive values are not equal
     expect(areEqual(Number(75), Number(63))).toBe(false);
     // Number objects and objects with a `valueOf` method are not equal
-    expect(areEqual(Number(63), {valueOf: function(){ return 63; }}))
+    expect(areEqual(Number(63), {valueOf: function() { return 63; }}))
     .toBe(false);
   });
 
@@ -107,19 +107,19 @@ describe('areEqual', function() {
     // Boolean objects are not equal to the boolean primitive `true`
     expect(areEqual(true, Boolean(false))).toBe(false);
     // String and number primitives with like values are not equal
-    expect(areEqual("75", 75)).toBe(false);
+    expect(areEqual('75', 75)).toBe(false);
     // String and number objects with like values are not equal
     expect(areEqual(Number(63), String(63))).toBe(false);
     // Commutative equality is implemented for like string and number values
-    expect(areEqual(75, "75")).toBe(false);
+    expect(areEqual(75, '75')).toBe(false);
     // Number and string primitives with like values are not equal
-    expect(areEqual(0, "")).toBe(false);
+    expect(areEqual(0, '')).toBe(false);
     // Number and boolean primitives with like values are not equal
     expect(areEqual(1, true)).toBe(false);
     // Boolean and number objects with like values are not equal
     expect(areEqual(Boolean(false), Number(0))).toBe(false);
     // Boolean primitives and string objects with like values are not equal
-    expect(areEqual(false, String(""))).toBe(false);
+    expect(areEqual(false, String(''))).toBe(false);
     // Dates and their corresponding numeric primitive values are not equal
     expect(areEqual(12564504e5, new Date(2009, 9, 25))).toBe(false);
   });
@@ -133,12 +133,12 @@ describe('areEqual', function() {
     .toBe(false);
     // Date objects and objects with a `getTime` method are not equal
     expect(areEqual(new Date(2009, 11, 13), {
-      getTime: function(){
+      getTime: function() {
         return 12606876e5;
       }
     })).toBe(false);
     // Invalid dates are not equal
-    expect(areEqual(new Date("Curly"), new Date("Curly"))).toBe(false);
+    expect(areEqual(new Date('Curly'), new Date('Curly'))).toBe(false);
   });
 
   it('works with functions', () => {
@@ -158,7 +158,7 @@ describe('areEqual', function() {
     expect(areEqual(/(?:)/gi, /(?:)/g)).toBe(false);
     // RegExps and RegExp-like objects are not equal
     expect(areEqual(/Curly/g,
-        {source: "Larry", global: true, ignoreCase: false, multiline: false}))
+        {source: 'Larry', global: true, ignoreCase: false, multiline: false}))
     .toBe(false);
   });
 
@@ -183,18 +183,18 @@ describe('areEqual', function() {
   it('works with arrays containing primitive and object values',
     function() {
     // Arrays containing identical primitives are equal
-    expect(areEqual([1, "Larry", true], [1, "Larry", true])).toBe(true);
+    expect(areEqual([1, 'Larry', true], [1, 'Larry', true])).toBe(true);
     // Arrays containing equivalent elements are equal
     expect(areEqual([(/Moe/g), new Date(2009, 9, 25)], [(/Moe/g),
       new Date(2009, 9, 25)])).toBe(true);
   });
 
   it('works with multidimentional arrays', () => {
-    var a = [Number(47), false, "Larry", /Moe/, new Date(2009, 11, 13),
+    var a = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
       ['running', 'biking', String('programming')], {a: 47}];
-    var b = [Number(47), false, "Larry", /Moe/, new Date(2009, 11, 13),
+    var b = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
       ['running', 'biking', String('programming')], {a: 47}];
-    var c = [Number(47), false, "Larry", /Moe/, new Date(2009, 11, 13),
+    var c = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
       ['running', 'biking', String('programming')], [32]];
     // Arrays containing nested arrays and objects are recursively compared
     expect(areEqual(a, b)).toBe(true);
@@ -202,11 +202,11 @@ describe('areEqual', function() {
     // Arrays containing equivalent elements and different non-numeric
     // properties are equal
     expect(areEqual(a, b)).toBe(true);
-    a.push("White Rocks");
+    a.push('White Rocks');
     // Arrays of different lengths are not equal
     expect(areEqual(a, b)).toBe(false);
-    a.push("East Boulder");
-    b.push("Gunbarrel Ranch", "Teller Farm");
+    a.push('East Boulder');
+    b.push('Gunbarrel Ranch', 'Teller Farm');
     // Arrays of identical lengths containing different elements are not equal
     expect(areEqual(a, b)).toBe(false);
   });
@@ -218,9 +218,9 @@ describe('areEqual', function() {
     expect(areEqual(Array(3), Array(6))).toBe(false);
   });
 
-  it('works with simple objects', function () {
+  it('works with simple objects', function() {
     // Objects containing identical primitives are equal
-    expect(areEqual({a: "Curly", b: 1, c: true}, {a: "Curly", b: 1, c: true}))
+    expect(areEqual({a: 'Curly', b: 1, c: true}, {a: 'Curly', b: 1, c: true}))
       .toBe(true);
     // Objects containing equivalent members are equal
     expect(areEqual({b: new Date(2009, 11, 13)}, {b: new Date(2009, 11, 13)}))
@@ -229,7 +229,7 @@ describe('areEqual', function() {
     expect(areEqual({a: /Curly/g}, {b: /Curly/g})).toBe(false);
     expect(areEqual({a: /Curly/g, b: new Date(2009, 11, 13)},
         {a: /Curly/g, b: new Date(2009, 11, 13)})).toBe(true);
-    expect(areEqual({a: 1},{b: 2})).toBe(false);
+    expect(areEqual({a: 1}, {b: 2})).toBe(false);
     // Objects of identical sizes with different values are not equal
     expect(areEqual({a: 63, b: 75}, {a: 61, b: 55})).toBe(false);
     // Objects of identical sizes with different property names are not equal
@@ -242,35 +242,35 @@ describe('areEqual', function() {
     expect(areEqual({x: 1, z: 3}, {x: 1, z: 2})).toBe(false);
     // `A` contains nested objects and arrays.
     var a = {
-      name: String("Moe Howard"),
+      name: String('Moe Howard'),
       age: Number(77),
       stooge: true,
-      hobbies: ["acting"],
+      hobbies: ['acting'],
       film: {
-        name: "Sing a Song of Six Pants",
+        name: 'Sing a Song of Six Pants',
         release: new Date(1947, 9, 30),
-        stars: [String("Larry Fine"), "Shemp Howard"],
+        stars: [String('Larry Fine'), 'Shemp Howard'],
         minutes: Number(16),
         seconds: 54
       }
     };
     // `B` contains equivalent nested objects and arrays.
     var b = {
-      name: String("Moe Howard"),
+      name: String('Moe Howard'),
       age: Number(77),
       stooge: true,
-      hobbies: ["acting"],
+      hobbies: ['acting'],
       film: {
-        name: "Sing a Song of Six Pants",
+        name: 'Sing a Song of Six Pants',
         release: new Date(1947, 9, 30),
-        stars: [String("Larry Fine"), "Shemp Howard"],
+        stars: [String('Larry Fine'), 'Shemp Howard'],
         minutes: Number(16),
         seconds: 54
       }
     };
     // Objects with nested equivalent members are recursively compared
     expect(areEqual(a, b)).toBe(true);
-    b.hobbies = ["swimming"];
+    b.hobbies = ['swimming'];
     expect(areEqual(a, b)).toBe(false);
   });
 
@@ -301,19 +301,19 @@ describe('areEqual', function() {
     (b = []).push(b);
     // Arrays containing circular references are equal
     expect(areEqual(a, b)).toBe(true);
-    a.push(String("Larry"));
-    b.push(String("Larry"));
+    a.push(String('Larry'));
+    b.push(String('Larry'));
     // Arrays containing circular references and equivalent properties
     // are equal
     expect(areEqual(a, b)).toBe(true);
-    a.push("Shemp");
-    b.push("Curly");
+    a.push('Shemp');
+    b.push('Curly');
     // Arays containing circular references and different properties
     // are not equal
     expect(areEqual(a, b)).toBe(false);
-    a = ["everything is checked but", "this", "is not"];
+    a = ['everything is checked but', 'this', 'is not'];
     a[1] = a;
-    b = ["everything is checked but", ["this", "array"], "is not"];
+    b = ['everything is checked but', ['this', 'array'], 'is not'];
     // Comparison of circular references with non-circular references
     // are not equal
     expect(areEqual(a, b)).toBe(false);
@@ -339,9 +339,9 @@ describe('areEqual', function() {
     // are not equal
     expect(areEqual(a, b)).toBe(false);
 
-    a = {everything: "is checked", but: "this", is: "not"};
+    a = {everything: 'is checked', but: 'this', is: 'not'};
     a.but = a;
-    b = {everything: "is checked", but: {that:"object"}, is: "not"};
+    b = {everything: 'is checked', but: {that:'object'}, is: 'not'};
     // Comparison of circular references with non-circular object references
     // are not equal
     expect(areEqual(a, b)).toBe(false);
@@ -355,30 +355,32 @@ describe('areEqual', function() {
     (b[0].abc = b).push(b);
     // Cyclic structures are equal
     expect(areEqual(a, b)).toBe(true);
-    a[0].def = "Larry";
-    b[0].def = "Larry";
+    a[0].def = 'Larry';
+    b[0].def = 'Larry';
     // Cyclic structures containing equivalent properties are equal
     expect(areEqual(a, b)).toBe(true);
-    a[0].def = String("Larry");
-    b[0].def = String("Curly");
+    a[0].def = String('Larry');
+    b[0].def = String('Curly');
     // Cyclic structures containing different properties are not equal
     expect(areEqual(a, b)).toBe(false);
   });
 
   it('works using object implementing `valueOf`', () => {
-    var vector = function(x, y) {
-      this.x = x;
-      this.y = y;
-      this.valueOf = this.valueOf;
-    };
-    vector.prototype.valueOf = function() {
-      return this.x + this.y;
-    };
-    var v1 = new vector(1, 4);
-    var v2 = new vector(2, 3);
-    expect(areEqual(v1,v2)).toBe(true);
-    var v3 = new vector(1, 5);
-    expect(areEqual(v1,v3)).toBe(false);
+    class Vector {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.valueOf = this.valueOf;
+      }
+      valueOf() {
+        return this.x + this.y;
+      }
+    }
+    var v1 = new Vector(1, 4);
+    var v2 = new Vector(2, 3);
+    expect(areEqual(v1, v2)).toBe(true);
+    var v3 = new Vector(1, 5);
+    expect(areEqual(v1, v3)).toBe(false);
 
   });
 
@@ -393,11 +395,11 @@ describe('areEqual', function() {
     expect(areEqual(true, false)).toBe(false);
 
     // We should support Regex and Date Type
-    expect(areEqual(/a/,/a/)).toBe(true);
-    expect(areEqual(/a/,/b/)).toBe(false);
-    expect(areEqual(/a/i,/a/)).toBe(false);
-    expect(areEqual(/a/g,/a/)).toBe(false);
-    expect(areEqual(/a/m,/a/)).toBe(false);
+    expect(areEqual(/a/, /a/)).toBe(true);
+    expect(areEqual(/a/, /b/)).toBe(false);
+    expect(areEqual(/a/i, /a/)).toBe(false);
+    expect(areEqual(/a/g, /a/)).toBe(false);
+    expect(areEqual(/a/m, /a/)).toBe(false);
 
     expect(areEqual(new Date(1000), new Date(1000))).toBe(true);
     expect(areEqual(new Date(1000), new Date(2000))).toBe(false);
@@ -482,13 +484,13 @@ describe('areEqual', function() {
     var a = [1, 2, 3];
     var b = [1, 2, 3];
     var arraylike = {'0': 1, '1': 2, '2': 3, length: 3};
-    var arraylike_b = {'0': 1, '1': 2, '2': 3, length: 3};
+    var arraylikeB = {'0': 1, '1': 2, '2': 3, length: 3};
 
     expect(areEqual(a, arraylike)).toBe(false);
     expect(areEqual(arraylike, a)).toBe(false);
 
     expect(areEqual(a, b)).toBe(true);
-    expect(areEqual(arraylike, arraylike_b)).toBe(true);
+    expect(areEqual(arraylike, arraylikeB)).toBe(true);
   });
 
   it('works with deep equality checks', () => {

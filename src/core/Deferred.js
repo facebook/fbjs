@@ -36,7 +36,7 @@ class Deferred<Tvalue, Treason> {
     });
   }
 
-  getPromise() {
+  getPromise(): Promise {
     return this._promise;
   }
 

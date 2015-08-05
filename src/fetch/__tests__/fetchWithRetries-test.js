@@ -11,6 +11,8 @@
 
 'use strict';
 
+jest.dontMock('fetchWithRetries');
+
 describe('fetchWithRetries', () => {
   var fetch;
   var fetchWithRetries;

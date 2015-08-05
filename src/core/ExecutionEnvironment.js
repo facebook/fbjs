@@ -9,8 +9,6 @@
  * @providesModule ExecutionEnvironment
  */
 
-/*jslint evil: true */
-
 'use strict';
 
 var canUseDOM = !!(
