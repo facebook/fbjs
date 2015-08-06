@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var babel = require('gulp-babel');
 var flatten = require('gulp-flatten');
 var del = require('del');
+var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
 
 var babelPluginDEV = require('./scripts/babel/dev-expression');
@@ -10,12 +11,23 @@ var babelDefaultOptions = require('./scripts/babel/default-options');
 var gulpModuleMap = require('./scripts/gulp/module-map.js');
 
 var paths = {
-  src: [
-    'src/**/*.js',
-    '!src/**/__tests__/**/*.js',
-    '!src/**/__mocks__/**/*.js'
-  ],
-  lib: 'lib',
+  lib: {
+    src: [
+      'src/**/*.js',
+      '!src/**/__tests__/**/*.js',
+      '!src/**/__mocks__/**/*.js'
+    ],
+    dest: 'lib'
+  },
+  mocks: {
+    src: [
+      'src/**/__mocks__/**/*.js'
+    ],
+    dest: 'lib/__mocks__',
+    babelOpts: {
+      _modulePrefix: '../'
+    }
+  },
   flowInclude: 'flow/include'
 };
 
@@ -31,24 +43,32 @@ var moduleMapOpts = {
 };
 
 gulp.task('clean', function(cb) {
-  del([paths.lib, paths.flowInclude], cb);
+  del([paths.lib.dest, paths.mocks.dest, paths.flowInclude], cb);
 });
 
 gulp.task('lib', function() {
-  return gulp
-    .src(paths.src)
+  var libTask = gulp
+    .src(paths.lib.src)
     .pipe(gulpModuleMap(moduleMapOpts))
     .pipe(babel(babelOpts))
     .pipe(flatten())
-    .pipe(gulp.dest(paths.lib));
+    .pipe(gulp.dest(paths.lib.dest));
+
+  var mockTask = gulp
+    .src(paths.mocks.src)
+    .pipe(babel(assign({}, babelOpts, paths.mocks.babelOpts)))
+    .pipe(flatten())
+    .pipe(gulp.dest(paths.mocks.dest));
+
+  return mergeStream(libTask, mockTask);
 });
 
 gulp.task('flow', function() {
   return gulp
-    .src(paths.src)
+    .src(paths.lib.src)
     .pipe(flatten())
     .pipe(gulp.dest(paths.flowInclude));
-})
+});
 
 gulp.task('watch', function() {
   gulp.watch(paths.src, ['lib', 'flow']);

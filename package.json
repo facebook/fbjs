@@ -14,11 +14,12 @@
   "devDependencies": {
     "babel": "^5.4.7",
     "del": "^1.2.0",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-flatten": "^0.1.1",
     "gulp-util": "^3.0.4",
     "jest-cli": "^0.4.5",
+    "merge-stream": "^0.1.8",
     "object-assign": "^3.0.0",
     "run-sequence": "^1.1.0",
     "through2": "^2.0.0"

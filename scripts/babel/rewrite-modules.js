@@ -21,7 +21,8 @@ function mapModule(context, module) {
   }
   // Jest understands the haste module system, so leave modules intact.
   if (process.env.NODE_ENV !== 'test') {
-    return './' + module;
+    var modulePrefix = context.state.opts._modulePrefix || './';
+    return modulePrefix + module;
   }
 }
 
