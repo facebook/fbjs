@@ -43,7 +43,7 @@ var moduleMapOpts = {
 };
 
 gulp.task('clean', function(cb) {
-  del([paths.lib.dest, paths.flowInclude], cb);
+  del([paths.lib.dest, paths.mocks.dest, paths.flowInclude], cb);
 });
 
 gulp.task('lib', function() {
