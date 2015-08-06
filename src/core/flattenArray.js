@@ -8,31 +8,40 @@
  *
  * @providesModule flattenArray
  * @typechecks
+ * @flow
  */
 
 /**
- * Provided a deeply nested array, returns the flattened array that would result
- * from doing a DFS iteration.
+ * Returns a flattened array that represents the DFS traversal of the supplied
+ * input array. For example:
  *
- *   // Example
- *   var deep = ["a", ["b", "c"], "d", {"e":[1,2]}, [["f"], "g"]];
+ *   var deep = ["a", ["b", "c"], "d", {"e": [1, 2]}, [["f"], "g"]];
  *   var flat = flattenArray(deep);
  *   console.log(flat);
- *   > ["a", "b", "c", "d", {"e":[1,2]}, "f", "g"];
+ *   > ["a", "b", "c", "d", {"e": [1, 2]}, "f", "g"];
  *
+ * @see https://github.com/jonschlinkert/arr-flatten
+ * @copyright 2014-2015 Jon Schlinkert
+ * @license MIT
  */
-function flattenArray(/*array*/ originalArray) {
-  var arr = originalArray.slice();
-  var flat = [];
-  while (arr.length) {
-    var last = arr.pop();
-    if (Array.isArray(last)) {
-      Array.prototype.push.apply(arr, last);
+function flattenArray(array: Array<any>): Array<any> {
+  var result = [];
+  flatten(array, result);
+  return result;
+}
+
+function flatten(array: Array<any>, result: Array<any>): void {
+  var length = array.length;
+  var ii = 0;
+
+  while (length--) {
+    var current = array[ii++];
+    if (Array.isArray(current)) {
+      flatten(current, result);
     } else {
-      flat.push(last);
+      result.push(current);
     }
   }
-  return flat.reverse();
 }
 
 module.exports = flattenArray;
