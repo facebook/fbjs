@@ -20,7 +20,7 @@ var sprintf = require('sprintf');
 var fetch = require('fetch');
 var warning = require('warning');
 
-type InitWitRetries = {
+type InitWithRetries = {
   body?: mixed;
   cache?: ?string;
   credentials?: ?string;
@@ -40,7 +40,7 @@ var DEFAULT_RETRY_DELAYS = [1000, 3000];
  */
 function fetchWithRetries(
   uri: string,
-  initWithRetries: InitWitRetries
+  initWithRetries: InitWithRetries
 ): Promise {
   var {fetchTimeout, retryDelays, ...init} = initWithRetries;
   var nonNullFetchTimeout = fetchTimeout || DEFAULT_FETCH_TIMEOUT;
