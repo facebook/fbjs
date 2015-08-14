@@ -24,11 +24,11 @@ type InitWithRetries = {
   body?: mixed;
   cache?: ?string;
   credentials?: ?string;
-  fetchTimeout?: number;
+  fetchTimeout?: ?number;
   headers?: mixed;
   method?: ?string;
   mode?: ?string;
-  retryDelays?: Array<number>;
+  retryDelays?: ?Array<number>;
 };
 
 var DEFAULT_FETCH_TIMEOUT = 15000;
