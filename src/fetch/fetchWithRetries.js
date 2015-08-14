@@ -24,25 +24,25 @@ type InitWithRetries = {
   body?: mixed;
   cache?: ?string;
   credentials?: ?string;
-  fetchTimeout?: number;
+  fetchTimeout?: ?number;
   headers?: mixed;
   method?: ?string;
   mode?: ?string;
-  retryDelays?: Array<number>;
+  retryDelays?: ?Array<number>;
 };
 
 var DEFAULT_FETCH_TIMEOUT = 15000;
 var DEFAULT_RETRY_DELAYS = [1000, 3000];
 
 /**
- * Posts a request to the server with the given data as the payload.
+ * Makes a POST request to the server with the given data as the payload.
  * Automatic retries are done based on the values in `retryDelays`.
  */
 function fetchWithRetries(
   uri: string,
-  initWithRetries: InitWithRetries
+  initWithRetries?: ?InitWithRetries
 ): Promise {
-  var {fetchTimeout, retryDelays, ...init} = initWithRetries;
+  var {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
   var nonNullFetchTimeout = fetchTimeout || DEFAULT_FETCH_TIMEOUT;
   var nonNullRetryDelays = retryDelays || DEFAULT_RETRY_DELAYS;
 
