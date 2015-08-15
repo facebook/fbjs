@@ -31,8 +31,8 @@ type InitWithRetries = {
   retryDelays?: ?Array<number>;
 };
 
-var DEFAULT_FETCH_TIMEOUT = 15000;
-var DEFAULT_RETRY_DELAYS = [1000, 3000];
+var DEFAULT_TIMEOUT = 15000;
+var DEFAULT_RETRIES = [1000, 3000];
 
 /**
  * Makes a POST request to the server with the given data as the payload.
@@ -43,8 +43,8 @@ function fetchWithRetries(
   initWithRetries?: ?InitWithRetries
 ): Promise {
   var {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
-  var nonNullFetchTimeout = fetchTimeout || DEFAULT_FETCH_TIMEOUT;
-  var nonNullRetryDelays = retryDelays || DEFAULT_RETRY_DELAYS;
+  var _fetchTimeout = fetchTimeout != null ? fetchTimeout : DEFAULT_TIMEOUT;
+  var _retryDelays = retryDelays != null ? retryDelays : DEFAULT_RETRIES;
 
   var requestsAttempted = 0;
   var requestStartTime = 0;
@@ -70,7 +70,7 @@ function fetchWithRetries(
             requestsAttempted
           )));
         }
-      }, nonNullFetchTimeout);
+      }, _fetchTimeout);
 
       request.then(response => {
         clearTimeout(requestTimeout);
@@ -104,7 +104,7 @@ function fetchWithRetries(
      * passed between the time the last request was sent and now.
      */
     function retryRequest(): void {
-      var retryDelay = nonNullRetryDelays[requestsAttempted - 1];
+      var retryDelay = _retryDelays[requestsAttempted - 1];
       var retryStartTime = requestStartTime + retryDelay;
       // Schedule retry for a configured duration after last request started.
       setTimeout(sendTimedRequest, retryStartTime - Date.now());
@@ -116,7 +116,7 @@ function fetchWithRetries(
     function shouldRetry(attempt: number): boolean {
       return (
         ExecutionEnvironment.canUseDOM &&
-        attempt <= nonNullRetryDelays.length
+        attempt <= _retryDelays.length
       );
     }
 

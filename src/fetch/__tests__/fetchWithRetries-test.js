@@ -55,10 +55,8 @@ describe('fetchWithRetries', () => {
     expect(handleNext).toBeCalledWith(response);
   });
 
-  it(
-    'rejects the promise if an error occurred during fetch and no more ' +
-    'retries should be attempted',
-    () => {
+  it('rejects the promise if an error occurred during fetch and no more ' +
+     'retries should be attempted', () => {
       // Disable retries for this test
       var error = new Error();
       var retryDelays = [];
@@ -102,17 +100,47 @@ describe('fetchWithRetries', () => {
       retries < retryDelays.length;
       retries++
     ) {
-      // Timeout request
+      // Timeout request.
       jest.runAllTimers();
-      // Delay before next try
+      // Delay before next try.
       jest.runAllTimers();
     }
     expect(fetch.mock.calls.length).toBe(retries + 1);
-    // Timeout last request
+    // Timeout last request.
     jest.runAllTimers();
     expect(handleNext.mock.calls[0][0]).toEqual(new Error(
       'fetchWithRetries',
       'Failed to get response from server, tried ' + retries + ' times',
     ));
+  });
+
+  it('defaults fetch timeout to 15s', () => {
+    fetchWithRetries('https://localhost', {retryDelays: []}).catch(handleNext);
+
+    setTimeout(() => {
+      expect(handleNext).not.toBeCalled();
+    }, 14999);
+    var callback = jest.genMockFunction();
+    setTimeout(callback.mockImplementation(() => {
+      expect(handleNext).toBeCalled();
+    }), 15001);
+    jest.runAllTimers();
+
+    expect(callback).toBeCalled();
+  });
+
+  it('preserves fetch timeout of 0s', () => {
+    fetchWithRetries('https://localhost', {
+      fetchTimeout: 0,
+      retryDelays: [],
+    }).catch(handleNext);
+
+    var callback = jest.genMockFunction();
+    setTimeout(callback.mockImplementation(() => {
+      expect(handleNext).toBeCalled();
+    }), 1);
+    jest.runAllTimers();
+
+    expect(callback).toBeCalled();
   });
 });
