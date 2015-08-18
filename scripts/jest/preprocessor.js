@@ -2,7 +2,9 @@ var assign = require('object-assign');
 var babel = require('babel');
 var babelDefaultOptions = require('../babel/default-options');
 
-var babelOpts = babelDefaultOptions;
+var babelOpts = assign({}, babelDefaultOptions, {
+  retainLines: true,
+});
 
 module.exports = {
   process: function(src, path) {
