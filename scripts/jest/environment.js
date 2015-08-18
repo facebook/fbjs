@@ -1,3 +1,3 @@
 require('core-js/es6');
 
-__DEV__ = true;
+global.__DEV__ = true;
