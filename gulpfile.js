@@ -6,9 +6,9 @@ var del = require('del');
 var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
 
-var babelPluginDEV = require('./scripts/babel/dev-expression');
-var babelDefaultOptions = require('./scripts/babel/default-options');
-var gulpModuleMap = require('./scripts/gulp/module-map.js');
+var babelPluginDEV = require('fbjs-scripts/babel/dev-expression');
+var babelDefaultOptions = require('fbjs-scripts/babel/default-options');
+var gulpModuleMap = require('fbjs-scripts/gulp/module-map.js');
 
 var paths = {
   lib: {
