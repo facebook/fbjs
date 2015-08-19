@@ -5,7 +5,7 @@
 ../node_modules/promise
 
 [libs]
-../flow
+../flow/lib
 
 [options]
 module.system=haste
