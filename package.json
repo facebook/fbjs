@@ -7,13 +7,15 @@
   "scripts": {
     "build": "gulp build",
     "prepublish": "npm run build",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "typecheck": "flow check src"
   },
   "author": "",
   "license": "BSD-3-Clause",
   "devDependencies": {
     "babel": "^5.4.7",
     "del": "^1.2.0",
+    "flow-bin": "^0.14.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-flatten": "^0.1.1",
