@@ -20,7 +20,7 @@ var sprintf = require('sprintf');
 var fetch = require('fetch');
 var warning = require('warning');
 
-type InitWithRetries = {
+export type InitWithRetries = {
   body?: mixed;
   cache?: ?string;
   credentials?: ?string;
