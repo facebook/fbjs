@@ -9,7 +9,7 @@
 
 'use strict';
 
-var t = require('babel').types;
+var t = require('babel-core').types;
 
 /**
  * Variable names associated with top level required modules.
