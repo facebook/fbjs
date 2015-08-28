@@ -9,7 +9,16 @@
 
 'use strict';
 
-var babelPluginModules = require('../babel/rewrite-modules');
+var babelPluginModules = require('./rewrite-modules');
+var inlineRequires = require('./inline-requires');
+var plugins = [babelPluginModules];
+
+if (process.env.NODE_ENV === 'test') {
+  plugins.push({
+    position: 'after',
+    transformer: inlineRequires,
+  });
+}
 
 module.exports = {
   nonStandard: true,
@@ -20,7 +29,7 @@ module.exports = {
     'es6.classes'
   ],
   stage: 1,
-  plugins: [babelPluginModules],
+  plugins: plugins,
   _moduleMap: {
     'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
