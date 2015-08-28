@@ -9,8 +9,6 @@
 
 'use strict';
 
-var t = require('babel-core').types;
-
 /**
  * Variable names associated with top level required modules.
  */
@@ -22,6 +20,16 @@ var topLevelRequireVarsMap;
  * in tests.
  */
 module.exports = function(babel) {
+  var t = babel.types;
+
+  function buildRequireCall(name) {
+    return t.callExpression(
+      t.identifier('require'), [
+        t.literal(topLevelRequireVarsMap[name])
+      ]
+    );
+  }
+
   return new babel.Transformer('fbjs.inline-requires', {
     Program: {
       enter: function(node, parent, scope, state) {
@@ -120,13 +128,5 @@ function isRequireCall(node) {
     node.callee.name === 'require' &&
     node['arguments'].length === 1 &&
     node['arguments'][0].type === 'Literal'
-  );
-}
-
-function buildRequireCall(name) {
-  return t.callExpression(
-    t.identifier('require'), [
-      t.literal(topLevelRequireVarsMap[name])
-    ]
   );
 }
