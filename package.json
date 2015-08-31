@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gulp build",
     "prepublish": "npm run build",
+    "pretest": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "test": "NODE_ENV=test jest",
     "typecheck": "flow check src"
   },
@@ -58,5 +59,9 @@
     "core-js": "^1.0.0",
     "promise": "^7.0.3",
     "whatwg-fetch": "^0.9.0"
+  },
+  "devEngines": {
+    "node": "3.x",
+    "npm": "2.x"
   }
 }
