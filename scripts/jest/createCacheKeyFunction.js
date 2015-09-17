@@ -31,10 +31,10 @@ var cacheKeyBase = buildCacheKey(cacheKeyFiles, '');
 module.exports = function(files) {
   var cacheKey = buildCacheKey(files, cacheKeyBase);
 
-  return function() {
+  return function(src, file, options, excludes) {
     return crypto.createHash('md5')
       .update(cacheKey)
-      .update(JSON.stringify(arguments))
+      .update(JSON.stringify([src, file, options, excludes]))
       .digest('hex');
   };
 };

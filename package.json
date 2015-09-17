@@ -61,7 +61,7 @@
     "whatwg-fetch": "^0.9.0"
   },
   "devEngines": {
-    "node": "3.x",
+    "node": ">=3",
     "npm": "2.x"
   }
 }
