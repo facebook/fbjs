@@ -86,7 +86,12 @@ function fetchWithRetries(
             retryRequest();
           } else {
             // Request was not successful, giving up.
-            reject(response);
+            var error: any = new Error(sprintf(
+                'fetchWithRetries(): Got an error as a final response from ' +
+                'server, tried %s times.',
+            ));
+            error.response = response;
+            reject(error);
           }
         }
       }).catch(error => {
