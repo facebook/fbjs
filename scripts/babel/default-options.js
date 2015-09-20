@@ -31,6 +31,7 @@ module.exports = {
   stage: 1,
   plugins: plugins,
   _moduleMap: {
+    'core-js/es6': 'core-js/es6',
     'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
     'whatwg-fetch': 'whatwg-fetch'
