@@ -15,7 +15,7 @@ function buildCacheKey(files, base) {
   return files.reduce(function(src, fileName) {
     return src + fs.readFileSync(fileName);
   }, base);
-};
+}
 
 var transformRoot = path.join(__dirname, '..');
 var cacheKeyFiles = [

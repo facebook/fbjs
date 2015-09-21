@@ -8,7 +8,6 @@ var f = require('util').format;
 
 // Make sure we have a package.json to parse. Take it as the first argument
 // (actually the 3rd for argv).
-var argv = process.argv;
 assert(
   process.argv.length >= 3,
   'Expected to receive a package.json file argument to parse'
@@ -23,7 +22,7 @@ try {
   assert(
     false,
     f('Expected to be able to parse %s as JSON but we got this error instead: %s', packageFilePath, e)
-  )
+  );
 }
 
 var devEngines = packageData.devEngines;

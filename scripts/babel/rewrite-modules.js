@@ -44,7 +44,7 @@ module.exports = function(babel) {
         t.isIdentifier(call.callee.property, {name: 'requireActual'})
       )
     ) {
-      return;
+      return undefined;
     }
     var moduleArg = call.arguments[0];
     if (moduleArg && moduleArg.type === 'Literal') {
@@ -64,7 +64,7 @@ module.exports = function(babel) {
    */
   function transformJestCall(context, call) {
     if (!t.isMemberExpression(call.callee)) {
-      return;
+      return undefined;
     }
     var object;
     var member = call.callee;
@@ -74,7 +74,7 @@ module.exports = function(babel) {
       object = transformJestCall(context, member.object);
     }
     if (!object) {
-      return;
+      return undefined;
     }
     var args = call.arguments;
     if (
