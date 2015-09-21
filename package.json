@@ -6,6 +6,7 @@
   "repository": "facebook/fbjs",
   "scripts": {
     "build": "gulp build",
+    "lint": "eslint .",
     "prepublish": "npm run build",
     "pretest": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "test": "NODE_ENV=test jest",
@@ -15,7 +16,9 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "babel": "^5.4.7",
+    "babel-eslint": "^4.1.3",
     "del": "^1.2.0",
+    "eslint": "^1.5.0",
     "fbjs-scripts": "file:scripts",
     "flow-bin": "^0.14.0",
     "gulp": "^3.9.0",
