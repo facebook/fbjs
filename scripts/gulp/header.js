@@ -9,72 +9,80 @@
 
 'use strict';
 
-var gutil = require('gulp-util');
-var through = require('through2');
+const stream = require('stream');
+const gutil = require('gulp-util');
 
-var PLUGIN_NAME = 'header';
-var YEAR = '2015';
+const PLUGIN_NAME = 'header';
 
-var HEADERS = {
-  license: function(pkg, version) {
-    return [
-      '/**',
-      ' * ' + pkg + ' v' + version,
-      ' *',
-      ' * Copyright 2013-' + YEAR + ', Facebook, Inc.',
-      ' * All rights reserved.',
-      ' *',
-      ' * This source code is licensed under the BSD-style license found in the',
-      ' * LICENSE file in the root directory of this source tree. An additional grant',
-      ' * of patent rights can be found in the PATENTS file in the same directory.',
-      ' *',
-      ' */',
-      ''
-    ].join('\n');
+const HEADERS = {
+  license(pkg, version, startYear) {
+    return (
+`/**
+ * ${pkg} v${version}
+ *
+ * Copyright ${startYear}-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+`);
   },
 
-  simple: function(pkg, version) {
-    return [
-      '/**',
-      ' * ' + pkg + ' v' + version,
-      ' */',
-      ''
-    ].join('\n');
-  }
+  simple(pkg, version) {
+    return (
+`/**
+ * ${pkg} v${version}
+ */
+`);
+  },
 };
 
-module.exports = function(opts) {
-  if (!opts || !('package' in opts && 'version' in opts && opts.type in HEADERS)) {
-    throw new gutil.PluginError(
-      PLUGIN_NAME,
-      'Missing options. Ensure you pass an object with ' +
-      '`package`, `version`, and `type`'
-    );
+class HeaderStream extends stream.Transform {
+  constructor(opts) {
+    super({objectMode: true, highWaterMark: 16});
+    this._header = HEADERS[opts.type](opts.pkg, opts.version, opts.startYear);
   }
 
-  var header = HEADERS[opts.type](opts.package, opts.version);
-
-  function transform(file, enc, cb) {
+  _transform(file, enc, cb) {
     if (file.isNull()) {
       cb(null, file);
       return;
     }
 
-    var output;
-
+    let output;
     if (file.isStream()) {
-      output = through();
-      output.write(header);
+      output = stream.PassThrough();
+      output.write(this._header);
       file.contents.pipe(output);
-      file.contents.on('error', this.emit.bind(this, 'error'));
+      file.contents.on('error', err => { this.emit('error', err); });
     } else {
-      output = new Buffer(header + file.contents);
+      output = new Buffer(this._header + file.contents);
     }
 
     file.contents = output;
     this.push(file);
     cb();
   }
+}
 
-  return through.obj(transform);
+module.exports = function(opts) {
+  if (!opts || !('pkg' in opts && 'version' in opts && opts.type in HEADERS)) {
+    throw new gutil.PluginError(
+      PLUGIN_NAME,
+      'Missing options. Ensure you pass an object with ' +
+      '`pkg`, `version`, and `type`'
+    );
+  }
+
+  if (opts.type === 'license' && !('startYear' in opts)) {
+    throw new gutil.PluginError(
+      PLUGIN_NAME,
+      'Missing options. `startYear` is required when using the "license" type'
+    );
+  }
+
+  return new HeaderStream(opts);
 };
