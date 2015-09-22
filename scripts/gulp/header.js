@@ -42,7 +42,7 @@ const HEADERS = {
 
 class HeaderStream extends stream.Transform {
   constructor(opts) {
-    super({objectMode: true, highWaterMark: 16});
+    super({objectMode: true});
     this._header = HEADERS[opts.type](opts.pkg, opts.version, opts.startYear);
   }
 
