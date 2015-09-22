@@ -89,6 +89,34 @@ describe('fetchWithRetries', () => {
     expect(handleNext).toBeCalledWith(successfulResponse);
   });
 
+  it('gives up if response failed after retries', () => {
+    var init = {retryDelays: [600]};
+    var failedResponse = mockResponse(500);
+    var handleCatch = jest.genMockFunction();
+    fetchWithRetries('https://localhost', init)
+      .then(handleNext).catch(handleCatch);
+    expect(fetch.mock.calls.length).toBe(1);
+    fetch.mock.deferreds[0].resolve(failedResponse);
+    for (var ii = 0; ii < 100; ii++) {
+      if (fetch.mock.calls.length < 2) {
+        jest.runOnlyPendingTimers();
+      } else {
+        break;
+      }
+    }
+    // Resolved with `failedResponse`, next run is scheduled
+    expect(fetch.mock.calls.length).toBe(2);
+    fetch.mock.deferreds[1].resolve(failedResponse);
+    // No more re-tries, it should reject with an `Error`
+    expect(handleNext).not.toBeCalled();
+    jest.runAllTimers();
+    var errorArg = handleCatch.mock.calls[0][0];
+    expect(errorArg instanceof Error).toBe(true);
+    expect(errorArg.message).toEqual('fetchWithRetries(): Still no ' +
+      'successful response after 2 retries, giving up.');
+    expect(errorArg.response).toEqual(failedResponse);
+  });
+
   it('retries the request if the previous attempt timed-out', () => {
     var retries;
     var retryDelays = [1000, 3000];

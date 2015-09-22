@@ -86,7 +86,13 @@ function fetchWithRetries(
             retryRequest();
           } else {
             // Request was not successful, giving up.
-            reject(response);
+            var error: any = new Error(sprintf(
+              'fetchWithRetries(): Still no successful response after ' +
+              '%s retries, giving up.',
+              requestsAttempted
+            ));
+            error.response = response;
+            reject(error);
           }
         }
       }).catch(error => {
