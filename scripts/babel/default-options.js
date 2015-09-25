@@ -33,6 +33,6 @@ module.exports = {
   _moduleMap: {
     'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
-    'whatwg-fetch': 'whatwg-fetch'
+    'isomorphic-fetch': 'isomorphic-fetch'
   }
 };
