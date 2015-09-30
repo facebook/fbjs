@@ -11,6 +11,30 @@ env:
 globals:
   __DEV__: true
 
+  # Flow globals
+  $Enum: true
+  $FixMe: true
+  $FlowFixMe: true
+  $FlowIssue: true
+  $Keys: true
+  Iterator: true
+  IteratorResult: true
+
+  # Flow globals for React
+  ReactClass: true
+  ReactElement: true
+  SyntheticClipboardEvent: true
+  SyntheticCompositionEvent: true
+  SyntheticDragEvent: true
+  SyntheticEvent: true
+  SyntheticFocusEvent: true
+  SyntheticInputEvent: true
+  SyntheticKeyboardEvent: true
+  SyntheticMouseEvent: true
+  SyntheticWheelEvent: true
+  SyntheticTouchEvent: true
+  SyntheticUIEvent: true
+
 rules:
   # Possible Errors <http://eslint.org/docs/rules/#possible-errors>
   # babel removes them for older browsers, we should do a codemod
@@ -337,4 +361,3 @@ rules:
   max-statements: 0
   no-bitwise: 1
   no-plusplus: 0
-
