@@ -1,2 +1,4 @@
 flow/
 lib/
+node_modules/
+scripts/node_modules/
