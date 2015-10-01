@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.3.0] - 2015-10-01
+
 ### Added
 - More modules: `memoizeStringOnly`, `joinClasses`
 - `UserAgent`: Query information about current user agent
