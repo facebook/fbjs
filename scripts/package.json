@@ -7,7 +7,7 @@
     "babel": "^5.4.7",
     "core-js": "^1.0.0",
     "gulp-util": "^3.0.4",
-    "object-assign": "^3.0.0",
+    "object-assign": "^4.0.1",
     "semver": "^5.0.1",
     "through2": "^2.0.0"
   }
