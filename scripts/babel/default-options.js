@@ -33,6 +33,7 @@ module.exports = {
   _moduleMap: {
     'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
+    'ua-parser-js': 'ua-parser-js',
     'whatwg-fetch': 'whatwg-fetch'
   }
 };
