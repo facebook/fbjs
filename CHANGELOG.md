@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.3.1 - 2015-10-01
+
 ### Fixed
 - Ensure the build completes correctly before packaging
 
