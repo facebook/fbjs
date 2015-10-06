@@ -17,7 +17,7 @@
  * implementation in open source so instead we make use of an open source
  * library to do the heavy lifting and then make some adjustments as necessary.
  * It's likely there will be some differences. Some we can smooth over.
- * Others should are going to be harder.
+ * Others are going to be harder.
  */
 
 'use strict';
