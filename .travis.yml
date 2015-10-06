@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 'iojs'
+  - "4"
 env:
   - CMD=test
   - CMD=typecheck
