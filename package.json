@@ -30,7 +30,7 @@
     "LICENSE",
     "PATENTS",
     "README.md",
-    "flow/",
+    "flow/lib",
     "index.js",
     "lib/",
     "module-map.json"
