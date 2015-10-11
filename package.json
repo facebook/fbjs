@@ -30,7 +30,7 @@
     "LICENSE",
     "PATENTS",
     "README.md",
-    "flow/lib",
+    "flow/",
     "index.js",
     "lib/",
     "module-map.json"
@@ -57,11 +57,17 @@
   },
   "dependencies": {
     "core-js": "^1.0.0",
+    "loose-envify": "^1.0.0",
     "promise": "^7.0.3",
     "whatwg-fetch": "^0.9.0"
   },
   "devEngines": {
     "node": ">=3",
     "npm": "2.x"
+  },
+  "browserify": {
+    "transform": [
+      "loose-envify"
+    ]
   }
 }
