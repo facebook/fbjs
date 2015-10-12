@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "core-js": "^1.0.0",
+    "loose-envify": "^1.0.0",
     "promise": "^7.0.3",
     "ua-parser-js": "^0.7.9",
     "whatwg-fetch": "^0.9.0"
@@ -67,5 +68,10 @@
   "devEngines": {
     "node": ">=3",
     "npm": "2.x"
+  },
+  "browserify": {
+    "transform": [
+      "loose-envify"
+    ]
   }
 }
