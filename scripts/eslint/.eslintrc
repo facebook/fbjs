@@ -38,7 +38,7 @@ globals:
 rules:
   # Possible Errors <http://eslint.org/docs/rules/#possible-errors>
   # babel removes them for older browsers, we should do a codemod
-  comma-dangle: [0, always-multiline]
+  comma-dangle: [1, always-multiline]
   # equivalent to jshint boss
   no-cond-assign: 0
   # equivalent to jshint devel
