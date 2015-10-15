@@ -15,12 +15,11 @@
 
 jest.dontMock('PromiseMap');
 
-describe('PromiseMap', () => {
-  var PromiseMap;
+var PromiseMap = require('PromiseMap');
 
+describe('PromiseMap', () => {
   beforeEach(() => {
     jest.resetModuleRegistry();
-    PromiseMap = require('PromiseMap');
   });
 
   it('can get a value after resolving it', () => {
@@ -111,7 +110,7 @@ describe('PromiseMap', () => {
 
     expect(() => {
       map.resolveKey('foo', 1337);
-    }).toThrow('Invariant Violation: PromiseMap: Already settled `foo`.');
+    }).toThrow('PromiseMap: Already settled `foo`.');
 
     map.get('foo').then(value => {
       getValue = value;
@@ -130,7 +129,7 @@ describe('PromiseMap', () => {
 
     expect(() => {
       map.rejectKey('foo', 1337);
-    }).toThrow('Invariant Violation: PromiseMap: Already settled `foo`.');
+    }).toThrow('PromiseMap: Already settled `foo`.');
 
     map.get('foo').catch(value => {
       getValue = value;
@@ -149,7 +148,7 @@ describe('PromiseMap', () => {
 
     expect(() => {
       map.rejectKey('foo', 1337);
-    }).toThrow('Invariant Violation: PromiseMap: Already settled `foo`.');
+    }).toThrow('PromiseMap: Already settled `foo`.');
 
     map.get('foo').then(value => {
       getValue = value;
