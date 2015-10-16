@@ -1,6 +1,6 @@
 {
   "name": "fbjs",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A collection of utility libraries used by other Facebook JS projects",
   "main": "index.js",
   "repository": "facebook/fbjs",
