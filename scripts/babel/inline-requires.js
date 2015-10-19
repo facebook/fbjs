@@ -10,70 +10,62 @@
 'use strict';
 
 /**
- * Variable names associated with top level required modules.
+ * Map of require(...) aliases to module names.
+ *
+ * `Foo` is an alias for `require('ModuleFoo')` in the following example:
+ *   var Foo = require('ModuleFoo');
  */
-var topLevelRequires;
-var topLevelRequireVarsMap;
+var inlineRequiredDependencyMap;
 
 /**
- * This transform inlines top-level require calls to enable lazy-mocking
- * in tests.
+ * This transform inlines top-level require(...) aliases with to enable lazy
+ * loading of dependencies.
+ *
+ * Continuing with the example above, this replaces all references to `Foo` in
+ * the module to `require('ModuleFoo')`.
  */
-module.exports = function(babel) {
+module.exports = function fbjsInlineRequiresTransform(babel) {
   var t = babel.types;
 
   function buildRequireCall(name) {
     return t.callExpression(
-      t.identifier('require'), [
-        t.literal(topLevelRequireVarsMap[name])
-      ]
+      t.identifier('require'),
+      [t.literal(inlineRequiredDependencyMap[name])]
     );
   }
 
   return new babel.Transformer('fbjs.inline-requires', {
     Program: {
       enter: function(node, parent, scope, state) {
-        resetCollections();
+        resetCollection();
       },
     },
 
     /**
-     * Collects required module names, and for top level modules,
-     * actual variable names associated with them.
+     * Collect top-level require(...) aliases.
      */
     CallExpression: {
-      enter: function(node, parent, scope, state) {
-        if (!isRequireCall(node)) {
-          return node;
-        }
+      enter: function(node, parent, scope) {
+        if (isTopLevelRequireAlias(this)) {
+          var varName = parent.id.name;
+          var moduleName = node.arguments[0].value;
 
-        var moduleName = node.arguments[0].value;
+          inlineRequiredDependencyMap[varName] = moduleName;
 
-        // Top level requires with var declarations.
-        if (isTopLevelRequireDefinition(this.parentPath)) {
-          var varName = this.parentPath.node.id.name;
-
-          topLevelRequires.push(moduleName);
-          topLevelRequireVarsMap[varName] = moduleName;
-
-          // Remove the var declaration with require, since module
-          // binding will be passed as a parameter to the wrapper function.
+          // Remove the declaration.
           this.parentPath.parentPath.dangerouslyRemove();
-
-          // Also remove associated binding in the scope.
+          // And the associated binding in the scope.
           scope.removeBinding(varName);
-        } else if (topLevelRequires.indexOf(moduleName) === -1) {
-          return node;
         }
       },
     },
 
     /**
-     * Inline references to modules directly to a require call.
+     * Inline require(...) aliases.
      */
     Identifier: {
       enter: function(node, parent, scope, state) {
-        if (!shouldInlineRequire(node, scope, state)) {
+        if (!shouldInlineRequire(node, scope)) {
           return node;
         }
 
@@ -84,7 +76,7 @@ module.exports = function(babel) {
         ) {
           throw new Error(
             'Cannot assign to a require(...) alias, ' + node.name +
-            '. Line: ' + node.loc.start.line
+            '. Line: ' + node.loc.start.line + '.'
           );
         }
 
@@ -94,30 +86,18 @@ module.exports = function(babel) {
   });
 };
 
-function shouldInlineRequire(node, scope, state) {
-  return (
-    topLevelRequireVarsMap.hasOwnProperty(node.name) &&
-    !scope.hasBinding(node.name, true /* noGlobals */)
-  );
+function resetCollection() {
+  inlineRequiredDependencyMap = {};
 }
 
-function resetCollections() {
-  topLevelRequires = [];
-  topLevelRequireVarsMap = {};
-}
-
-function isTopLevelRequireDefinition(path) {
-  var node = path.node;
-  var parent = path.parent;
-
+function isTopLevelRequireAlias(path) {
   return (
-    path.parentPath.parent.type === 'Program' &&
-    parent.type === 'VariableDeclaration' &&
-    parent.declarations.length === 1 &&
-    node.type === 'VariableDeclarator' &&
-    node.id.type === 'Identifier' &&
-    node.init &&
-    isRequireCall(node.init)
+    isRequireCall(path.node) &&
+    path.parent.type === 'VariableDeclarator' &&
+    path.parent.id.type === 'Identifier' &&
+    path.parentPath.parent.type === 'VariableDeclaration' &&
+    path.parentPath.parent.declarations.length === 1 &&
+    path.parentPath.parentPath.parent.type === 'Program'
   );
 }
 
@@ -128,5 +108,12 @@ function isRequireCall(node) {
     node.callee.name === 'require' &&
     node['arguments'].length === 1 &&
     node['arguments'][0].type === 'Literal'
+  );
+}
+
+function shouldInlineRequire(node, scope) {
+  return (
+    inlineRequiredDependencyMap.hasOwnProperty(node.name) &&
+    !scope.hasBinding(node.name, true /* noGlobals */)
   );
 }
