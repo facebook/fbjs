@@ -7,34 +7,34 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var crypto = require('crypto');
-var fs = require('fs');
-var path = require('path');
+ 'use strict';
+
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 function buildCacheKey(files, base) {
-  return files.reduce(function(src, fileName) {
-    return src + fs.readFileSync(fileName);
-  }, base);
+  return files.reduce(
+    (src, fileName) => src + fs.readFileSync(fileName),
+    base
+  );
 }
 
-var transformRoot = path.join(__dirname, '..');
-var cacheKeyFiles = [
+const transformRoot = path.join(__dirname, '..');
+const cacheKeyFiles = [
   __filename,
-  path.join(transformRoot, 'babel/default-options.js'),
-  path.join(transformRoot, 'babel/dev-expression.js'),
-  path.join(transformRoot, 'babel/inline-requires.js'),
-  path.join(transformRoot, 'babel/rewrite-modules.js'),
+  path.join(transformRoot, 'babel', 'default-options.js'),
+  path.join(transformRoot, 'babel', 'dev-expression.js'),
+  path.join(transformRoot, 'babel', 'inline-requires.js'),
+  path.join(transformRoot, 'babel', 'rewrite-modules.js'),
 ];
 
-var cacheKeyBase = buildCacheKey(cacheKeyFiles, '');
+const cacheKeyBase = buildCacheKey(cacheKeyFiles, '');
 
-module.exports = function(files) {
-  var cacheKey = buildCacheKey(files, cacheKeyBase);
-
-  return function(src, file, options, excludes) {
-    return crypto.createHash('md5')
-      .update(cacheKey)
-      .update(JSON.stringify([src, file, options, excludes]))
-      .digest('hex');
-  };
+module.exports = files => {
+  const cacheKey = buildCacheKey(files, cacheKeyBase);
+  return (src, file, configString) => crypto.createHash('md5')
+    .update(cacheKey)
+    .update(src + file + configString)
+    .digest('hex');
 };
