@@ -7,13 +7,15 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var assign = require('object-assign');
-var babel = require('babel');
-var babelDefaultOptions = require('../babel/default-options');
-var createCacheKeyFunction = require('./createCacheKeyFunction');
+'use strict';
+
+const assign = require('object-assign');
+const babel = require('babel');
+const babelDefaultOptions = require('../babel/default-options');
+const createCacheKeyFunction = require('./createCacheKeyFunction');
 
 module.exports = {
-  process: function(src, filename) {
+  process(src, filename) {
     return babel.transform(src, assign(
       {},
       babelDefaultOptions,
