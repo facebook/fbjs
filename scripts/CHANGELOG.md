@@ -1,7 +1,11 @@
 ## [Unreleased]
 
+
+## [0.3.0] - 2015-10-23
+
 ### Changed
 - [lint] `comma-dangle` rule upgraded to warning
+- [jest] Update `createCacheKeyFunction` to make it compatible with Jest v0.6
 
 
 ## [0.2.2] - 2015-10-01
