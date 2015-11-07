@@ -28,10 +28,12 @@ module.exports = function fbjsInlineRequiresTransform() {
   var t = require('babel-types');
 
   function buildRequireCall(name) {
-    return t.callExpression(
+    var call = t.callExpression(
       t.identifier('require'),
       [t.stringLiteral(inlineRequiredDependencyMap[name])]
     );
+    call.new = true;
+    return call;
   }
 
   return {
@@ -43,7 +45,7 @@ module.exports = function fbjsInlineRequiresTransform() {
       /**
        * Collect top-level require(...) aliases.
        */
-      CallExpression: function(path, scope) {
+      CallExpression: function(path) {
         var node = path.node;
 
         if (isTopLevelRequireAlias(path)) {
@@ -107,6 +109,7 @@ function isTopLevelRequireAlias(path) {
 
 function isRequireCall(node) {
   return (
+    !node.new &&
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
     node.callee.name === 'require' &&
