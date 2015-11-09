@@ -80,6 +80,8 @@ var svgElements = [
   'stop',
   'text',
   'tspan',
+  'symbol',
+  'use',
 ];
 svgElements.forEach((nodeName) => {
   markupWrap[nodeName] = svgWrap;
