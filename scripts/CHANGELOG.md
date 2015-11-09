@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+## [0.4.0] - 2015-11-09
+- [babel] Add inline-requires plugin for Babel 6
+
 
 ## [0.3.0] - 2015-10-23
 
