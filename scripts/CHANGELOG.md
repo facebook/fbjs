@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+
+## [0.5.0] - 2015-11-11
+- [babel] Add auto-importer plugin for Babel & Babel 6
+- [babel] Add auto-importer plugin to default babel options
+
+
 ## [0.4.0] - 2015-11-09
 - [babel] Add inline-requires plugin for Babel 6
 
