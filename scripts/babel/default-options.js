@@ -10,8 +10,19 @@
 'use strict';
 
 var babelPluginModules = require('./rewrite-modules');
+var babelPluginAutoImporter = require('./auto-importer');
 var inlineRequires = require('./inline-requires');
-var plugins = [babelPluginModules];
+
+var plugins = [
+  {
+    position: 'after',
+    transformer: babelPluginAutoImporter,
+  },
+  {
+    position: 'after',
+    transformer: babelPluginModules,
+  },
+];
 
 if (process.env.NODE_ENV === 'test') {
   plugins.push({
