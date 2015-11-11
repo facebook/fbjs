@@ -15,7 +15,7 @@ describe('memoizeStringOnly', function() {
   var memoizeStringOnly;
 
   beforeEach(function() {
-    require('mock-modules').dumpCache();
+    jest.resetModuleRegistry();
     memoizeStringOnly = require('memoizeStringOnly');
   });
 

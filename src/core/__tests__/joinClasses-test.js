@@ -11,7 +11,7 @@
 
 'use strict';
 
-require('mock-modules').dontMock('joinClasses');
+jest.dontMock('joinClasses');
 
 var joinClasses = require('joinClasses');
 

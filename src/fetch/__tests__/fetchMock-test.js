@@ -11,16 +11,10 @@
 
 'use strict';
 
+var Deferred = require('Deferred');
+var fetch = require('fetch');
+
 describe('fetchMock', () => {
-  var Deferred;
-
-  var fetch;
-
-  beforeEach(() => {
-    Deferred = require('Deferred');
-    fetch = require('fetch');
-  });
-
   it('has a corresponding `Deferred` for each call to `fetch`', () => {
     expect(fetch.mock.calls.length).toBe(0);
     expect(fetch.mock.deferreds.length).toBe(0);
@@ -37,5 +31,4 @@ describe('fetchMock', () => {
     jest.runAllTimers();
     expect(mockCallback).toBeCalledWith(mockResult);
   });
-
 });

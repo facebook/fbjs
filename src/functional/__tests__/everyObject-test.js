@@ -13,9 +13,9 @@
 
 jest.dontMock('everyObject');
 
-describe('everyObject', function() {
-  var everyObject = require('everyObject');
+var everyObject = require('everyObject');
 
+describe('everyObject', function() {
   var mockObject;
   var mockCallback;
 

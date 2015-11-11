@@ -10,7 +10,7 @@
  * @flow
  */
 
-require('mock-modules').autoMockOff();
+jest.autoMockOff();
 var nullthrows = require('nullthrows');
 
 describe('nullthrows', () => {

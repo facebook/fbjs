@@ -13,9 +13,9 @@
 
 jest.dontMock('someObject');
 
-describe('someObject', function() {
-  var someObject = require('someObject');
+var someObject = require('someObject');
 
+describe('someObject', function() {
   var mockObject;
   var mockCallback;
 

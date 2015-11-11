@@ -9,13 +9,14 @@
  * @emails oncall+jsinfra
  */
 
-require('mock-modules')
+jest
   .dontMock('sprintf');
+
+var sprintf = require('sprintf');
 
 describe('sprintf', function() {
 
   it('works with %s', function() {
-    var sprintf = require('sprintf');
     expect(sprintf('aaa %s bbb %s ccc', '111', '222'))
       .toBe('aaa 111 bbb 222 ccc');
   });
