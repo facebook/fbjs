@@ -15,11 +15,11 @@ var inlineRequires = require('./inline-requires');
 
 var plugins = [
   {
-    position: 'after',
+    position: 'before',
     transformer: babelPluginAutoImporter,
   },
   {
-    position: 'after',
+    position: 'before',
     transformer: babelPluginModules,
   },
 ];
