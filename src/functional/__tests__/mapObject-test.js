@@ -13,9 +13,9 @@
 
 jest.dontMock('mapObject');
 
-describe('mapObject', () => {
-  var mapObject = require('mapObject');
+var mapObject = require('mapObject');
 
+describe('mapObject', () => {
   var mockObject;
   var mockCallback;
 

@@ -13,9 +13,9 @@
 
 jest.dontMock('forEachObject');
 
-describe('forEachObject', function() {
-  var forEachObject = require('forEachObject');
+var forEachObject = require('forEachObject');
 
+describe('forEachObject', function() {
   var mockObject;
   var mockCallback;
 

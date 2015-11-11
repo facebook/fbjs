@@ -13,9 +13,10 @@
 
 jest.dontMock('fetchWithRetries');
 
+var fetch = require('fetch');
+var fetchWithRetries = require('fetchWithRetries');
+
 describe('fetchWithRetries', () => {
-  var fetch;
-  var fetchWithRetries;
   var handleNext;
 
   function mockResponse(status) {
@@ -25,8 +26,6 @@ describe('fetchWithRetries', () => {
   beforeEach(() => {
     jest.resetModuleRegistry();
 
-    fetch = require('fetch');
-    fetchWithRetries = require('fetchWithRetries');
     handleNext = jest.genMockFunction();
 
     spyOn(console, 'error').andCallFake(message => {

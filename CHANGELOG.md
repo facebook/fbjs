@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- `getActiveElement`: No longer handles a non-existent `document`
+
+
 ## 0.4.0 - 2015-10-16
 
 ### Changed

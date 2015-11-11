@@ -13,9 +13,9 @@
 
 jest.dontMock('filterObject');
 
-describe('filterObject', () => {
-  var filterObject = require('filterObject');
+var filterObject = require('filterObject');
 
+describe('filterObject', () => {
   var mockObject;
   var mockCallback;
 
@@ -71,5 +71,4 @@ describe('filterObject', () => {
       baz: 3
     });
   });
-
 });

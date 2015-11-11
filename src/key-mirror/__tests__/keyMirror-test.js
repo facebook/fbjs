@@ -11,7 +11,7 @@
 
 'use strict';
 
-require('mock-modules').dontMock('keyMirror');
+jest.dontMock('keyMirror');
 
 var keyMirror = require('keyMirror');
 
