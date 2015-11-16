@@ -27,6 +27,7 @@
     "gulp-babel": "^5.1.0",
     "gulp-flatten": "^0.2.0",
     "gulp-rename": "^1.2.2",
+    "immutable": "^3.7.5",
     "jest-cli": "^0.8.2",
     "merge-stream": "^1.0.0",
     "object-assign": "^4.0.1",
