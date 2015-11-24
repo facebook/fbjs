@@ -15,31 +15,31 @@ var paths = {
     src: [
       'src/**/*.js',
       '!src/**/__tests__/**/*.js',
-      '!src/**/__mocks__/**/*.js'
+      '!src/**/__mocks__/**/*.js',
     ],
-    dest: 'lib'
+    dest: 'lib',
   },
   mocks: {
     src: [
-      'src/**/__mocks__/**/*.js'
+      'src/**/__mocks__/**/*.js',
     ],
     dest: 'lib/__mocks__',
     babelOpts: {
-      _modulePrefix: '../'
-    }
+      _modulePrefix: '../',
+    },
   },
-  flowInclude: 'flow/include'
+  flowInclude: 'flow/include',
 };
 
 var babelOpts = assign({}, babelDefaultOptions, {
   plugins: babelDefaultOptions.plugins.concat([
-    babelPluginDEV
-  ])
+    babelPluginDEV,
+  ]),
 });
 
 var moduleMapOpts = {
   moduleMapFile: './module-map.json',
-  prefix: 'fbjs/lib/'
+  prefix: 'fbjs/lib/',
 };
 
 gulp.task('clean', function(cb) {

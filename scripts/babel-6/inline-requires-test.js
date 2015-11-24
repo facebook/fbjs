@@ -16,30 +16,30 @@ describe('inline-requires', function() {
   it('should inline single usage', function() {
     compare([
       'var foo = require("foo");',
-      'foo.bar()'
+      'foo.bar()',
     ], [
-      'require("foo").bar();'
+      'require("foo").bar();',
     ]);
   });
 
   it('should inline requires that are not assigned', function() {
     compare([
-      'require("foo");'
+      'require("foo");',
     ], [
-      'require("foo");'
+      'require("foo");',
     ]);
   });
 
   it('should delete unused requires', function() {
     compare([
-      'var foo = require("foo");'
+      'var foo = require("foo");',
     ], [
-      ''
+      '',
     ]);
   });
 
-  it('should throw when assigning to a require', function () {
-    expect(function () {
+  it('should throw when assigning to a require', function() {
+    expect(function() {
       transform([
         'var foo = require("foo");',
         'foo = "bar";',

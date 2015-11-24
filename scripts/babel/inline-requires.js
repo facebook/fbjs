@@ -81,7 +81,7 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
         }
 
         return this.isReferenced() ? buildRequireCall(node.name) : node;
-      }
+      },
     },
   });
 };

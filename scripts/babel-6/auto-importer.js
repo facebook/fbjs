@@ -54,6 +54,6 @@ module.exports = function autoImporter(babel) {
 
         this.autoImported[node.name] = true;
       },
-    }
+    },
   };
 };
