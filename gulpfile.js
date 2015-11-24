@@ -2,6 +2,7 @@ var assign = require('object-assign');
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var flatten = require('gulp-flatten');
+var rename = require('gulp-rename');
 var del = require('del');
 var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
@@ -28,7 +29,6 @@ var paths = {
       _modulePrefix: '../',
     },
   },
-  flowInclude: 'flow/include',
 };
 
 var babelOpts = assign({}, babelDefaultOptions, {
@@ -43,7 +43,7 @@ var moduleMapOpts = {
 };
 
 gulp.task('clean', function(cb) {
-  del([paths.lib.dest, paths.mocks.dest, paths.flowInclude], cb);
+  del([paths.lib.dest, paths.mocks.dest], cb);
 });
 
 gulp.task('lib', function() {
@@ -67,7 +67,8 @@ gulp.task('flow', function() {
   return gulp
     .src(paths.lib.src)
     .pipe(flatten())
-    .pipe(gulp.dest(paths.flowInclude));
+    .pipe(rename({extname: '.js.flow'}))
+    .pipe(gulp.dest(paths.lib.dest));
 });
 
 gulp.task('watch', function() {
