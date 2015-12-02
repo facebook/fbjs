@@ -28,22 +28,41 @@ module.exports = function(babel) {
     t.stringLiteral('production')
   );
 
+  var DEV_IDENTIFIER = t.identifier('__DEV__');
+  var DEV_DECLARATION = t.variableDeclaration(
+    'var',
+    [t.variableDeclarator(DEV_IDENTIFIER, DEV_EXPRESSION)]
+  );
+
   return {
     visitor: {
       Identifier: {
-        enter: function(path) {
+        enter: function(path, file) {
           // Do nothing when testing
           if (process.env.NODE_ENV === 'test') {
             return;
           }
           // replace __DEV__ with process.env.NODE_ENV !== 'production'
           if (path.isIdentifier({name: '__DEV__'})) {
-            path.replaceWith(DEV_EXPRESSION);
+            // Mark file so we can hoist the DEV_DECLARATION
+            file.set('hasDevEnv', true);
           }
         },
       },
+      Program: {
+        exit: function(path, file) {
+          var node = path.node;
+          // Do nothing if no __DEV__ identifiers were found, or in test
+          if (!file.get('hasDevEnv') || process.env.NODE_ENV === 'test') {
+            return;
+          }
+
+          // Hoists a const definition of __DEV__ just below the 'use strict'.
+          node.body.splice(1, 0, DEV_DECLARATION);
+        },
+      },
       CallExpression: {
-        exit: function(path) {
+        exit: function(path, file) {
           var node = path.node;
           // Do nothing when testing
           if (process.env.NODE_ENV === 'test') {
@@ -54,6 +73,9 @@ module.exports = function(babel) {
             return;
           }
           if (path.get('callee').isIdentifier({name: 'invariant'})) {
+            // mark __DEV__ replacement
+            file.set('hasDevEnv', true);
+
             // Turns this code:
             //
             // invariant(condition, argument, argument);
@@ -61,7 +83,7 @@ module.exports = function(babel) {
             // into this:
             //
             // if (!condition) {
-            //   if ("production" !== process.env.NODE_ENV) {
+            //   if (__DEV__) {
             //     invariant(false, argument, argument);
             //   } else {
             //     invariant(false);
@@ -89,7 +111,7 @@ module.exports = function(babel) {
               t.unaryExpression('!', condition),
               t.blockStatement([
                 t.ifStatement(
-                  DEV_EXPRESSION,
+                  DEV_IDENTIFIER,
                   t.blockStatement([
                     t.expressionStatement(devInvariant),
                   ]),
@@ -100,6 +122,9 @@ module.exports = function(babel) {
               ])
             ));
           } else if (path.get('callee').isIdentifier({name: 'warning'})) {
+            // mark __DEV__ replacement
+            file.set('hasDevEnv', true);
+
             // Turns this code:
             //
             // warning(condition, argument, argument);
@@ -113,10 +138,9 @@ module.exports = function(babel) {
             // The goal is to strip out warning calls entirely in production. We
             // don't need the same optimizations for conditions that we use for
             // invariant because we don't care about an extra call in __DEV__
-
             node[SEEN_SYMBOL] = true;
             path.replaceWith(t.ifStatement(
-              DEV_EXPRESSION,
+              DEV_IDENTIFIER,
               t.blockStatement([
                 t.expressionStatement(
                   node
