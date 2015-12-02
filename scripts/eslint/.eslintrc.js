@@ -107,8 +107,6 @@ function getBaseConfig() {
       'no-obj-calls': ERROR,
       // improves legibility
       'no-regex-spaces': WARNING,
-      // we target es6!
-      'no-reserved-keys': OFF,
       // equivalent to jshint elision
       'no-sparse-arrays': ERROR,
       // equivalent to jshint W027
@@ -147,12 +145,16 @@ function getBaseConfig() {
       'no-alert': OFF,
       // incompatible with 'use strict' equivalent to jshint noarg
       'no-caller': ERROR,
+      // we don't care about this right now, but might later
+      'no-case-declarations': OFF,
       // we don't do this/care about this
       'no-div-regex': OFF,
       // we don't do this/care about this
       'no-else-return': OFF,
       // equivalent to jshint W028
       'no-empty-label': ERROR,
+      // avoid mistaken variables when destructuring
+      'no-empty-pattern': WARNING,
       // see eqeqeq: we explicitly allow this, equivalent to jshint eqnull
       'no-eq-null': OFF,
       // equivalent to jshint evil
@@ -179,6 +181,8 @@ function getBaseConfig() {
       'no-lone-blocks': WARNING,
       // equivalent to jshint loopfunc
       'no-loop-func': OFF,
+      // we surely have these, don't bother with it
+      'no-magic-numbers': OFF,
       // we may use this for alignment in some places
       'no-multi-spaces': OFF,
       // equivalent to jshint multistr, consider using es6 template strings
@@ -189,6 +193,8 @@ function getBaseConfig() {
       'no-new-func': ERROR,
       // don't use constructors for side-effects, equivalent to jshint nonew
       'no-new': WARNING,
+      // very limited uses, mostly in third_party
+      'no-new-wrappers': WARNING,
       // deprecated in ES5, but we still use it in some places
       'no-octal-escape': WARNING,
       // deprecated in ES5, may cause unexpected behavior
@@ -215,6 +221,8 @@ function getBaseConfig() {
       'no-unused-expressions': OFF,
       // disallow unnecessary .call() and .apply()
       'no-useless-call': WARNING,
+      // disallow concatenating string literals
+      'no-useless-concat': WARNING,
       // this has valid use-cases, eg. to circumvent no-unused-expressions
       'no-void': OFF,
       // this journey is 1% finished (allow TODO comments)
@@ -261,6 +269,7 @@ function getBaseConfig() {
       // Node.js <http://eslint.org/docs/rules/#nodejs>
       // TODO: turn some of these on in places where we lint node code
       'callback-return': OFF,
+      'global-require': OFF,
       'handle-callback-err': OFF,
       'no-mixed-requires': OFF,
       'no-new-require': OFF,
@@ -272,6 +281,8 @@ function getBaseConfig() {
       // Stylistic Issues <http://eslint.org/docs/rules/#stylistic-issues>
       // See also: https://our.intern.facebook.com/intern/dex/style-guide/
       'array-bracket-spacing': WARNING,
+      // TODO: enable this with consensus on single line blocks
+      'block-spacing': OFF,
       'brace-style': [WARNING, '1tbs', {allowSingleLine: true}],
       // too noisy at the moment, and jshint didn't check it
       'camelcase': [OFF, {properties: 'always'}],
@@ -286,14 +297,25 @@ function getBaseConfig() {
       'func-names': OFF,
       // too noisy ATM
       'func-style': [OFF, 'declaration'],
+      // no way we could enforce min/max lengths or patterns for vars
+      'id-length': OFF,
+      'id-match': OFF,
       // we weren't enforcing this with jshint, so erroring would be too noisy
       'indent': [WARNING, 2, {SwitchCase: 1}],
+      // we use single quotes for JS literals, double quotes for JSX literals
+      'jsx-quotes': [WARNING, 'prefer-double'],
       // we may use extra spaces for alignment
       'key-spacing': [OFF, {beforeColon: false, afterColon: true}],
       'lines-around-comment': OFF,
       // should be handled by a generic TXT linter instead
       'linebreak-style': [OFF, 'unix'],
+      'max-depth': OFF,
+      'max-len': [WARNING, 120, 2,
+        {'ignorePattern': maxLenIgnorePattern},
+      ],
       'max-nested-callbacks': OFF,
+      'max-params': OFF,
+      'max-statements': OFF,
       // https://facebook.com/groups/995898333776940/1027358627297577
       'new-cap': OFF,
       // equivalent to jshint W058
@@ -301,16 +323,22 @@ function getBaseConfig() {
       'newline-after-var': OFF,
       // equivalent to FacebookWebJSLintLinter's checkPhpStyleArray
       'no-array-constructor': ERROR,
+      'no-bitwise': WARNING,
       'no-continue': OFF,
       'no-inline-comments': OFF,
       // doesn't play well with `if (__DEV__) {}`
       'no-lonely-if': OFF,
       // stopgap, irrelevant if we can eventually turn `indent` on to error
       'no-mixed-spaces-and-tabs': ERROR,
+      // don't care
+      'no-multiple-empty-lines': OFF,
+      'no-negated-condition': OFF,
       // we do this a bunch of places, and it's less bad with proper indentation
       'no-nested-ternary': OFF,
       // similar to FacebookWebJSLintLinter's checkPhpStyleArray
       'no-new-object': WARNING,
+      'no-plusplus': OFF,
+      'no-restricted-syntax': OFF,
       'no-spaced-func': WARNING,
       'no-ternary': OFF,
       // should be handled by a generic TXT linter instead
@@ -331,6 +359,7 @@ function getBaseConfig() {
       // probably too noisy on pre-ES5 code
       'quote-props': [OFF, 'as-needed'],
       'quotes': [WARNING, 'single', 'avoid-escape'],
+      'require-jsdoc': OFF,
       'semi-spacing': [WARNING, {before: false, after: true}],
       // equivalent to jshint asi/W032
       'semi': [WARNING, 'always'],
@@ -344,6 +373,8 @@ function getBaseConfig() {
         WARNING,
         {anonymous: 'never', named: 'never'},
       ],
+      // require `} else {` instead of `}else {`
+      'space-before-keywords': [WARNING, 'always'],
       // incompatible with our legacy inline type annotations
       'space-in-parens': [OFF, 'never'],
       'space-infix-ops': OFF,
@@ -358,6 +389,7 @@ function getBaseConfig() {
       'wrap-regex': OFF,
 
       // ECMAScript 6 <http://eslint.org/docs/rules/#ecmascript-6>
+      'arrow-body-style': OFF,
       // TODO: our style guide says to always use parens, even w/ a single param
       'arrow-parens': OFF,
       // tbgs finds *very few* places where we don't put spaces around =>
@@ -366,9 +398,12 @@ function getBaseConfig() {
       'constructor-super': ERROR,
       // https://github.com/babel/babel-eslint#known-issues
       'generator-star-spacing': OFF,
+      // more serious case of ambiguous arrow sytax
+      'no-arrow-condition': WARNING,
       'no-class-assign': WARNING,
       // this is a runtime error
       'no-const-assign': ERROR,
+      'no-dupe-class-members': OFF,
       // violation of the ES6 spec, won't transform, `this` is part of the TDZ
       'no-this-before-super': ERROR,
       // we have way too much ES3 & ES5 code
@@ -378,18 +413,9 @@ function getBaseConfig() {
       'prefer-spread': OFF,
       // we don't support/polyfill this yet
       'prefer-reflect': OFF,
+      'prefer-template': OFF,
       // there are legitimate use-cases for an empty generator
       'require-yield': OFF,
-
-      // Legacy <http://eslint.org/docs/rules/#legacy>
-      'max-depth': OFF,
-      'max-len': [WARNING, 120, 2,
-        {'ignorePattern': maxLenIgnorePattern},
-      ],
-      'max-params': OFF,
-      'max-statements': OFF,
-      'no-bitwise': WARNING,
-      'no-plusplus': OFF,
     },
 
     // Defines a basic set of globals
