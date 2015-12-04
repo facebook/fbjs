@@ -12,7 +12,7 @@
 var gutil = require('gulp-util');
 var through = require('through2');
 var fs = require('fs');
-var path = require('path');
+var Path = require('path');
 
 var PM_REGEXP = /\r?\n \* \@providesModule (\S+)\r?\n/;
 
@@ -28,6 +28,7 @@ module.exports = function(opts) {
   }
   var moduleMapFile = opts.moduleMapFile;
   var prefix = opts.prefix;
+  var useRelative = opts.useRelative;
   var moduleMap = {};
 
   function transform(file, enc, cb) {
@@ -65,7 +66,12 @@ module.exports = function(opts) {
     // Keep it ABC order for better diffing.
     var map = Object.keys(moduleMap).sort().reduce(function(prev, curr) {
       // Rewrite path here since we don't need the full path anymore.
-      prev[curr] = prefix + path.basename(moduleMap[curr], '.js');
+      var path = Path.basename(moduleMap[curr], '.js');
+      if (useRelative) {
+        path = Path.relative(process.cwd(), moduleMap[curr]);
+      }
+
+      prev[curr] = prefix + path;
       return prev;
     }, {});
     fs.writeFile(moduleMapFile, JSON.stringify(map, null, 2), 'utf-8', function() {
