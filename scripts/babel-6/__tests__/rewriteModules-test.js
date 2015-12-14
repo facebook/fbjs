@@ -61,8 +61,9 @@ describe('rewrite-modules', function() {
           }
         }];
 
-        let result = babel.transform(code,
-          {plugins: [rewritePlugin]});
+        let result = babel.transform(code, {
+          plugins: [rewritePlugin]
+        });
 
         expect(normalizeResults(result.code))
           .toEqual(normalizeResults(expected));
