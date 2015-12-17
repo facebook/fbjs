@@ -34,10 +34,10 @@ if (process.env.NODE_ENV === 'test') {
 module.exports = {
   nonStandard: true,
   blacklist: [
-    'spec.functionName'
+    'spec.functionName',
   ],
   loose: [
-    'es6.classes'
+    'es6.classes',
   ],
   stage: 1,
   plugins: plugins,
@@ -45,6 +45,6 @@ module.exports = {
     'core-js/library/es6/map': 'core-js/library/es6/map',
     'promise': 'promise',
     'ua-parser-js': 'ua-parser-js',
-    'whatwg-fetch': 'whatwg-fetch'
-  }
+    'whatwg-fetch': 'whatwg-fetch',
+  },
 };

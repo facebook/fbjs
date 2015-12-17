@@ -21,11 +21,11 @@ module.exports = {
       babelDefaultOptions,
       {
         filename: filename,
-        retainLines: true
+        retainLines: true,
       }
     )).code;
   },
 
   // Generate a cache key that is based on the module and transform data.
-  getCacheKey: createCacheKeyFunction([__filename])
+  getCacheKey: createCacheKeyFunction([__filename]),
 };

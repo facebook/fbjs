@@ -104,7 +104,7 @@ module.exports = function(babel) {
           transformRequireCall(this, node) ||
           transformJestCall(this, node)
         );
-      }
-    }
+      },
+    },
   });
 };
