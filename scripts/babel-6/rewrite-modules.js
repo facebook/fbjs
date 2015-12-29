@@ -9,8 +9,6 @@
 
 'use strict';
 
-var p = require('path');
-
 /**
  * Rewrites module string literals according to the `map` and `prefix` options.
  * This allows other npm packages to be published and used directly without
@@ -27,7 +25,7 @@ function mapModule(state, module) {
     if (modulePrefix == null) {
       modulePrefix = './';
     }
-    return p.normalize(modulePrefix + module);
+    return modulePrefix + module;
   }
 }
 
