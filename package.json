@@ -52,7 +52,8 @@
     "scriptPreprocessor": "node_modules/fbjs-scripts/jest/preprocessor.js",
     "setupEnvScriptFile": "node_modules/fbjs-scripts/jest/environment.js",
     "testPathDirs": [
-      "<rootDir>/src"
+      "<rootDir>/src",
+      "<rootDir>/scripts"
     ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/",
@@ -61,6 +62,7 @@
   },
   "dependencies": {
     "core-js": "^1.0.0",
+    "babel-core": "^6.3.17",
     "loose-envify": "^1.0.0",
     "promise": "^7.0.3",
     "ua-parser-js": "^0.7.9",
@@ -68,7 +70,7 @@
   },
   "devEngines": {
     "node": ">=3",
-    "npm": "2.x"
+    "npm": ">=2.x"
   },
   "browserify": {
     "transform": [
