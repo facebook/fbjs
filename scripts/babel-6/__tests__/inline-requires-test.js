@@ -50,7 +50,7 @@ describe('inline-requires', function() {
 
 function transform(input) {
   return babel.transform(normalise(input), {
-    plugins: ['../inline-require.js'],
+    plugins: [require('../inline-requires.js')],
   }).code;
 }
 
