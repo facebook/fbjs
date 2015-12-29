@@ -5,10 +5,31 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "babel": "^5.4.7",
+    "babel-types": "^6.3.24",
     "core-js": "^1.0.0",
     "gulp-util": "^3.0.4",
     "object-assign": "^4.0.1",
     "semver": "^5.0.1",
     "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.17",
+    "jest-cli": "^0.8.2"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test jest"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "persistModuleRegistryBetweenSpecs": true,
+    "rootDir": "",
+    "testPathDirs": [
+      "<rootDir>"
+    ],
+    "unmockedModulePathPatterns": [
+      ""
+    ]
   }
 }

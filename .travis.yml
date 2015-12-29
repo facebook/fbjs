@@ -5,4 +5,5 @@ env:
   - CMD=test
   - CMD=typecheck
   - CMD=lint
+  - CMD=test-scripts
 script: npm run $CMD
