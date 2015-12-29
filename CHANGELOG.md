@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.6.0] - 2015-12-29
+
 ### Changed
 - Flow: Original source files in `fbjs/flow/include` have been removed in favor of placing original files alongside compiled files in lib with a `.flow` suffix. This requires Flow version 0.19 or greater and a change to `.flowconfig` files to remove the include path.
 
