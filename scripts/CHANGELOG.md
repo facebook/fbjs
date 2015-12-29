@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Added
+- [babel] Added rewrite-modules plugin for Babel 6
+
 
 ## [0.5.0] - 2015-11-11
 - [babel] Add auto-importer plugin for Babel & Babel 6
