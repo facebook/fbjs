@@ -25,7 +25,7 @@ describe('rewrite-modules', function() {
         let result = babel.transform(
           'require(\'test\');',
           {
-            plugins: [[rewriteModules, {_moduleMap: {'test': 'test/test'}}]],
+            plugins: [[rewriteModules, {map: {'test': 'test/test'}}]],
           }
         );
 
@@ -57,7 +57,7 @@ describe('rewrite-modules', function() {
 
         const rewritePlugin = [
           rewriteModules, {
-            _moduleMap: {
+            map: {
               'foo': 'foo/foo',
               'bar': 'bar/bar',
               'baz': 'baz/baz',
