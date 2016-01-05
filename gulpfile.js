@@ -9,7 +9,8 @@ var runSequence = require('run-sequence');
 
 var babelPluginDEV = require('fbjs-scripts/babel/dev-expression');
 var babelDefaultOptions = require('fbjs-scripts/babel/default-options');
-var gulpModuleMap = require('fbjs-scripts/gulp/module-map.js');
+var gulpModuleMap = require('fbjs-scripts/gulp/module-map');
+var gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
 
 var paths = {
   lib: {
@@ -50,6 +51,7 @@ gulp.task('lib', function() {
   var libTask = gulp
     .src(paths.lib.src)
     .pipe(gulpModuleMap(moduleMapOpts))
+    .pipe(gulpStripProvidesModule())
     .pipe(babel(babelOpts))
     .pipe(flatten())
     .pipe(gulp.dest(paths.lib.dest));

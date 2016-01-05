@@ -11,13 +11,17 @@
 
 /* jslint unused:false */
 
-var ErrorUtils = {
-  applyWithGuard(callback, context, args, onError, name) {
-    return callback.apply(context, args);
-  },
-  guard(callback, name) {
-    return callback;
-  },
-};
+if (global.ErrorUtils) {
+  module.exports = global.ErrorUtils;
+} else {
+  var ErrorUtils = {
+    applyWithGuard(callback, context, args, onError, name) {
+      return callback.apply(context, args);
+    },
+    guard(callback, name) {
+      return callback;
+    },
+  };
 
-module.exports = ErrorUtils;
+  module.exports = ErrorUtils;
+}

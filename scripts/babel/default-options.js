@@ -43,8 +43,10 @@ module.exports = {
   plugins: plugins,
   _moduleMap: {
     'core-js/library/es6/map': 'core-js/library/es6/map',
+    'isomorphic-fetch': 'isomorphic-fetch',
     'promise': 'promise',
+    'promise/setimmediate/done': 'promise/setimmediate/done',
+    'promise/setimmediate/es6-extensions': 'promise/setimmediate/es6-extensions',
     'ua-parser-js': 'ua-parser-js',
-    'whatwg-fetch': 'whatwg-fetch',
   },
 };

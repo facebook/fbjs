@@ -14,7 +14,7 @@ var through = require('through2');
 var fs = require('fs');
 var path = require('path');
 
-var PM_REGEXP = /\r?\n \* \@providesModule (\S+)\r?\n/;
+var PM_REGEXP = require('./shared/provides-module').regexp;
 
 var PLUGIN_NAME = 'module-map';
 
