@@ -9,6 +9,7 @@
 ### Changed
 
 - `ErrorUtils`: Re-uses any global instance that already exists
+- `fetch`: Switched to `isomorphic-fetch` when a global implementation is missing
 - `getActiveElement`: Handles a non-existent `document` (again)
 
 ## [0.6.0] - 2015-12-29
