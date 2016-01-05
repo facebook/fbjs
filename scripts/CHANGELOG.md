@@ -1,7 +1,10 @@
 ## [Unreleased]
 
+## [0.7.0] - 2016-01-04
+
 ### Added
 - [babel] Added rewrite-modules plugin for Babel 6
+- [gulp] Added strip-provides-module to strip `@providesModule` headers
 
 
 ## [0.5.0] - 2015-11-11
