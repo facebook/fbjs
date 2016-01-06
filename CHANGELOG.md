@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.6.1] - 2016-01-06
+
+### Changed
+- `getActiveElement`: no longer throws in non-browser environment (again)
+
 ## [0.6.0] - 2015-12-29
 
 ### Changed
