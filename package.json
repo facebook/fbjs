@@ -64,7 +64,7 @@
     "core-js": "^1.0.0",
     "loose-envify": "^1.0.0",
     "isomorphic-fetch": "^2.1.1",
-    "promise": "^7.0.3",
+    "promise": "^7.1.1",
     "ua-parser-js": "^0.7.9"
   },
   "devEngines": {
