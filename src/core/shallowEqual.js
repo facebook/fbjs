@@ -21,7 +21,7 @@ var hasOwnProperty = Object.prototype.hasOwnProperty;
  * Returns true when the values of all keys are strictly equal.
  */
 function shallowEqual(objA: mixed, objB: mixed): boolean {
-  if (objA === objB) {
+  if (Object.is(objA, objB)) {
     return true;
   }
 
@@ -40,7 +40,7 @@ function shallowEqual(objA: mixed, objB: mixed): boolean {
   // Test for A's keys different from B.
   var bHasOwnProperty = hasOwnProperty.bind(objB);
   for (var i = 0; i < keysA.length; i++) {
-    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
+    if (!bHasOwnProperty(keysA[i]) || !Object.is(objA[keysA[i]], objB[keysA[i]])) {
       return false;
     }
   }
