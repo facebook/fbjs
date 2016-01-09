@@ -29,8 +29,22 @@ describe('shallowEqual', () => {
   it('returns true if arguments are shallow equal', () => {
     expect(
       shallowEqual(
-        {a: 1, b: 2, c: 3},
-        {a: 1, b: 2, c: 3}
+        {a: 1, b: 2, c: NaN},
+        {a: 1, b: 2, c: NaN}
+      )
+    ).toBe(true);
+
+    expect(
+      shallowEqual(
+        1,
+        1
+      )
+    ).toBe(true);
+
+    expect(
+      shallowEqual(
+        NaN,
+        NaN
       )
     ).toBe(true);
   });
