@@ -16,8 +16,6 @@ var Deferred = require('Deferred');
 
 var invariant = require('invariant');
 
-import type Promise from 'Promise';
-
 /**
  * A map of asynchronous values that can be get or set in any order. Unlike a
  * normal map, setting the value for a particular key more than once throws.

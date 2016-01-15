@@ -110,7 +110,7 @@ describe('PromiseMap', () => {
 
     expect(() => {
       map.resolveKey('foo', 1337);
-    }).toThrow('PromiseMap: Already settled `foo`.');
+    }).toThrowError('PromiseMap: Already settled `foo`.');
 
     map.get('foo').then(value => {
       getValue = value;
@@ -129,7 +129,7 @@ describe('PromiseMap', () => {
 
     expect(() => {
       map.rejectKey('foo', 1337);
-    }).toThrow('PromiseMap: Already settled `foo`.');
+    }).toThrowError('PromiseMap: Already settled `foo`.');
 
     map.get('foo').catch(value => {
       getValue = value;
@@ -148,7 +148,7 @@ describe('PromiseMap', () => {
 
     expect(() => {
       map.rejectKey('foo', 1337);
-    }).toThrow('PromiseMap: Already settled `foo`.');
+    }).toThrowError('PromiseMap: Already settled `foo`.');
 
     map.get('foo').then(value => {
       getValue = value;

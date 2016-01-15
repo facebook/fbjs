@@ -26,11 +26,26 @@ describe('shallowEqual', () => {
     expect(shallowEqual(undefined, undefined)).toBe(true);
   });
 
+  it('returns true if arguments are not objects and are equal', () => {
+    expect(shallowEqual(1, 1)).toBe(true);
+  });
+
   it('returns true if arguments are shallow equal', () => {
     expect(
       shallowEqual(
         {a: 1, b: 2, c: 3},
         {a: 1, b: 2, c: 3}
+      )
+    ).toBe(true);
+  });
+
+  it('returns true when comparing NaN', () => {
+    expect(shallowEqual(NaN, NaN)).toBe(true);
+
+    expect(
+      shallowEqual(
+        {a: 1, b: 2, c: 3, d: NaN},
+        {a: 1, b: 2, c: 3, d: NaN}
       )
     ).toBe(true);
   });
