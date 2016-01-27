@@ -9,37 +9,23 @@
 
 'use strict';
 
-var p = require('path');
-
 /**
- * plugin options have changed see https://babeljs.io/docs/plugins/#options
- * for details.
- */
-function getModuleMap(state) {
-  return state.opts._moduleMap || {};
-}
-
-function getModulePrefix(state) {
-  return state.opts._modulePrefix;
-}
-
-/**
- * Rewrites module string literals according to the `_moduleMap` babel option.
+ * Rewrites module string literals according to the `map` and `prefix` options.
  * This allows other npm packages to be published and used directly without
  * being a part of the same build.
  */
 function mapModule(state, module) {
-  var moduleMap = getModuleMap(state);
+  var moduleMap = state.opts.map || {};
   if (moduleMap.hasOwnProperty(module)) {
     return moduleMap[module];
   }
   // Jest understands the haste module system, so leave modules intact.
   if (process.env.NODE_ENV !== 'test') {
-    var modulePrefix = getModulePrefix(state);
+    var modulePrefix = state.opts.prefix;
     if (modulePrefix == null) {
       modulePrefix = './';
     }
-    return p.normalize(modulePrefix + module);
+    return modulePrefix + module;
   }
 }
 
