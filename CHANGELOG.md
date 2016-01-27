@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.7.0] - 2016-01-27
+
 ### Added
 - `Promise` for React Native with rejection tracking in `__DEV__` and a `finally` method
 - `_shouldPolyfillES6Collection`: check if ES6 Collections need to be polyfilled.
