@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Added
+- `Promise` for React Native with rejection tracking in `__DEV__` and a `finally` method
+
+### Changed
+- `ErrorUtils`: Re-uses any global instance that already exists
+- `fetch`: Switched to `isomorphic-fetch` when a global implementation is missing
+
 ## [0.6.1] - 2016-01-06
 
 ### Changed
