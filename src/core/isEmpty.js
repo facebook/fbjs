@@ -11,10 +11,17 @@
 
 /*eslint-disable no-unused-vars */
 
+const invariant = require('invariant');
+
 /**
  * Mimics empty from PHP.
  */
 function isEmpty(obj) {
+  invariant(
+    !(obj && obj[Symbol.iterator] && obj.size !== undefined),
+    'isEmpty does not support Map or Set',
+  );
+
   if (Array.isArray(obj)) {
     return obj.length === 0;
   } else if (typeof obj === 'object') {

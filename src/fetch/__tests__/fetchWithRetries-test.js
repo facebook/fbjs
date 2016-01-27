@@ -28,7 +28,7 @@ describe('fetchWithRetries', () => {
 
     handleNext = jest.genMockFunction();
 
-    spyOn(console, 'error').andCallFake(message => {
+    spyOn(console, 'error').and.callFake(message => {
       expect(message).toBe(
         'Warning: fetchWithRetries: HTTP timeout, retrying.'
       );
@@ -135,10 +135,10 @@ describe('fetchWithRetries', () => {
     expect(fetch.mock.calls.length).toBe(retries + 1);
     // Timeout last request.
     jest.runAllTimers();
-    expect(handleNext.mock.calls[0][0]).toEqual(new Error(
-      'fetchWithRetries',
-      'Failed to get response from server, tried ' + retries + ' times',
-    ));
+    expect(handleNext.mock.calls[0][0].message).toEqual(
+      'fetchWithRetries(): ' +
+      'Failed to get response from server, tried ' + (retries + 1) + ' times.'
+    );
   });
 
   // Test fails when used with npm `promise` due to Jest timing issues.

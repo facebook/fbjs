@@ -76,7 +76,7 @@ function createNodesFromMarkup(markup, handleScript) {
     createArrayFromMixed(scripts).forEach(handleScript);
   }
 
-  var nodes = createArrayFromMixed(node.childNodes);
+  var nodes = Array.from(node.childNodes);
   while (node.lastChild) {
     node.removeChild(node.lastChild);
   }

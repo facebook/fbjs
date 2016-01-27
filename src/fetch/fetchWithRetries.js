@@ -14,7 +14,6 @@
 'use strict';
 
 var ExecutionEnvironment = require('ExecutionEnvironment');
-var Promise = require('Promise');
 
 var sprintf = require('sprintf');
 var fetch = require('fetch');

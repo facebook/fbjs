@@ -10,8 +10,6 @@
  * @flow
  */
 
-var Promise = require('Promise');
-
 var resolvedPromise = Promise.resolve();
 
 /**

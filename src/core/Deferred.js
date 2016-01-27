@@ -11,8 +11,6 @@
  * @flow
  */
 
-var Promise = require('Promise');
-
 /**
  * Deferred provides a Promise-like API that exposes methods to resolve and
  * reject the Promise. It is most useful when converting non-Promise code to use

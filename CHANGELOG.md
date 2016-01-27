@@ -2,10 +2,15 @@
 
 ### Added
 - `Promise` for React Native with rejection tracking in `__DEV__` and a `finally` method
+- `_shouldPolyfillES6Collection`: check if ES6 Collections need to be polyfilled.
+
+### Removed
+- `toArray`: removed in favor of using `Array.from` directly.
 
 ### Changed
 - `ErrorUtils`: Re-uses any global instance that already exists
 - `fetch`: Switched to `isomorphic-fetch` when a global implementation is missing
+- `shallowEqual`: handles `NaN` values appropriately (as equal), now using `Object.is` semantics
 
 ## [0.6.1] - 2016-01-06
 
