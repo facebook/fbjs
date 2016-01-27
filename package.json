@@ -21,7 +21,7 @@
     "del": "^1.2.1",
     "eslint": "1.10.3",
     "fbjs-scripts": "file:scripts",
-    "flow-bin": "^0.18.1",
+    "flow-bin": "^0.20.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-flatten": "^0.2.0",

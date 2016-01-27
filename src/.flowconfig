@@ -9,3 +9,8 @@
 
 [options]
 module.system=haste
+
+suppress_type=$FlowIssue
+
+[version]
+0.20.1
