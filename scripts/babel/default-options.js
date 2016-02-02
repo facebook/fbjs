@@ -47,6 +47,7 @@ module.exports = {
     'promise': 'promise',
     'promise/setimmediate/done': 'promise/setimmediate/done',
     'promise/setimmediate/es6-extensions': 'promise/setimmediate/es6-extensions',
+    'promise/setimmediate/rejection-tracking': 'promise/setimmediate/rejection-tracking',
     'ua-parser-js': 'ua-parser-js',
   },
 };
