@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.7.1] - 2016-02-02
+
+### Fixed
+
+- Corrected require path issue for native `Promise` module
+
 ## [0.7.0] - 2016-01-27
 
 ### Added
