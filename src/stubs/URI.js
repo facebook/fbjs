@@ -7,12 +7,22 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule URI
- * @typechecks
+ * @stub
  * @flow
  */
 
 'use strict';
 
-class URI {}
+class URI {
+  _uri: string;
+
+  constructor(uri: string) {
+    this._uri = uri;
+  }
+
+  toString(): string {
+    return this._uri;
+  }
+}
 
 module.exports = URI;
