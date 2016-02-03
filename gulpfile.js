@@ -11,6 +11,7 @@ var babelPluginDEV = require('fbjs-scripts/babel/dev-expression');
 var babelDefaultOptions = require('fbjs-scripts/babel/default-options');
 var gulpModuleMap = require('fbjs-scripts/gulp/module-map');
 var gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
+var gulpCheckDependencies = require('fbjs-scripts/gulp/check-dependencies');
 
 var paths = {
   lib: {
@@ -73,12 +74,18 @@ gulp.task('flow', function() {
     .pipe(gulp.dest(paths.lib.dest));
 });
 
+gulp.task('check-dependencies', function() {
+  return gulp
+    .src('package.json')
+    .pipe(gulpCheckDependencies());
+});
+
 gulp.task('watch', function() {
   gulp.watch(paths.src, ['lib', 'flow']);
 });
 
 gulp.task('build', function(cb) {
-  runSequence('clean', ['lib', 'flow'], cb);
+  runSequence('check-dependencies', 'clean', ['lib', 'flow'], cb);
 });
 
 gulp.task('default', ['build']);
