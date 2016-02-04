@@ -7,9 +7,10 @@
     "babel": "^5.4.7",
     "babel-types": "^6.3.24",
     "core-js": "^1.0.0",
+    "cross-spawn": "^2.1.5",
     "gulp-util": "^3.0.4",
     "object-assign": "^4.0.1",
-    "semver": "^5.0.1",
+    "semver": "^5.1.0",
     "through2": "^2.0.0"
   },
   "devDependencies": {

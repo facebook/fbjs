@@ -3,6 +3,7 @@
 ### Added
 - [babel] Added rewrite-modules plugin for Babel 6
 - [gulp] Added strip-provides-module to strip `@providesModule` headers
+- [gulp] Added check-dependencies to ensure installed packages are compatible with package.json specification
 
 
 ## [0.5.0] - 2015-11-11
