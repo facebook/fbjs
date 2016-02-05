@@ -3,6 +3,9 @@
 ### Fixed
 - `URI`: correctly store reference to value in constructor and return it when stringifying
 
+### Removed
+- Backed out rejection tracking for React Native `Promise` implementation. That code now lives in React Native.
+
 ## [0.7.1] - 2016-02-02
 
 ### Fixed
