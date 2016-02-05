@@ -105,7 +105,7 @@ module.exports = function(babel) {
       if (path.node.name === 'jest') {
         this.isJest = true;
       }
-    }
+    },
   };
 
   function transformJestCall(path, state) {
@@ -126,8 +126,8 @@ module.exports = function(babel) {
           transformRequireCall(path, state);
           transformJestCall(path, state);
           path.node.seen = true;
-        }
-      }
-    }
+        },
+      },
+    },
   };
 };
