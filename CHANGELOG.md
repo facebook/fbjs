@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.7.2] - 2016-02-05
+
 ### Fixed
 - `URI`: correctly store reference to value in constructor and return it when stringifying
 
