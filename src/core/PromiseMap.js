@@ -12,9 +12,9 @@
 
 'use strict';
 
-var Deferred = require('Deferred');
+const Deferred = require('Deferred');
 
-var invariant = require('invariant');
+const invariant = require('invariant');
 
 /**
  * A map of asynchronous values that can be get or set in any order. Unlike a
@@ -33,13 +33,13 @@ class PromiseMap<Tvalue, Treason> {
   }
 
   resolveKey(key: string, value: Tvalue): void {
-    var entry = getDeferred(this._deferred, key);
+    const entry = getDeferred(this._deferred, key);
     invariant(!entry.isSettled(), 'PromiseMap: Already settled `%s`.', key);
     entry.resolve(value);
   }
 
   rejectKey(key: string, reason: Treason): void {
-    var entry = getDeferred(this._deferred, key);
+    const entry = getDeferred(this._deferred, key);
     invariant(!entry.isSettled(), 'PromiseMap: Already settled `%s`.', key);
     entry.reject(reason);
   }

@@ -11,11 +11,11 @@
 
 'use strict';
 
-var UserAgentData = require('UserAgentData');
-var VersionRange = require('VersionRange');
+const UserAgentData = require('UserAgentData');
+const VersionRange = require('VersionRange');
 
-var mapObject = require('mapObject');
-var memoizeStringOnly = require('memoizeStringOnly');
+const mapObject = require('mapObject');
+const memoizeStringOnly = require('memoizeStringOnly');
 
 /**
  * Checks to see whether `name` and `version` satisfy `query`.
@@ -38,7 +38,7 @@ function compare(name, version, query, normalizer) {
   }
 
   // full comparison with version
-  var range = query.slice(name.length);
+  let range = query.slice(name.length);
   if (version) {
     range = normalizer ? normalizer(range) : range;
     return VersionRange.contains(range, version);
@@ -68,7 +68,7 @@ function normalizePlatformVersion(version) {
  * Provides client-side access to the authoritative PHP-generated User Agent
  * information supplied by the server.
  */
-var UserAgent = {
+const UserAgent = {
   /**
    * Check if the User Agent browser matches `query`.
    *

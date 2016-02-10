@@ -13,7 +13,7 @@
 
 jest.dontMock('shallowEqual');
 
-var shallowEqual = require('shallowEqual');
+const shallowEqual = require('shallowEqual');
 
 describe('shallowEqual', () => {
   it('returns false if either argument is null', () => {

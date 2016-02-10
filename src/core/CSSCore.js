@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-var invariant = require('invariant');
+const invariant = require('invariant');
 
 /**
  * The CSSCore module specifies the API (and implements most of the methods)
@@ -20,7 +20,7 @@ var invariant = require('invariant');
  * display of elements.
  */
 
-var CSSCore = {
+const CSSCore = {
 
   /**
    * Adds the class passed in to the element if it doesn't already have it.

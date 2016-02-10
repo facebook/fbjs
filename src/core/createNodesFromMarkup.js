@@ -12,22 +12,22 @@
 
 /*eslint-disable fb-www/unsafe-html*/
 
-var ExecutionEnvironment = require('ExecutionEnvironment');
+const ExecutionEnvironment = require('ExecutionEnvironment');
 
-var createArrayFromMixed = require('createArrayFromMixed');
-var getMarkupWrap = require('getMarkupWrap');
-var invariant = require('invariant');
+const createArrayFromMixed = require('createArrayFromMixed');
+const getMarkupWrap = require('getMarkupWrap');
+const invariant = require('invariant');
 
 /**
  * Dummy container used to render all markup.
  */
-var dummyNode =
+const dummyNode =
   ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
 
 /**
  * Pattern used by `getNodeName`.
  */
-var nodeNamePattern = /^\s*<(\w+)/;
+const nodeNamePattern = /^\s*<(\w+)/;
 
 /**
  * Extracts the `nodeName` of the first element in a string of markup.
@@ -36,7 +36,7 @@ var nodeNamePattern = /^\s*<(\w+)/;
  * @return {?string} Node name of the supplied markup.
  */
 function getNodeName(markup) {
-  var nodeNameMatch = markup.match(nodeNamePattern);
+  const nodeNameMatch = markup.match(nodeNamePattern);
   return nodeNameMatch && nodeNameMatch[1].toLowerCase();
 }
 
@@ -51,15 +51,15 @@ function getNodeName(markup) {
  * @return {array<DOMElement|DOMTextNode>} An array of rendered nodes.
  */
 function createNodesFromMarkup(markup, handleScript) {
-  var node = dummyNode;
+  let node = dummyNode;
   invariant(!!dummyNode, 'createNodesFromMarkup dummy not initialized');
-  var nodeName = getNodeName(markup);
+  const nodeName = getNodeName(markup);
 
-  var wrap = nodeName && getMarkupWrap(nodeName);
+  const wrap = nodeName && getMarkupWrap(nodeName);
   if (wrap) {
     node.innerHTML = wrap[1] + markup + wrap[2];
 
-    var wrapDepth = wrap[0];
+    let wrapDepth = wrap[0];
     while (wrapDepth--) {
       node = node.lastChild;
     }
@@ -67,7 +67,7 @@ function createNodesFromMarkup(markup, handleScript) {
     node.innerHTML = markup;
   }
 
-  var scripts = node.getElementsByTagName('script');
+  const scripts = node.getElementsByTagName('script');
   if (scripts.length) {
     invariant(
       handleScript,
@@ -76,7 +76,7 @@ function createNodesFromMarkup(markup, handleScript) {
     createArrayFromMixed(scripts).forEach(handleScript);
   }
 
-  var nodes = Array.from(node.childNodes);
+  const nodes = Array.from(node.childNodes);
   while (node.lastChild) {
     node.removeChild(node.lastChild);
   }

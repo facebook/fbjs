@@ -12,7 +12,7 @@
 jest
   .dontMock('sprintf');
 
-var sprintf = require('sprintf');
+const sprintf = require('sprintf');
 
 describe('sprintf', function() {
 

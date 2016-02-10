@@ -9,7 +9,7 @@
  * @providesModule nativeRequestAnimationFrame
  */
 
-var nativeRequestAnimationFrame =
+const nativeRequestAnimationFrame =
   global.requestAnimationFrame       ||
   global.webkitRequestAnimationFrame ||
   global.mozRequestAnimationFrame    ||

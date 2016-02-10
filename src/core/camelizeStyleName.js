@@ -12,9 +12,9 @@
 
 'use strict';
 
-var camelize = require('camelize');
+const camelize = require('camelize');
 
-var msPattern = /^-ms-/;
+const msPattern = /^-ms-/;
 
 /**
  * Camelcases a hyphenated CSS property name, for example:

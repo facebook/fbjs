@@ -10,7 +10,7 @@
  * @flow
  */
 
-var resolvedPromise = Promise.resolve();
+const resolvedPromise = Promise.resolve();
 
 /**
  * An alternative to setImmediate based on Promise.

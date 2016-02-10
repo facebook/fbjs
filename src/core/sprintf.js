@@ -20,7 +20,7 @@
  * @return {string} the replaced string
  */
 function sprintf(format, ...args) {
-  var index = 0;
+  let index = 0;
   return format.replace(/%s/g, match => args[index++]);
 }
 

@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-var _hyphenPattern = /-(.)/g;
+const _hyphenPattern = /-(.)/g;
 
 /**
  * Camelcases a hyphenated string, for example:

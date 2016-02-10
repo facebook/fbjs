@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-var isNode = require('isNode');
+const isNode = require('isNode');
 
 /**
  * @param {*} object The object to check.

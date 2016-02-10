@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-var invariant = require('invariant');
+const invariant = require('invariant');
 
 /**
  * Convert array-like objects to arrays.
@@ -22,7 +22,7 @@ var invariant = require('invariant');
  * @return {array}
  */
 function toArray(obj) {
-  var length = obj.length;
+  const length = obj.length;
 
   // Some browsers builtin objects can report typeof 'function' (e.g. NodeList
   // in old versions of Safari).
@@ -62,8 +62,8 @@ function toArray(obj) {
 
   // Fall back to copying key by key. This assumes all keys have a value,
   // so will not preserve sparsely populated inputs.
-  var ret = Array(length);
-  for (var ii = 0; ii < length; ii++) {
+  const ret = Array(length);
+  for (let ii = 0; ii < length; ii++) {
     ret[ii] = obj[ii];
   }
   return ret;

@@ -11,7 +11,7 @@
 
 'use strict';
 
-var emptyObject = {};
+const emptyObject = {};
 
 if (__DEV__) {
   Object.freeze(emptyObject);

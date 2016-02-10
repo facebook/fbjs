@@ -19,7 +19,7 @@
  * @return {function}
  */
 function memoizeStringOnly(callback) {
-  var cache = {};
+  const cache = {};
   return function(string) {
     if (!cache.hasOwnProperty(string)) {
       cache[string] = callback.call(this, string);

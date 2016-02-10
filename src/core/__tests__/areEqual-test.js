@@ -13,7 +13,7 @@
 
 jest.dontMock('areEqual');
 
-var areEqual = require('areEqual');
+const areEqual = require('areEqual');
 
 describe('areEqual', function() {
   function First() {
@@ -190,11 +190,11 @@ describe('areEqual', function() {
   });
 
   it('works with multidimentional arrays', () => {
-    var a = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
+    const a = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
       ['running', 'biking', String('programming')], {a: 47}];
-    var b = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
+    const b = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
       ['running', 'biking', String('programming')], {a: 47}];
-    var c = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
+    const c = [Number(47), false, 'Larry', /Moe/, new Date(2009, 11, 13),
       ['running', 'biking', String('programming')], [32]];
     // Arrays containing nested arrays and objects are recursively compared
     expect(areEqual(a, b)).toBe(true);
@@ -296,7 +296,7 @@ describe('areEqual', function() {
   });
 
   it('works with circular arrays', () => {
-    var a, b;
+    let a, b;
     (a = []).push(a);
     (b = []).push(b);
     // Arrays containing circular references are equal
@@ -320,7 +320,7 @@ describe('areEqual', function() {
   });
 
   it('works with circular objects', () => {
-    var a, b;
+    let a, b;
     a = {abc: null};
     b = {abc: null};
     a.abc = a;
@@ -348,7 +348,7 @@ describe('areEqual', function() {
   });
 
   it('works with all sorts of cyclic structures', () => {
-    var a, b;
+    let a, b;
     a = [{abc: null}];
     b = [{abc: null}];
     (a[0].abc = a).push(a);
@@ -376,10 +376,10 @@ describe('areEqual', function() {
         return this.x + this.y;
       }
     }
-    var v1 = new Vector(1, 4);
-    var v2 = new Vector(2, 3);
+    const v1 = new Vector(1, 4);
+    const v2 = new Vector(2, 3);
     expect(areEqual(v1, v2)).toBe(true);
-    var v3 = new Vector(1, 5);
+    const v3 = new Vector(1, 5);
     expect(areEqual(v1, v3)).toBe(false);
 
   });
@@ -419,8 +419,8 @@ describe('areEqual', function() {
   });
 
   it('should be false on arrays with values in different order ', () => {
-    var a = [3, 2, 1];
-    var b = [2, 3, 1];
+    const a = [3, 2, 1];
+    const b = [2, 3, 1];
 
     expect(areEqual(a, b)).toBe(false);
 
@@ -431,8 +431,8 @@ describe('areEqual', function() {
   });
 
   it('should only work with equal values and equal types', () => {
-    var a = [1, '2', 3];
-    var b = [1, 2, 3];
+    const a = [1, '2', 3];
+    const b = [1, 2, 3];
     expect(areEqual(a, b)).toBe(false);
   });
 
@@ -441,31 +441,31 @@ describe('areEqual', function() {
   });
 
   it('should be false on arrays with different length', () => {
-    var a = [1, 2];
-    var b = [3];
+    const a = [1, 2];
+    const b = [3];
 
     expect(areEqual(a, b)).toBe(false);
     expect(areEqual(b, a)).toBe(false);
   });
 
   it('should be true if an array contains equal objects', () => {
-    var object = {};
-    var div = document.createElement('div');
-    var a = [object, div, window];
-    var b = [object, div, window];
+    const object = {};
+    const div = document.createElement('div');
+    const a = [object, div, window];
+    const b = [object, div, window];
 
     expect(areEqual(a, b)).toBe(true);
   });
 
   it('should be true on null or undefined values', () => {
-    var a = [null, 1, undefined];
-    var b = [null, 1, undefined];
+    const a = [null, 1, undefined];
+    const b = [null, 1, undefined];
 
     expect(areEqual(a, b)).toBe(true);
   });
 
   it('should compare two equal objects and return true', () => {
-    var a = {a: 1, b: 2, c: 3};
+    let a = {a: 1, b: 2, c: 3};
     var b = {a: 1, b: 2, c: 3};
     expect(areEqual(a, b)).toBe(true);
 
@@ -475,16 +475,16 @@ describe('areEqual', function() {
   });
 
   it('should compare two objects with random key order', () => {
-    var a = {a: 1, c: 3, b: 2};
+    const a = {a: 1, c: 3, b: 2};
     var b = {c: 3, b: 2, a: 1};
     expect(areEqual(a, b)).toBe(true);
   });
 
   it('should be false on array-like inputs', () => {
-    var a = [1, 2, 3];
-    var b = [1, 2, 3];
-    var arraylike = {'0': 1, '1': 2, '2': 3, length: 3};
-    var arraylikeB = {'0': 1, '1': 2, '2': 3, length: 3};
+    const a = [1, 2, 3];
+    const b = [1, 2, 3];
+    const arraylike = {'0': 1, '1': 2, '2': 3, length: 3};
+    const arraylikeB = {'0': 1, '1': 2, '2': 3, length: 3};
 
     expect(areEqual(a, arraylike)).toBe(false);
     expect(areEqual(arraylike, a)).toBe(false);
@@ -494,7 +494,7 @@ describe('areEqual', function() {
   });
 
   it('works with deep equality checks', () => {
-    var a = {array: [1, 2, 3, {a: '1', b: [1, 2, 5]}]};
+    const a = {array: [1, 2, 3, {a: '1', b: [1, 2, 5]}]};
     var b = {array: [1, 2, 3, {a: '1', b: [1, 2, 5]}]};
 
     expect(areEqual(a, b)).toBe(true);
@@ -504,8 +504,8 @@ describe('areEqual', function() {
   });
 
   it('works with values where triple-equals returns true', () => {
-    var div = document.createElement('div');
-    var a = {
+    const div = document.createElement('div');
+    const a = {
       a: null, b: undefined, c: window, d: div, e: true, f: 'string', g: 42
     };
     var b = {

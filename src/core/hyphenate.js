@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-var _uppercasePattern = /([A-Z])/g;
+const _uppercasePattern = /([A-Z])/g;
 
 /**
  * Hyphenates a camelcased string, for example:

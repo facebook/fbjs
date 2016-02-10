@@ -12,9 +12,9 @@
 
 'use strict';
 
-var hyphenate = require('hyphenate');
+const hyphenate = require('hyphenate');
 
-var msPattern = /^ms-/;
+const msPattern = /^ms-/;
 
 /**
  * Hyphenates a camelcased CSS property name, for example:

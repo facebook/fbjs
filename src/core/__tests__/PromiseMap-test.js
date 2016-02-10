@@ -15,7 +15,7 @@
 
 jest.dontMock('PromiseMap');
 
-var PromiseMap = require('PromiseMap');
+const PromiseMap = require('PromiseMap');
 
 describe('PromiseMap', () => {
   beforeEach(() => {
@@ -23,9 +23,9 @@ describe('PromiseMap', () => {
   });
 
   it('can get a value after resolving it', () => {
-    var map = new PromiseMap();
-    var fooValue;
-    var barValue;
+    const map = new PromiseMap();
+    let fooValue;
+    let barValue;
 
     map.resolveKey('foo', 42);
     map.resolveKey('bar', 1337);
@@ -43,9 +43,9 @@ describe('PromiseMap', () => {
   });
 
   it('can get a value before resolving it', () => {
-    var map = new PromiseMap();
-    var fooValue;
-    var barValue;
+    const map = new PromiseMap();
+    let fooValue;
+    let barValue;
 
     map.get('foo').then(value => {
       fooValue = value;
@@ -63,9 +63,9 @@ describe('PromiseMap', () => {
   });
 
   it('can get an error after rejecting it', () => {
-    var map = new PromiseMap();
-    var fooValue;
-    var barValue;
+    const map = new PromiseMap();
+    let fooValue;
+    let barValue;
 
     map.rejectKey('foo', 42);
     map.rejectKey('bar', 1337);
@@ -83,9 +83,9 @@ describe('PromiseMap', () => {
   });
 
   it('can get an error before rejecting it', () => {
-    var map = new PromiseMap();
-    var fooValue;
-    var barValue;
+    const map = new PromiseMap();
+    let fooValue;
+    let barValue;
 
     map.get('foo').catch(value => {
       fooValue = value;
@@ -103,8 +103,8 @@ describe('PromiseMap', () => {
   });
 
   it('throws if the same key is resolved more than once', () => {
-    var map = new PromiseMap();
-    var getValue;
+    const map = new PromiseMap();
+    let getValue;
 
     map.resolveKey('foo', 42);
 
@@ -122,8 +122,8 @@ describe('PromiseMap', () => {
   });
 
   it('throws if the same key is rejected more than once', () => {
-    var map = new PromiseMap();
-    var getValue;
+    const map = new PromiseMap();
+    let getValue;
 
     map.rejectKey('foo', 42);
 
@@ -141,8 +141,8 @@ describe('PromiseMap', () => {
   });
 
   it('throws if the same key is both rejected and resolved', () => {
-    var map = new PromiseMap();
-    var getValue;
+    const map = new PromiseMap();
+    let getValue;
 
     map.resolveKey('foo', 42);
 

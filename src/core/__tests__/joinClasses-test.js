@@ -13,7 +13,7 @@
 
 jest.dontMock('joinClasses');
 
-var joinClasses = require('joinClasses');
+const joinClasses = require('joinClasses');
 
 describe('joinClasses', function() {
 
@@ -22,26 +22,26 @@ describe('joinClasses', function() {
   });
 
   it('should join two classes together', function() {
-    var aaa = 'aaa';
-    var bbb = 'bbb';
+    const aaa = 'aaa';
+    const bbb = 'bbb';
     expect(joinClasses(aaa, bbb)).toEqual('aaa bbb');
   });
 
   it('should join many classes together', function() {
-    var aaa = 'aaa';
-    var bbb = 'bbb';
-    var ccc = 'ccc';
-    var ddd = 'ddd';
-    var eee = 'eee';
+    const aaa = 'aaa';
+    const bbb = 'bbb';
+    const ccc = 'ccc';
+    const ddd = 'ddd';
+    const eee = 'eee';
     expect(joinClasses(aaa, bbb, ccc, ddd, eee)).toEqual('aaa bbb ccc ddd eee');
   });
 
   it('should omit undefined and empty classes', function() {
-    var aaa = 'aaa';
-    var bbb;
-    var ccc = null;
-    var ddd = '';
-    var eee = 'eee';
+    const aaa = 'aaa';
+    let bbb;
+    const ccc = null;
+    const ddd = '';
+    const eee = 'eee';
     expect(joinClasses(bbb)).toEqual('');
     expect(joinClasses(bbb, bbb, bbb)).toEqual('');
     expect(joinClasses(aaa, bbb, ccc, ddd, eee)).toEqual('aaa eee');

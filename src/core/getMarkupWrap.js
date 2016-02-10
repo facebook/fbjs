@@ -11,14 +11,14 @@
 
 /*eslint-disable fb-www/unsafe-html */
 
-var ExecutionEnvironment = require('ExecutionEnvironment');
+const ExecutionEnvironment = require('ExecutionEnvironment');
 
-var invariant = require('invariant');
+const invariant = require('invariant');
 
 /**
  * Dummy container used to detect which wraps are necessary.
  */
-var dummyNode =
+const dummyNode =
   ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
 
 /**
@@ -28,15 +28,15 @@ var dummyNode =
  * In IE8, certain elements cannot render alone, so wrap all elements ('*').
  */
 
-var shouldWrap = {};
+const shouldWrap = {};
 
-var selectWrap = [1, '<select multiple="true">', '</select>'];
-var tableWrap = [1, '<table>', '</table>'];
-var trWrap = [3, '<table><tbody><tr>', '</tr></tbody></table>'];
+const selectWrap = [1, '<select multiple="true">', '</select>'];
+const tableWrap = [1, '<table>', '</table>'];
+const trWrap = [3, '<table><tbody><tr>', '</tr></tbody></table>'];
 
-var svgWrap = [1, '<svg xmlns="http://www.w3.org/2000/svg">', '</svg>'];
+const svgWrap = [1, '<svg xmlns="http://www.w3.org/2000/svg">', '</svg>'];
 
-var markupWrap = {
+const markupWrap = {
   '*': [1, '?<div>', '</div>'],
 
   'area': [1, '<map>', '</map>'],
@@ -61,7 +61,7 @@ var markupWrap = {
 // Initialize the SVG elements since we know they'll always need to be wrapped
 // consistently. If they are created inside a <div> they will be initialized in
 // the wrong namespace (and will not display).
-var svgElements = [
+const svgElements = [
   'circle',
   'clipPath',
   'defs',

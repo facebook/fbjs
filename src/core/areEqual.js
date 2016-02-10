@@ -10,8 +10,8 @@
  * @flow
  */
 
-var aStackPool = [];
-var bStackPool = [];
+const aStackPool = [];
+const bStackPool = [];
 
 /**
  * Checks if two values are equal. Values may be primitives, arrays, or objects.
@@ -22,9 +22,9 @@ var bStackPool = [];
  * @license MIT
  */
 function areEqual(a: any, b: any): boolean {
-  var aStack = aStackPool.length ? aStackPool.pop() : [];
-  var bStack = bStackPool.length ? bStackPool.pop() : [];
-  var result = eq(a, b, aStack, bStack);
+  const aStack = aStackPool.length ? aStackPool.pop() : [];
+  const bStack = bStackPool.length ? bStackPool.pop() : [];
+  const result = eq(a, b, aStack, bStack);
   aStack.length = 0;
   bStack.length = 0;
   aStackPool.push(aStack);
@@ -44,8 +44,8 @@ function eq(a: any, b: any, aStack: Array<any>, bStack: Array<any>): boolean {
   if (typeof a != 'object' || typeof b != 'object') {
     return false;
   }
-  var objToStr = Object.prototype.toString;
-  var className = objToStr.call(a);
+  const objToStr = Object.prototype.toString;
+  const className = objToStr.call(a);
   if (className != objToStr.call(b)) {
     return false;
   }
@@ -64,7 +64,7 @@ function eq(a: any, b: any, aStack: Array<any>, bStack: Array<any>): boolean {
         a.ignoreCase == b.ignoreCase;
   }
   // Assume equality for cyclic structures.
-  var length = aStack.length;
+  let length = aStack.length;
   while (length--) {
     if (aStack[length] == a) {
       return bStack[length] == b;
@@ -72,7 +72,7 @@ function eq(a: any, b: any, aStack: Array<any>, bStack: Array<any>): boolean {
   }
   aStack.push(a);
   bStack.push(b);
-  var size = 0;
+  let size = 0;
   // Recursively compare objects and arrays.
   if (className === '[object Array]') {
     size = a.length;
@@ -92,11 +92,11 @@ function eq(a: any, b: any, aStack: Array<any>, bStack: Array<any>): boolean {
     if (a.hasOwnProperty('valueOf') && b.hasOwnProperty('valueOf')) {
       return a.valueOf() == b.valueOf();
     }
-    var keys = Object.keys(a);
+    const keys = Object.keys(a);
     if (keys.length != Object.keys(b).length) {
       return false;
     }
-    for (var i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys.length; i++) {
       if (!eq(a[keys[i]], b[keys[i]], aStack, bStack)) {
         return false;
       }

@@ -11,13 +11,13 @@
 
 'use strict';
 
-var invariant = require('invariant');
+const invariant = require('invariant');
 
-var componentRegex = /\./;
-var orRegex = /\|\|/;
-var rangeRegex = /\s+\-\s+/;
-var modifierRegex = /^(<=|<|=|>=|~>|~|>|)?\s*(.+)/;
-var numericRegex = /^(\d*)(.*)/;
+const componentRegex = /\./;
+const orRegex = /\|\|/;
+const rangeRegex = /\s+\-\s+/;
+const modifierRegex = /^(<=|<|=|>=|~>|~|>|)?\s*(.+)/;
+const numericRegex = /^(\d*)(.*)/;
 
 /**
  * Splits input `range` on "||" and returns true if any subrange matches
@@ -28,7 +28,7 @@ var numericRegex = /^(\d*)(.*)/;
  * @returns {boolean}
  */
 function checkOrExpression(range, version) {
-  var expressions = range.split(orRegex);
+  const expressions = range.split(orRegex);
 
   if (expressions.length > 1) {
     return expressions.some(range => VersionRange.contains(range, version));
@@ -47,7 +47,7 @@ function checkOrExpression(range, version) {
  * @returns {boolean}
  */
 function checkRangeExpression(range, version) {
-  var expressions = range.split(rangeRegex);
+  const expressions = range.split(rangeRegex);
 
   invariant(
     expressions.length > 0 && expressions.length <= 2,
@@ -57,7 +57,7 @@ function checkRangeExpression(range, version) {
   if (expressions.length === 1) {
     return checkSimpleExpression(expressions[0], version);
   } else {
-    var [startVersion, endVersion] = expressions;
+    const [startVersion, endVersion] = expressions;
     invariant(
       isSimpleVersion(startVersion) && isSimpleVersion(endVersion),
       'operands to the "-" operator must be simple (no modifiers)'
@@ -84,8 +84,8 @@ function checkSimpleExpression(range, version) {
     return true;
   }
 
-  var versionComponents = version.split(componentRegex);
-  var {modifier, rangeComponents} = getModifierAndComponents(range);
+  const versionComponents = version.split(componentRegex);
+  const {modifier, rangeComponents} = getModifierAndComponents(range);
   switch (modifier) {
     case '<':
       return checkLessThan(versionComponents, rangeComponents);
@@ -122,7 +122,7 @@ function checkLessThan(a, b) {
  * @returns {boolean}
  */
 function checkLessThanOrEqual(a, b) {
-  var result = compareComponents(a, b);
+  const result = compareComponents(a, b);
   return result === -1 || result === 0;
 }
 
@@ -145,7 +145,7 @@ function checkEqual(a, b) {
  * @returns {boolean}
  */
 function checkGreaterThanOrEqual(a, b) {
-  var result = compareComponents(a, b);
+  const result = compareComponents(a, b);
   return result === 1 || result === 0;
 }
 
@@ -170,14 +170,14 @@ function checkGreaterThan(a, b) {
  * @returns {boolean}
  */
 function checkApproximateVersion(a, b) {
-  var lowerBound = b.slice();
-  var upperBound = b.slice();
+  const lowerBound = b.slice();
+  const upperBound = b.slice();
 
   if (upperBound.length > 1) {
     upperBound.pop();
   }
-  var lastIndex = upperBound.length - 1;
-  var numeric = parseInt(upperBound[lastIndex], 10);
+  const lastIndex = upperBound.length - 1;
+  const numeric = parseInt(upperBound[lastIndex], 10);
   if (isNumber(numeric)) {
     upperBound[lastIndex] = numeric + 1 + '';
   }
@@ -199,8 +199,8 @@ function checkApproximateVersion(a, b) {
  * @returns {object}
  */
 function getModifierAndComponents(range) {
-  var rangeComponents = range.split(componentRegex);
-  var matches = rangeComponents[0].match(modifierRegex);
+  const rangeComponents = range.split(componentRegex);
+  const matches = rangeComponents[0].match(modifierRegex);
   invariant(matches, 'expected regex to match but it did not');
 
   return {
@@ -237,7 +237,7 @@ function isSimpleVersion(range) {
  * @param {number} length
  */
 function zeroPad(array, length) {
-  for (var i = array.length; i < length; i++) {
+  for (let i = array.length; i < length; i++) {
     array[i] = '0';
   }
 }
@@ -262,14 +262,14 @@ function normalizeVersions(a, b) {
   zeroPad(a, b.length);
 
   // mark "x" and "*" components as equal
-  for (var i = 0; i < b.length; i ++) {
-    var matches = b[i].match(/^[x*]$/i);
+  for (let i = 0; i < b.length; i ++) {
+    const matches = b[i].match(/^[x*]$/i);
     if (matches) {
       b[i] = a[i] = '0';
 
       // final "*" greedily zeros all remaining components
       if (matches[0] === '*' && i === b.length - 1) {
-        for (var j = i; j < a.length; j++) {
+        for (let j = i; j < a.length; j++) {
           a[j] = '0';
         }
       }
@@ -292,10 +292,10 @@ function normalizeVersions(a, b) {
  * or greater than `b`, respectively
  */
 function compareNumeric(a, b) {
-  var aPrefix = a.match(numericRegex)[1];
-  var bPrefix = b.match(numericRegex)[1];
-  var aNumeric = parseInt(aPrefix, 10);
-  var bNumeric = parseInt(bPrefix, 10);
+  const aPrefix = a.match(numericRegex)[1];
+  const bPrefix = b.match(numericRegex)[1];
+  const aNumeric = parseInt(aPrefix, 10);
+  const bNumeric = parseInt(bPrefix, 10);
 
   if (isNumber(aNumeric) && isNumber(bNumeric) && aNumeric !== bNumeric) {
     return compare(aNumeric, bNumeric);
@@ -333,10 +333,10 @@ function compare(a, b) {
  * or greater than `b`, respectively
  */
 function compareComponents(a, b) {
-  var [aNormalized, bNormalized] = normalizeVersions(a, b);
+  const [aNormalized, bNormalized] = normalizeVersions(a, b);
 
-  for (var i = 0; i < bNormalized.length; i++) {
-    var result = compareNumeric(aNormalized[i], bNormalized[i]);
+  for (let i = 0; i < bNormalized.length; i++) {
+    const result = compareNumeric(aNormalized[i], bNormalized[i]);
     if (result) {
       return result;
     }

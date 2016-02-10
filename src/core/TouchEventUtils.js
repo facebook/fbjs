@@ -9,7 +9,7 @@
  * @providesModule TouchEventUtils
  */
 
-var TouchEventUtils = {
+const TouchEventUtils = {
   /**
    * Utility function for common case of extracting out the primary touch from a
    * touch event.
@@ -21,10 +21,10 @@ var TouchEventUtils = {
    * @return {TouchesObject?} an object with pageX and pageY or null.
    */
   extractSingleTouch: function(nativeEvent) {
-    var touches = nativeEvent.touches;
-    var changedTouches = nativeEvent.changedTouches;
-    var hasTouches = touches && touches.length > 0;
-    var hasChangedTouches = changedTouches && changedTouches.length > 0;
+    const touches = nativeEvent.touches;
+    const changedTouches = nativeEvent.changedTouches;
+    const hasTouches = touches && touches.length > 0;
+    const hasChangedTouches = changedTouches && changedTouches.length > 0;
 
     return !hasTouches && hasChangedTouches ? changedTouches[0] :
            hasTouches ? touches[0] :

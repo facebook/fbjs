@@ -12,7 +12,7 @@
 'use strict';
 
 describe('memoizeStringOnly', function() {
-  var memoizeStringOnly;
+  let memoizeStringOnly;
 
   beforeEach(function() {
     jest.resetModuleRegistry();
@@ -20,10 +20,10 @@ describe('memoizeStringOnly', function() {
   });
 
   it('should be transparent to callers', function() {
-    var callback = function(string) {
+    const callback = function(string) {
       return string;
     };
-    var memoized = memoizeStringOnly(callback);
+    const memoized = memoizeStringOnly(callback);
 
     expect(memoized('foo'), callback('foo'));
   });

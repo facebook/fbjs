@@ -10,7 +10,7 @@
  * @typechecks
  */
 
-var isTextNode = require('isTextNode');
+const isTextNode = require('isTextNode');
 
 /*eslint-disable no-bitwise */
 

@@ -13,11 +13,11 @@
 
 'use strict';
 
-var ExecutionEnvironment = require('ExecutionEnvironment');
+const ExecutionEnvironment = require('ExecutionEnvironment');
 
-var sprintf = require('sprintf');
-var fetch = require('fetch');
-var warning = require('warning');
+const sprintf = require('sprintf');
+const fetch = require('fetch');
+const warning = require('warning');
 
 export type InitWithRetries = {
   body?: mixed;
@@ -30,8 +30,8 @@ export type InitWithRetries = {
   retryDelays?: ?Array<number>;
 };
 
-var DEFAULT_TIMEOUT = 15000;
-var DEFAULT_RETRIES = [1000, 3000];
+const DEFAULT_TIMEOUT = 15000;
+const DEFAULT_RETRIES = [1000, 3000];
 
 /**
  * Makes a POST request to the server with the given data as the payload.
@@ -41,12 +41,12 @@ function fetchWithRetries(
   uri: string,
   initWithRetries?: ?InitWithRetries
 ): Promise {
-  var {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
-  var _fetchTimeout = fetchTimeout != null ? fetchTimeout : DEFAULT_TIMEOUT;
-  var _retryDelays = retryDelays != null ? retryDelays : DEFAULT_RETRIES;
+  const {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
+  const _fetchTimeout = fetchTimeout != null ? fetchTimeout : DEFAULT_TIMEOUT;
+  const _retryDelays = retryDelays != null ? retryDelays : DEFAULT_RETRIES;
 
-  var requestsAttempted = 0;
-  var requestStartTime = 0;
+  let requestsAttempted = 0;
+  let requestStartTime = 0;
   return new Promise((resolve, reject) => {
     /**
      * Sends a request to the server that will timeout after `fetchTimeout`.
@@ -55,9 +55,9 @@ function fetchWithRetries(
     function sendTimedRequest(): void {
       requestsAttempted++;
       requestStartTime = Date.now();
-      var isRequestAlive = true;
-      var request = fetch(uri, init);
-      var requestTimeout = setTimeout(() => {
+      let isRequestAlive = true;
+      const request = fetch(uri, init);
+      const requestTimeout = setTimeout(() => {
         isRequestAlive = false;
         if (shouldRetry(requestsAttempted)) {
           warning(false, 'fetchWithRetries: HTTP timeout, retrying.');
@@ -85,7 +85,7 @@ function fetchWithRetries(
             retryRequest();
           } else {
             // Request was not successful, giving up.
-            var error: any = new Error(sprintf(
+            const error: any = new Error(sprintf(
               'fetchWithRetries(): Still no successful response after ' +
               '%s retries, giving up.',
               requestsAttempted
@@ -109,8 +109,8 @@ function fetchWithRetries(
      * passed between the time the last request was sent and now.
      */
     function retryRequest(): void {
-      var retryDelay = _retryDelays[requestsAttempted - 1];
-      var retryStartTime = requestStartTime + retryDelay;
+      const retryDelay = _retryDelays[requestsAttempted - 1];
+      const retryStartTime = requestStartTime + retryDelay;
       // Schedule retry for a configured duration after last request started.
       setTimeout(sendTimedRequest, retryStartTime - Date.now());
     }

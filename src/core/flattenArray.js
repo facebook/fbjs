@@ -25,17 +25,17 @@
  * @license MIT
  */
 function flattenArray(array: Array<any>): Array<any> {
-  var result = [];
+  const result = [];
   flatten(array, result);
   return result;
 }
 
 function flatten(array: Array<any>, result: Array<any>): void {
-  var length = array.length;
-  var ii = 0;
+  let length = array.length;
+  let ii = 0;
 
   while (length--) {
-    var current = array[ii++];
+    const current = array[ii++];
     if (Array.isArray(current)) {
       flatten(current, result);
     } else {
