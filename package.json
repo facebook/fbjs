@@ -6,6 +6,7 @@
   "repository": "facebook/fbjs",
   "scripts": {
     "build": "gulp build",
+    "postbuild": "node scripts/node/check-lib-requires.js lib",
     "lint": "eslint .",
     "prepublish": "npm run build",
     "pretest": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
