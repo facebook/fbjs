@@ -43,6 +43,7 @@ module.exports = {
   plugins: plugins,
   _moduleMap: {
     'core-js/library/es6/map': 'core-js/library/es6/map',
+    'core-js/library/es6/set': 'core-js/library/es6/set',
     'isomorphic-fetch': 'isomorphic-fetch',
     'promise': 'promise',
     'promise/setimmediate/done': 'promise/setimmediate/done',

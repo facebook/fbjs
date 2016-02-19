@@ -6,23 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * @providesModule URI
- * @stub
- * @flow
+ * @providesModule Set
  */
 
-'use strict';
-
-class URI {
-  _uri: string;
-
-  constructor(uri: string) {
-    this._uri = uri;
-  }
-
-  toString(): string {
-    return this._uri;
-  }
-}
-
-module.exports = URI;
+module.exports = require('core-js/library/es6/set');
