@@ -1,6 +1,6 @@
 {
   "name": "fbjs-scripts",
-  "version": "0.5.0",
+  "version": "0.6.0-alpha.1",
   "description": "A bundle of helpful scripts used in projects consuming fbjs.",
   "license": "BSD-3-Clause",
   "dependencies": {
