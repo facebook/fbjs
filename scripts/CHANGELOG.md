@@ -6,6 +6,9 @@
 - [gulp] Added check-dependencies to ensure installed packages are compatible with package.json specification
 - [node] Added check-lib-requires script to ensure all lib files can be required
 
+### Fixed
+- [babel] Fixed the rewrite-modules plugin to support more Jest methods
+
 
 ## [0.5.0] - 2015-11-11
 - [babel] Add auto-importer plugin for Babel & Babel 6

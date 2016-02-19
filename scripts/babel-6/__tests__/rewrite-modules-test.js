@@ -32,13 +32,15 @@ describe('rewrite-modules', function() {
         expect(result.code).toEqual('require(\'test/test\');');
       });
 
-      it('should work for jest. mock, dontMock and genMockFromModule', function() {
+      it('should transform jest and requireActual methods', function() {
         const code = `function test() {
           'use strict';
 
           jest.mock('foo');
           jest.mock('foo').mock('bar').dontMock('baz');
           var fooMock = jest.genMockFromModule('foo');
+          jest.unmock('foo');
+          jest.setMock('foo', () => {});
 
           var foo = require('foo');
           var actualFoo = require.requireActual('foo');
@@ -50,6 +52,8 @@ describe('rewrite-modules', function() {
           jest.mock('foo/foo');
           jest.mock('foo/foo').mock('bar/bar').dontMock('baz/baz');
           var fooMock = jest.genMockFromModule('foo/foo');
+          jest.unmock('foo/foo');
+          jest.setMock('foo/foo', () => {});
 
           var foo = require('foo/foo');
           var actualFoo = require.requireActual('foo/foo');

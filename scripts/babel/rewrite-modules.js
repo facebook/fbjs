@@ -29,6 +29,18 @@ function mapModule(context, module) {
   }
 }
 
+var jestMethods = [
+  'dontMock',
+  'genMockFromModule',
+  'mock',
+  'setMock',
+  'unmock',
+];
+
+function isJestProperty(t, property) {
+  return t.isIdentifier(property) && jestMethods.indexOf(property.name) !== -1;
+}
+
 module.exports = function(babel) {
   var t = babel.types;
 
@@ -46,13 +58,15 @@ module.exports = function(babel) {
     ) {
       return undefined;
     }
-    var moduleArg = call.arguments[0];
+    var args = call.arguments.slice();
+    var moduleArg = args[0];
     if (moduleArg && moduleArg.type === 'Literal') {
       var module = mapModule(context, moduleArg.value);
       if (module) {
+        args[0] = t.literal(module);
         return t.callExpression(
           call.callee,
-          [t.literal(module)]
+          args
         );
       }
     }
@@ -76,19 +90,15 @@ module.exports = function(babel) {
     if (!object) {
       return undefined;
     }
-    var args = call.arguments;
+    var args = call.arguments.slice();
     if (
       args[0] &&
       args[0].type === 'Literal' &&
-      (
-        t.isIdentifier(member.property, {name: 'dontMock'}) ||
-        t.isIdentifier(member.property, {name: 'mock'}) ||
-        t.isIdentifier(member.property, {name: 'genMockFromModule'})
-      )
+      isJestProperty(t, member.property)
     ) {
       var module = mapModule(context, args[0].value);
       if (module) {
-        args = [t.literal(module)];
+        args[0] = t.literal(module);
       }
     }
     return t.callExpression(

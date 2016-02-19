@@ -36,6 +36,18 @@ function getArguments(path) {
   }
 }
 
+var jestMethods = [
+  'dontMock',
+  'genMockFromModule',
+  'mock',
+  'setMock',
+  'unmock',
+];
+
+function isJestProperty(t, property) {
+  return t.isIdentifier(property) && jestMethods.indexOf(property.name) !== -1;
+}
+
 module.exports = function(babel) {
 
   var t = babel.types;
@@ -56,16 +68,15 @@ module.exports = function(babel) {
       return;
     }
 
-    var moduleArg = getArguments(path);
-    if (moduleArg && moduleArg.type === 'StringLiteral') {
-      var module = mapModule(state, moduleArg.value);
+    var args = path.get('arguments');
+    if (!args.length) {
+      return;
+    }
+    var moduleArg = args[0];
+    if (moduleArg.node.type === 'StringLiteral') {
+      var module = mapModule(state, moduleArg.node.value);
       if (module) {
-        path.replaceWith(
-          t.callExpression(
-            calleePath.node,
-            [t.stringLiteral(module)]
-          )
-        );
+        moduleArg.replaceWith(t.stringLiteral(module));
       }
     }
   }
@@ -76,28 +87,21 @@ module.exports = function(babel) {
    */
   function transformJestHelper(path, state) {
     var calleePath = path.get('callee');
-    var args = getArguments(path);
+    var args = path.get('arguments');
+    if (!args.length) {
+      return;
+    }
+    var moduleArg = args[0];
     if (
-      args &&
-      args.type === 'StringLiteral' &&
+      moduleArg.node.type === 'StringLiteral' &&
       calleePath.node &&
-      (
-        t.isIdentifier(calleePath.node.property, {name: 'dontMock'}) ||
-        t.isIdentifier(calleePath.node.property, {name: 'mock'}) ||
-        t.isIdentifier(calleePath.node.property, {name: 'genMockFromModule'})
-      )
+      isJestProperty(t, calleePath.node.property)
     ) {
-      var module = mapModule(state, args.value);
+      var module = mapModule(state, moduleArg.node.value);
       if (module) {
-        args = t.stringLiteral(module);
+        moduleArg.replaceWith(t.stringLiteral(module))
       }
     }
-    path.replaceWith(
-      t.callExpression(
-        calleePath.node,
-        [args]
-      )
-    );
   }
 
   const jestIdentifier = {
