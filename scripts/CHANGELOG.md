@@ -5,6 +5,9 @@
 - [gulp] Added strip-provides-module to strip `@providesModule` headers
 - [gulp] Added check-dependencies to ensure installed packages are compatible with package.json specification
 
+### Fixed
+- [babel] Fixed the rewrite-modules plugin to support more Jest methods
+
 
 ## [0.5.0] - 2015-11-11
 - [babel] Add auto-importer plugin for Babel & Babel 6
