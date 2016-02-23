@@ -47,7 +47,11 @@ module.exports = function(opts) {
         var requested = pkgData[type][name];
         if (!semver.satisfies(current, requested)) {
           // Definitely wrong, so we should error
-          failures.push({name, current, requested});
+          failures.push({
+            name: name,
+            current: current,
+            requested: requested,
+          });
         }
       });
 
