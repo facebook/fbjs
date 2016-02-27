@@ -1,4 +1,3 @@
-var assign = require('object-assign');
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var flatten = require('gulp-flatten');
@@ -7,8 +6,8 @@ var del = require('del');
 var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
 
-var babelPluginDEV = require('fbjs-scripts/babel/dev-expression');
-var babelDefaultOptions = require('fbjs-scripts/babel/default-options');
+var babelPluginDEV = require('fbjs-scripts/babel-6/dev-expression');
+var babelDefaultOptions = require('fbjs-scripts/babel-6/default-options');
 var gulpModuleMap = require('fbjs-scripts/gulp/module-map');
 var gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
 var gulpCheckDependencies = require('fbjs-scripts/gulp/check-dependencies');
@@ -27,17 +26,11 @@ var paths = {
       'src/**/__mocks__/**/*.js',
     ],
     dest: 'lib/__mocks__',
-    babelOpts: {
-      _modulePrefix: '../',
+    moduleOpts: {
+      prefix: '../',
     },
   },
 };
-
-var babelOpts = assign({}, babelDefaultOptions, {
-  plugins: babelDefaultOptions.plugins.concat([
-    babelPluginDEV,
-  ]),
-});
 
 var moduleMapOpts = {
   moduleMapFile: './module-map.json',
@@ -53,13 +46,18 @@ gulp.task('lib', function() {
     .src(paths.lib.src)
     .pipe(gulpModuleMap(moduleMapOpts))
     .pipe(gulpStripProvidesModule())
-    .pipe(babel(babelOpts))
+    .pipe(babel(babelDefaultOptions({
+      plugins: [babelPluginDEV],
+    })))
     .pipe(flatten())
     .pipe(gulp.dest(paths.lib.dest));
 
   var mockTask = gulp
     .src(paths.mocks.src)
-    .pipe(babel(assign({}, babelOpts, paths.mocks.babelOpts)))
+    .pipe(babel(babelDefaultOptions({
+      plugins: [babelPluginDEV],
+      moduleOpts: paths.mocks.moduleOpts,
+    })))
     .pipe(flatten())
     .pipe(gulp.dest(paths.mocks.dest));
 

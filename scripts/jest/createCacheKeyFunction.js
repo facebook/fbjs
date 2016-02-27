@@ -23,10 +23,10 @@ function buildCacheKey(files, base) {
 const transformRoot = path.join(__dirname, '..');
 const cacheKeyFiles = [
   __filename,
-  path.join(transformRoot, 'babel', 'default-options.js'),
-  path.join(transformRoot, 'babel', 'dev-expression.js'),
-  path.join(transformRoot, 'babel', 'inline-requires.js'),
-  path.join(transformRoot, 'babel', 'rewrite-modules.js'),
+  path.join(transformRoot, 'babel-6', 'default-options.js'),
+  path.join(transformRoot, 'babel-6', 'dev-expression.js'),
+  path.join(transformRoot, 'babel-6', 'inline-requires.js'),
+  path.join(transformRoot, 'babel-6', 'rewrite-modules.js'),
 ];
 
 const cacheKeyBase = buildCacheKey(cacheKeyFiles, '');
