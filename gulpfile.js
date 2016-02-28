@@ -6,11 +6,13 @@ var del = require('del');
 var mergeStream = require('merge-stream');
 var runSequence = require('run-sequence');
 
-var babelPluginDEV = require('fbjs-scripts/babel-6/dev-expression');
 var babelDefaultOptions = require('fbjs-scripts/babel-6/default-options');
+var babelPluginDEV = require('fbjs-scripts/babel-6/dev-expression');
+var babelPluginModules = require('fbjs-scripts/babel-6/rewrite-modules');
 var gulpModuleMap = require('fbjs-scripts/gulp/module-map');
 var gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
 var gulpCheckDependencies = require('fbjs-scripts/gulp/check-dependencies');
+var thirdPartyModuleMap = require('fbjs-scripts/third-party-module-map.json');
 
 var paths = {
   lib: {
@@ -67,6 +69,15 @@ gulp.task('lib', function() {
 gulp.task('flow', function() {
   return gulp
     .src(paths.lib.src)
+    .pipe(gulpModuleMap(moduleMapOpts))
+    .pipe(babel({
+      plugins: [
+        "syntax-flow",
+        "syntax-trailing-function-commas",
+        "syntax-object-rest-spread",
+        [babelPluginModules, {map: thirdPartyModuleMap}]
+      ]
+    }))
     .pipe(flatten())
     .pipe(rename({extname: '.js.flow'}))
     .pipe(gulp.dest(paths.lib.dest));

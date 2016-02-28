@@ -21,6 +21,7 @@
     "babel-eslint": "^5.0.0",
     "babel-plugin-check-es2015-constants": "^6.5.0",
     "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
+    "babel-plugin-syntax-object-rest-spread": "^6.3.13",
     "babel-plugin-transform-class-properties": "^6.5.0",
     "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
     "babel-plugin-transform-es2015-block-scoped-functions": "^6.5.0",
@@ -85,9 +86,10 @@
     ]
   },
   "dependencies": {
+    "babel-plugin-syntax-flow": "^6.5.0",
     "core-js": "^1.0.0",
-    "loose-envify": "^1.0.0",
     "isomorphic-fetch": "^2.1.1",
+    "loose-envify": "^1.0.0",
     "promise": "^7.1.1",
     "ua-parser-js": "^0.7.9"
   },
