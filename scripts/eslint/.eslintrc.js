@@ -63,8 +63,9 @@ function getBaseConfig() {
     // rules to add/remove to/from this list.
     rules: {
       // Possible Errors <http://eslint.org/docs/rules/#possible-errors>
-      // babel removes them for older browsers, we should do a codemod
-      'comma-dangle': [WARNING, 'always-multiline'],
+
+      // Forked and moved to fb-www/comma-dangle
+      'comma-dangle': OFF,
       // equivalent to jshint boss
       'no-cond-assign': OFF,
       // equivalent to jshint devel
@@ -121,6 +122,7 @@ function getBaseConfig() {
       'no-unexpected-multiline': OFF,
 
       // Best Practices <http://eslint.org/docs/rules/#best-practices>
+
       // probably a bug, we shouldn't actually even use this yet, because of IE8
       'accessor-pairs': [WARNING, {setWithoutGet: true}],
       // probably too noisy ATM
@@ -255,7 +257,7 @@ function getBaseConfig() {
       'no-shadow-restricted-names': WARNING,
       // a definite code-smell, but probably too noisy
       'no-shadow': OFF,
-      // it's nice to be explicit sometimes: `var foo = undefined;`
+      // it's nice to be explicit sometimes: `let foo = undefined;`
       'no-undef-init': OFF,
       // equivalent to jshint undef, turned into an error in getConfig
       'no-undef': WARNING,
@@ -321,7 +323,6 @@ function getBaseConfig() {
       // equivalent to jshint W058
       'new-parens': ERROR,
       'newline-after-var': OFF,
-      // equivalent to FacebookWebJSLintLinter's checkPhpStyleArray
       'no-array-constructor': ERROR,
       'no-bitwise': WARNING,
       'no-continue': OFF,
@@ -345,7 +346,7 @@ function getBaseConfig() {
       'no-trailing-spaces': OFF,
       // we use this for private/protected identifiers
       'no-underscore-dangle': OFF,
-      // disallow `var isYes = answer === 1 ? true : false;`
+      // disallow `let isYes = answer === 1 ? true : false;`
       'no-unneeded-ternary': WARNING,
       // too noisy ATM
       'object-curly-spacing': OFF,
@@ -390,7 +391,7 @@ function getBaseConfig() {
 
       // ECMAScript 6 <http://eslint.org/docs/rules/#ecmascript-6>
       'arrow-body-style': OFF,
-      // TODO: our style guide says to always use parens, even w/ a single param
+      // Forked to fb-www/arrow-parens to fix issues with flow and add fixer
       'arrow-parens': OFF,
       // tbgs finds *very few* places where we don't put spaces around =>
       'arrow-spacing': [WARNING, {before: true, after: true}],
@@ -398,12 +399,11 @@ function getBaseConfig() {
       'constructor-super': ERROR,
       // https://github.com/babel/babel-eslint#known-issues
       'generator-star-spacing': OFF,
-      // more serious case of ambiguous arrow sytax
-      'no-arrow-condition': WARNING,
+      'no-arrow-condition': OFF,
       'no-class-assign': WARNING,
       // this is a runtime error
       'no-const-assign': ERROR,
-      'no-dupe-class-members': OFF,
+      'no-dupe-class-members': ERROR,
       // violation of the ES6 spec, won't transform, `this` is part of the TDZ
       'no-this-before-super': ERROR,
       // we have way too much ES3 & ES5 code
