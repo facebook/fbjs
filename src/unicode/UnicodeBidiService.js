@@ -77,9 +77,9 @@ class UnicodeBidiService {
   }
 
   /**
-   * Reset the interal state
+   * Reset the internal state
    *
-   * Instead of creating a new instance, You can just reset() your instance
+   * Instead of creating a new instance, you can just reset() your instance
    * everytime you start a new loop.
    */
   reset(): void {
@@ -87,7 +87,7 @@ class UnicodeBidiService {
   }
 
   /**
-   * Returnes the direction of a block of text, and remembers it as the
+   * Returns the direction of a block of text, and remembers it as the
    * fall-back direction for the next paragraph.
    *
    * @param str  A text block, e.g. paragraph, table cell, tag
