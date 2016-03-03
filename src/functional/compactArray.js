@@ -14,7 +14,7 @@
  * `Array.prototype.filter`.
  */
 function compactArray<T>(
-  array: Array<?T>
+  array: Array<T|null|void>
 ): Array<T> {
   var result = [];
   for (var i = 0; i < array.length; ++i) {
