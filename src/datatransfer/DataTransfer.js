@@ -145,7 +145,7 @@ class DataTransfer {
     var items = this.getFiles();
     for (var i = 0; i < items.length; i++) {
       var type = items[i].type;
-      if (!PhotosMimeType(type).isImage()) {
+      if (!PhotosMimeType.isImage(type)) {
         return false;
       }
     }

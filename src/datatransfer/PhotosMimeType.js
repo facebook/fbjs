@@ -8,23 +8,23 @@
  *
  * @providesModule PhotosMimeType
  */
-class PhotosMimeType {
-  constructor(mimeString) {
-    // Allow this to be used as a function
-    if (this instanceof PhotosMimeType === false) {
-      return new PhotosMimeType(mimeString);
-    }
-    this._parts = mimeString.split('/');
-  }
+const PhotosMimeType = {
+  isImage(mimeString) {
+    return getParts(mimeString)[0] === 'image';
+  },
 
-  isImage() {
-    return this._parts[0] === 'image';
-  }
-
-  isJpeg() {
-    return this.isImage() &&
+  isJpeg(mimeString) {
+    const parts = getParts(mimeString);
+    return (
+      PhotosMimeType.isImage(mimeString) &&
       // see http://fburl.com/10972194
-      (this._parts[1] === 'jpeg' || this._parts[1] === 'pjpeg');
-  }
+      (parts[1] === 'jpeg' || parts[1] === 'pjpeg')
+    );
+  },
+};
+
+function getParts(mimeString) {
+  return mimeString.split('/');
 }
+
 module.exports = PhotosMimeType;
