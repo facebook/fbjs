@@ -45,7 +45,7 @@ module.exports = function(opts) {
         var current = outdatedData[name].current;
         var type = outdatedData[name].type;
         var requested = pkgData[type][name];
-        if (!semver.satisfies(current, requested)) {
+        if (!requested.startsWith('file:') && !semver.satisfies(current, requested)) {
           // Definitely wrong, so we should error
           failures.push({name, current, requested});
         }
