@@ -18,7 +18,11 @@ const invariant = require('invariant');
  */
 function isEmpty(obj) {
   invariant(
-    !(obj && obj[Symbol.iterator] && obj.size !== undefined),
+    (
+      !obj ||
+      (typeof Symbol !== 'undefined' && !obj[Symbol.iterator]) ||
+      obj.size === undefined
+    ),
     'isEmpty does not support Map or Set',
   );
 
