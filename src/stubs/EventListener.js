@@ -18,6 +18,7 @@
  */
 
 var emptyFunction = require('emptyFunction');
+var useAddEventListener = require('useAddEventListener');
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -33,7 +34,7 @@ var EventListener = {
    * @return {object} Object with a `remove` method.
    */
   listen: function(target, eventType, callback) {
-    if (target.addEventListener) {
+    if (useAddEventListener(target)) {
       target.addEventListener(eventType, callback, false);
       return {
         remove: function() {
@@ -59,7 +60,7 @@ var EventListener = {
    * @return {object} Object with a `remove` method.
    */
   capture: function(target, eventType, callback) {
-    if (target.addEventListener) {
+    if (useAddEventListener(target)) {
       target.addEventListener(eventType, callback, true);
       return {
         remove: function () {
