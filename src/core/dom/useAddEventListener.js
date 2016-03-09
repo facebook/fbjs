@@ -23,12 +23,12 @@
  * @return {boolean} True if 'addEventListener' should be used.
  * @internal
  */
+
+var hasEventListener = 'addEventListener' in document;
+
 function useAddEventListener(target) {
-         // verify the most common case first
-  return 'addEventListener' in target &&
-         // be sure there's no 'attachEvent'
-         // if there is one, be sure it's not an old version of opera
-         !('attachEvent' in target && typeof opera === 'undefined');
+  // avoid conflicts with runtime patched environments
+  return hasEventListener && target.addEventListener;
 }
 
 module.exports = useAddEventListener;
