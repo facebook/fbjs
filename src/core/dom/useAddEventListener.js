@@ -12,6 +12,12 @@
 
 'use strict';
 
+// feature detect ASAP and *once*
+// 'addEventListener' ability
+// so that no patched IE8 will ever
+// sufffer dual logic or runtime checks
+var hasEventListener = 'addEventListener' in document;
+
 /**
  * Checks if a target has 'addEventListener' but not 'attachEvent'.
  *
@@ -23,9 +29,6 @@
  * @return {boolean} True if 'addEventListener' should be used.
  * @internal
  */
-
-var hasEventListener = 'addEventListener' in document;
-
 function useAddEventListener(target) {
   // avoid conflicts with runtime patched environments
   return hasEventListener && target.addEventListener;
