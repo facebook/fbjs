@@ -9,11 +9,15 @@
 
 'use strict';
 
+const assign = require('object-assign');
+
 module.exports = function(options) {
   return {
     presets: [
       require('babel-preset-fbjs/configure')({
-        rewriteModules: options.moduleOpts || {},
+        rewriteModules: assign({
+          map: require('../third-party-module-map'),
+        }, options.moduleOpts),
       }),
     ],
     plugins: options.plugins || [],
