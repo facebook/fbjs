@@ -12,9 +12,9 @@ Any `@providesModule` modules that are used by your project should be added to `
 
 ```js
 // Before transform
-var emptyFunction = require('emptyFunction');
+const emptyFunction = require('emptyFunction');
 // After transform
-var emptyFunction = require('fbjs/lib/emptyFunction');
+const emptyFunction = require('fbjs/lib/emptyFunction');
 ```
 
 See React for an example of this. *Coming soon!*

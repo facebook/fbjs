@@ -153,8 +153,6 @@ function getBaseConfig() {
       'no-div-regex': OFF,
       // we don't do this/care about this
       'no-else-return': OFF,
-      // equivalent to jshint W028
-      'no-empty-label': ERROR,
       // avoid mistaken variables when destructuring
       'no-empty-pattern': WARNING,
       // see eqeqeq: we explicitly allow this, equivalent to jshint eqnull
@@ -308,6 +306,7 @@ function getBaseConfig() {
       'jsx-quotes': [WARNING, 'prefer-double'],
       // we may use extra spaces for alignment
       'key-spacing': [OFF, {beforeColon: false, afterColon: true}],
+      "keyword-spacing": WARNING,
       'lines-around-comment': OFF,
       // should be handled by a generic TXT linter instead
       'linebreak-style': [OFF, 'unix'],
@@ -365,8 +364,6 @@ function getBaseConfig() {
       // equivalent to jshint asi/W032
       'semi': [WARNING, 'always'],
       'sort-vars': OFF,
-      // require `if ()` instead of `if()`
-      'space-after-keywords': [WARNING, 'always'],
       // require `if () {` instead of `if (){`
       'space-before-blocks': [WARNING, 'always'],
       // require `function foo()` instead of `function foo ()`
@@ -374,13 +371,9 @@ function getBaseConfig() {
         WARNING,
         {anonymous: 'never', named: 'never'},
       ],
-      // require `} else {` instead of `}else {`
-      'space-before-keywords': [WARNING, 'always'],
       // incompatible with our legacy inline type annotations
       'space-in-parens': [OFF, 'never'],
       'space-infix-ops': OFF,
-      // require `return -a` instead of `return-a`
-      'space-return-throw-case': WARNING,
       // Currently broken: https://github.com/eslint/eslint/issues/2764
       'space-unary-ops': [OFF, {words: true, nonwords: false}],
       // TODO: Figure out a way to do this that doesn't break typechecks

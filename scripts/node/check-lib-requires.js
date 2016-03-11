@@ -30,7 +30,7 @@ fs.readdir(pathToLib, (err, files) => {
         const missingModule = e.toString().match(EXTRACT_MODULE_NAME_REGEX)[1];
         console.error(moduleName, 'is missing a dependency:', missingModule);
       } else {
-        console.error('UNKNOWN ERROR', e)
+        console.error('UNKNOWN ERROR', e);
       }
       didError = true;
     }

@@ -11,7 +11,6 @@
 
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
 
 function buildCacheKey(files, base) {
   return files.reduce(
@@ -20,19 +19,9 @@ function buildCacheKey(files, base) {
   );
 }
 
-const transformRoot = path.join(__dirname, '..');
-const cacheKeyFiles = [
-  __filename,
-  path.join(transformRoot, 'babel-6', 'default-options.js'),
-  path.join(transformRoot, 'babel-6', 'dev-expression.js'),
-  path.join(transformRoot, 'babel-6', 'inline-requires.js'),
-  path.join(transformRoot, 'babel-6', 'rewrite-modules.js'),
-];
-
-const cacheKeyBase = buildCacheKey(cacheKeyFiles, '');
-
 module.exports = files => {
-  const cacheKey = buildCacheKey(files, cacheKeyBase);
+  const presetVersion = require('../package').dependencies['babel-preset-fbjs'];
+  const cacheKey = buildCacheKey(files, presetVersion);
   return (src, file, configString) => crypto.createHash('md5')
     .update(cacheKey)
     .update(src + file + configString)

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -9,7 +9,7 @@
 
 'use strict';
 
-var MODULES = [
+const MODULES = [
   // Local Promise implementation.
   'Promise',
 ];
@@ -18,11 +18,10 @@ var MODULES = [
  * Automatically imports a module if its identifier is in the AST.
  */
 module.exports = function autoImporter(babel) {
-
-  var t = babel.types;
+  const t = babel.types;
 
   function isAppropriateModule(name, scope, state) {
-    var autoImported = state.autoImported;
+    const autoImported = state.autoImported;
     return MODULES.indexOf(name) !== -1
         && !autoImported.hasOwnProperty(name)
         && !scope.hasBinding(name, /*skip globals*/true);
@@ -37,8 +36,8 @@ module.exports = function autoImporter(babel) {
 
     visitor: {
       ReferencedIdentifier: function(path) {
-        var node = path.node;
-        var scope = path.scope;
+        const node = path.node;
+        const scope = path.scope;
 
         if (!isAppropriateModule(node.name, scope, this)) {
           return;
