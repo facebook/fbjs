@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -24,8 +24,8 @@ var inlineRequiredDependencyMap;
  * Continuing with the example above, this replaces all references to `Foo` in
  * the module to `require('ModuleFoo')`.
  */
-module.exports = function fbjsInlineRequiresTransform() {
-  var t = require('babel-types');
+module.exports = function fbjsInlineRequiresTransform(babel) {
+  var t = babel.types;
 
   function buildRequireCall(name) {
     var call = t.callExpression(

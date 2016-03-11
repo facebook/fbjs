@@ -1,20 +1,28 @@
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var flatten = require('gulp-flatten');
-var rename = require('gulp-rename');
-var del = require('del');
-var mergeStream = require('merge-stream');
-var runSequence = require('run-sequence');
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
-var babelDefaultOptions = require('fbjs-scripts/babel-6/default-options');
-var babelPluginDEV = require('fbjs-scripts/babel-6/dev-expression');
-var babelPluginModules = require('fbjs-scripts/babel-6/rewrite-modules');
-var gulpModuleMap = require('fbjs-scripts/gulp/module-map');
-var gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
-var gulpCheckDependencies = require('fbjs-scripts/gulp/check-dependencies');
-var thirdPartyModuleMap = require('fbjs-scripts/third-party-module-map.json');
+'use strict';
 
-var paths = {
+const del = require('del');
+const flatten = require('gulp-flatten');
+const gulp = require('gulp');
+const gulpBabel = require('gulp-babel');
+const mergeStream = require('merge-stream');
+const rename = require('gulp-rename');
+const runSequence = require('run-sequence');
+
+const configureBabelPreset = require('babel-preset-fbjs/configure');
+const gulpModuleMap = require('fbjs-scripts/gulp/module-map');
+const gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
+const gulpCheckDependencies = require('fbjs-scripts/gulp/check-dependencies');
+
+const paths = {
   lib: {
     src: [
       'src/**/*.js',
@@ -34,31 +42,29 @@ var paths = {
   },
 };
 
-var moduleMapOpts = {
+const moduleMapOpts = {
   moduleMapFile: './module-map.json',
   prefix: 'fbjs/lib/',
 };
 
-gulp.task('clean', function(cb) {
-  del([paths.lib.dest, paths.mocks.dest], cb);
+gulp.task('clean', function() {
+  return del([paths.lib.dest, paths.mocks.dest]);
 });
 
 gulp.task('lib', function() {
-  var libTask = gulp
+  const libTask = gulp
     .src(paths.lib.src)
     .pipe(gulpModuleMap(moduleMapOpts))
     .pipe(gulpStripProvidesModule())
-    .pipe(babel(babelDefaultOptions({
-      plugins: [babelPluginDEV],
-    })))
+    .pipe(gulpBabel(configureBabelPreset({stripDEV: true})))
     .pipe(flatten())
     .pipe(gulp.dest(paths.lib.dest));
 
-  var mockTask = gulp
+  const mockTask = gulp
     .src(paths.mocks.src)
-    .pipe(babel(babelDefaultOptions({
-      plugins: [babelPluginDEV],
-      moduleOpts: paths.mocks.moduleOpts,
+    .pipe(gulpBabel(configureBabelPreset({
+      stripDEV: true,
+      rewriteModules: paths.mocks.moduleOpts,
     })))
     .pipe(flatten())
     .pipe(gulp.dest(paths.mocks.dest));
@@ -70,13 +76,15 @@ gulp.task('flow', function() {
   return gulp
     .src(paths.lib.src)
     .pipe(gulpModuleMap(moduleMapOpts))
-    .pipe(babel({
+    .pipe(gulpBabel({
+      presets: [
+        configureBabelPreset({stripDEV: true}),
+      ],
       plugins: [
-        "syntax-flow",
-        "syntax-trailing-function-commas",
-        "syntax-object-rest-spread",
-        [babelPluginModules, {map: thirdPartyModuleMap}]
-      ]
+        require('babel-plugin-syntax-flow'),
+        require('babel-plugin-syntax-trailing-function-commas'),
+        require('babel-plugin-syntax-object-rest-spread'),
+      ],
     }))
     .pipe(flatten())
     .pipe(rename({extname: '.js.flow'}))

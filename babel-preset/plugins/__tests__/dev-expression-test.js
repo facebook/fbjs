@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2015, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
@@ -7,6 +8,8 @@
  */
 
 'use strict';
+
+/* eslint-disable max-len */
 
 let babel = require('babel-core');
 let devExpression = require('../dev-expression');
@@ -49,15 +52,15 @@ if (process.env.NODE_ENV !== 'production') {
 
   it('should replace warning calls', () => {
     compare(
-      `warning(condition, 'a %s b', 'c');`,
-      `process.env.NODE_ENV !== 'production' ? warning(condition, 'a %s b', 'c') : undefined;`
+      "warning(condition, 'a %s b', 'c');",
+      "process.env.NODE_ENV !== 'production' ? warning(condition, 'a %s b', 'c') : void 0;"
     );
   });
 
   it('should replace invariant calls', () => {
     compare(
-      `invariant(condition, 'a %s b', 'c');`,
-      `!condition ? process.env.NODE_ENV !== 'production' ? invariant(false, 'a %s b', 'c') : invariant(false) : undefined;`
+      "invariant(condition, 'a %s b', 'c');",
+      "!condition ? process.env.NODE_ENV !== 'production' ? invariant(false, 'a %s b', 'c') : invariant(false) : void 0;"
     );
   });
 });

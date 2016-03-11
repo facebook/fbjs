@@ -7,6 +7,4 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-'use strict';
-
-throw new Error('The fbjs package should not be required without a full path.');
+module.exports = require('./configure')({});

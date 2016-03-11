@@ -9,21 +9,19 @@
 
 'use strict';
 
-const assign = require('object-assign');
-const babel = require('babel');
-const babelDefaultOptions = require('../babel/default-options');
+const babel = require('babel-core');
 const createCacheKeyFunction = require('./createCacheKeyFunction');
 
 module.exports = {
   process(src, filename) {
-    return babel.transform(src, assign(
-      {},
-      babelDefaultOptions,
-      {
-        filename: filename,
-        retainLines: true,
-      }
-    )).code;
+    const options = {
+      presets: [
+        require('babel-preset-fbjs'),
+      ],
+      filename: filename,
+      retainLines: true,
+    };
+    return babel.transform(src, options).code;
   },
 
   // Generate a cache key that is based on the module and transform data.

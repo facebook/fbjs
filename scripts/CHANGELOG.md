@@ -7,6 +7,10 @@
 - [gulp] Added check-dependencies to ensure installed packages are compatible with package.json specification
 - [node] Added check-lib-requires script to ensure all lib files can be required
 
+### Changed
+
+- [babel] Moved all plugins into new `babel-preset-fbjs` package
+
 ### Fixed
 - [babel] Fixed the rewrite-modules plugin to support more Jest methods
 

@@ -60,7 +60,7 @@ module.exports = function(opts) {
           );
         });
         var msg =
-          `Some of your dependencies are outdated. Please run ` +
+          'Some of your dependencies are outdated. Please run ' +
           `${colors.bold('npm update')} to ensure you are up to date.`;
         cb(new gutil.PluginError(PLUGIN_NAME, msg));
         return;

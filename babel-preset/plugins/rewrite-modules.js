@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -27,13 +27,7 @@ function mapModule(state, module) {
     }
     return modulePrefix + module;
   }
-}
-
-function getArguments(path) {
-  var args = path.get('arguments');
-  if (args && args.length) {
-    return args[0].node;
-  }
+  return null;
 }
 
 var jestMethods = [
@@ -99,7 +93,7 @@ module.exports = function(babel) {
     ) {
       var module = mapModule(state, moduleArg.node.value);
       if (module) {
-        moduleArg.replaceWith(t.stringLiteral(module))
+        moduleArg.replaceWith(t.stringLiteral(module));
       }
     }
   }
