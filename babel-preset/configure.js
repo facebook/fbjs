@@ -17,7 +17,7 @@ module.exports = function(options) {
   options = assign({
     autoImport: true,
     inlineRequires: process.env.NODE_ENV === 'test',
-    rewriteModules: {}, // {map?: ?{[module: string]: string}, prefix?: ?string}
+    rewriteModules: null, // {map: ?{[module: string]: string}, prefix: ?string}
     stripDEV: false,
   }, options);
 
@@ -48,13 +48,7 @@ module.exports = function(options) {
 
       options.autoImport ? require('./plugins/auto-importer') : null,
       options.rewriteModules ?
-        [
-          require('./plugins/rewrite-modules'),
-          assign(
-            {map: require('./config/third-party-module-map.json')},
-            options.rewriteModules
-          ),
-        ] :
+        [require('./plugins/rewrite-modules'), options.rewriteModules || {}] :
         null,
     ],
     [

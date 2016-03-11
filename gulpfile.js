@@ -17,7 +17,7 @@ const mergeStream = require('merge-stream');
 const rename = require('gulp-rename');
 const runSequence = require('run-sequence');
 
-const configureBabelPreset = require('babel-preset-fbjs/configure');
+const fbjsConfigurePreset = require('babel-preset-fbjs/configure');
 const gulpModuleMap = require('fbjs-scripts/gulp/module-map');
 const gulpStripProvidesModule = require('fbjs-scripts/gulp/strip-provides-module');
 const gulpCheckDependencies = require('fbjs-scripts/gulp/check-dependencies');
@@ -30,19 +30,29 @@ const paths = {
       '!src/**/__mocks__/**/*.js',
     ],
     dest: 'lib',
+    presetOptions: {
+      stripDEV: true,
+      rewriteModules: {
+        map: require('fbjs-scripts/third-party-module-map'),
+      },
+    },
   },
   mocks: {
     src: [
       'src/**/__mocks__/**/*.js',
     ],
     dest: 'lib/__mocks__',
-    moduleOpts: {
-      prefix: '../',
+    presetOptions: {
+      stripDEV: true,
+      rewriteModules: {
+        map: require('fbjs-scripts/third-party-module-map'),
+        prefix: '../',
+      },
     },
   },
 };
 
-const moduleMapOpts = {
+const rewriteOptions = {
   moduleMapFile: './module-map.json',
   prefix: 'fbjs/lib/',
 };
@@ -54,18 +64,15 @@ gulp.task('clean', function() {
 gulp.task('lib', function() {
   const libTask = gulp
     .src(paths.lib.src)
-    .pipe(gulpModuleMap(moduleMapOpts))
+    .pipe(gulpModuleMap(rewriteOptions))
     .pipe(gulpStripProvidesModule())
-    .pipe(gulpBabel(configureBabelPreset({stripDEV: true})))
+    .pipe(gulpBabel(fbjsConfigurePreset(paths.lib.presetOptions)))
     .pipe(flatten())
     .pipe(gulp.dest(paths.lib.dest));
 
   const mockTask = gulp
     .src(paths.mocks.src)
-    .pipe(gulpBabel(configureBabelPreset({
-      stripDEV: true,
-      rewriteModules: paths.mocks.moduleOpts,
-    })))
+    .pipe(gulpBabel(fbjsConfigurePreset(paths.mocks.presetOptions)))
     .pipe(flatten())
     .pipe(gulp.dest(paths.mocks.dest));
 
@@ -75,10 +82,10 @@ gulp.task('lib', function() {
 gulp.task('flow', function() {
   return gulp
     .src(paths.lib.src)
-    .pipe(gulpModuleMap(moduleMapOpts))
+    .pipe(gulpModuleMap(rewriteOptions))
     .pipe(gulpBabel({
       presets: [
-        configureBabelPreset({stripDEV: true}),
+        fbjsConfigurePreset(paths.lib.presetOptions),
       ],
       plugins: [
         require('babel-plugin-syntax-flow'),
