@@ -94,7 +94,7 @@
     "ua-parser-js": "^0.7.9"
   },
   "devEngines": {
-    "node": ">=3",
+    "node": ">=4",
     "npm": ">=2.x"
   },
   "browserify": {
