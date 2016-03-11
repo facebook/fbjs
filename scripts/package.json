@@ -20,7 +20,7 @@
     "babel-plugin-syntax-object-rest-spread": "^6.5.0",
     "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
     "del": "^2.2.0",
-    "eslint": "^2.3.0",
+    "eslint": "~2.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-flatten": "^0.2.0",
