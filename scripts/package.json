@@ -2,34 +2,16 @@
   "name": "fbjs-scripts",
   "version": "0.6.0",
   "description": "A bundle of helpful scripts used in projects consuming fbjs.",
+  "repository": "facebook/fbjs",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "babel": "^5.4.7",
+    "babel-core": "^6.7.2",
+    "babel-preset-fbjs": "^1.0.0",
     "core-js": "^1.0.0",
     "cross-spawn": "^2.1.5",
     "gulp-util": "^3.0.4",
     "object-assign": "^4.0.1",
     "semver": "^5.1.0",
     "through2": "^2.0.0"
-  },
-  "devDependencies": {
-    "babel-core": "^6.3.17",
-    "jest-cli": "^0.10.0"
-  },
-  "scripts": {
-    "test": "NODE_ENV=test jest"
-  },
-  "jest": {
-    "modulePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "persistModuleRegistryBetweenSpecs": true,
-    "rootDir": "",
-    "testPathDirs": [
-      "<rootDir>"
-    ],
-    "unmockedModulePathPatterns": [
-      ""
-    ]
   }
 }
