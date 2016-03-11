@@ -11,7 +11,6 @@
 
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
 
 function buildCacheKey(files, base) {
   return files.reduce(
