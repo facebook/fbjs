@@ -36,7 +36,7 @@ function getScrollPosition(scrollable) {
 
   const viewport =
     scrollable === documentScrollElement ?
-      document.documentElement :
+      document.body :
       scrollable;
 
   const xMax = scrollable.scrollWidth - viewport.clientWidth;
