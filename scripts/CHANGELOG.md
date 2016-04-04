@@ -3,12 +3,18 @@
 ### Added
 - [babel] Added rewrite-modules plugin for Babel 6
 - [babel] Added dev-expression plugin for Babel 6
+- [babel] Added default-options for Babel 6
 - [gulp] Added strip-provides-module to strip `@providesModule` headers
 - [gulp] Added check-dependencies to ensure installed packages are compatible with package.json specification
 - [node] Added check-lib-requires script to ensure all lib files can be required
 
+### Changed
+- [lint] Moved ESLint config from `eslint/.eslintrc` to `eslint/.eslintrc.js`. requires ESLint >= v1.10.
+- [lint] Base config updated to match internal config
+
 ### Fixed
 - [babel] Fixed the rewrite-modules plugin to support more Jest methods
+- [babel] Removed dependency on babel-types
 
 
 ## [0.5.0] - 2015-11-11

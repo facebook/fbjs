@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+### Added
+- Several additional modules. Notably, a collection of Unicode utilities and many new `functional` helpers.
+- `CSSCore`: added `matchesSelector` method
+
+### Changed
+- Copyright headers updated to reflect current boilerplate
+- `@providesModule` headers removed from generated source code
+- Flow files now contain relative requires, improving compatibility with Haste and CommonJS module systems
+
+### Fixed
+- `isEmpty`: Protect from breaking in environments without `Symbol` defined
+
+
 ## [0.7.2] - 2016-02-05
 
 ### Fixed
