@@ -50,14 +50,14 @@ if (process.env.NODE_ENV !== 'production') {
   it('should replace warning calls', () => {
     compare(
       `warning(condition, 'a %s b', 'c');`,
-      `process.env.NODE_ENV !== 'production' ? warning(condition, 'a %s b', 'c') : undefined;`
+      `process.env.NODE_ENV !== 'production' ? warning(condition, 'a %s b', 'c') : void 0;`
     );
   });
 
   it('should replace invariant calls', () => {
     compare(
       `invariant(condition, 'a %s b', 'c');`,
-      `!condition ? process.env.NODE_ENV !== 'production' ? invariant(false, 'a %s b', 'c') : invariant(false) : undefined;`
+      `!condition ? process.env.NODE_ENV !== 'production' ? invariant(false, 'a %s b', 'c') : invariant(false) : void 0;`
     );
   });
 });
