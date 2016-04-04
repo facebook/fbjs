@@ -39,8 +39,8 @@ var moduleMapOpts = {
   prefix: 'fbjs/lib/',
 };
 
-gulp.task('clean', function(cb) {
-  del([paths.lib.dest, paths.mocks.dest], cb);
+gulp.task('clean', function() {
+  return del([paths.lib.dest, paths.mocks.dest]);
 });
 
 gulp.task('lib', function() {

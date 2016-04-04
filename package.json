@@ -41,7 +41,7 @@
     "babel-plugin-transform-es3-property-literals": "^6.5.0",
     "babel-plugin-transform-flow-strip-types": "^6.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.5.0",
-    "del": "^1.2.1",
+    "del": "^2.2.0",
     "eslint": "1.10.3",
     "fbjs-scripts": "file:scripts",
     "flow-bin": "^0.22.1",
