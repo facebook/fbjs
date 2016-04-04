@@ -50,7 +50,7 @@
     "gulp-flatten": "^0.2.0",
     "gulp-rename": "^1.2.2",
     "immutable": "^3.7.5",
-    "jest-cli": "^0.8.2",
+    "jest-cli": "^0.10.0",
     "merge-stream": "^1.0.0",
     "object-assign": "^4.0.1",
     "run-sequence": "^1.1.0"
@@ -79,7 +79,6 @@
     "testPathDirs": [
       "<rootDir>/src"
     ],
-    "testRunner": "node_modules/jest-cli/src/testRunners/jasmine/jasmine2.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/src/(?!(__forks__/fetch.js$|fetch/))"

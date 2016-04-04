@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.3.17",
-    "jest-cli": "^0.8.2"
+    "jest-cli": "^0.10.0"
   },
   "scripts": {
     "test": "NODE_ENV=test jest"
