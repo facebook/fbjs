@@ -24,8 +24,8 @@ var inlineRequiredDependencyMap;
  * Continuing with the example above, this replaces all references to `Foo` in
  * the module to `require('ModuleFoo')`.
  */
-module.exports = function fbjsInlineRequiresTransform() {
-  var t = require('babel-types');
+module.exports = function fbjsInlineRequiresTransform(babel) {
+  var t = babel.types;
 
   function buildRequireCall(name) {
     var call = t.callExpression(
