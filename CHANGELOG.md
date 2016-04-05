@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## [0.8.0] - 2016-04-04
+
 ### Added
 - Several additional modules. Notably, a collection of Unicode utilities and many new `functional` helpers.
 - `CSSCore`: added `matchesSelector` method

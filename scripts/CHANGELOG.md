@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## [0.6.0] - 2016-04-04
+
 ### Added
 - [babel] Added rewrite-modules plugin for Babel 6
 - [babel] Added dev-expression plugin for Babel 6
