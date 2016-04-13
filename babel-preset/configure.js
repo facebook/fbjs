@@ -19,13 +19,37 @@ module.exports = function(options) {
     inlineRequires: process.env.NODE_ENV === 'test',
     rewriteModules: null, // {map: ?{[module: string]: string}, prefix: ?string}
     stripDEV: false,
+    target: 'js',
   }, options);
 
-  // Use two passes to circumvent bug with auto-importer and inline-requires.
-  const passPresets = [
+  if (options.target !== 'js' && options.target !== 'flow') {
+    throw new Error('options.target must be one of "js" or "flow".');
+  }
+
+  // Always enable these. These will overlap with some transforms (which also
+  // enable the corresponding syntax, eg Flow), but these are the minimal
+  // additional syntaxes that need to be enabled so we can minimally transform
+  // to .js.flow files as well.
+  let presetSets = [
     [
-      require('babel-plugin-transform-flow-strip-types'),
+      require('babel-plugin-syntax-flow'),
       require('babel-plugin-syntax-trailing-function-commas'),
+      require('babel-plugin-syntax-object-rest-spread'),
+
+      options.autoImport ? require('./plugins/auto-importer') : null,
+      options.rewriteModules ?
+        [require('./plugins/rewrite-modules'), options.rewriteModules || {}] :
+        null,
+    ],
+    [
+      options.inlineRequires ? require('./plugins/inline-requires') : null,
+      options.stripDEV ? require('./plugins/dev-expression') : null,
+    ]
+  ];
+
+  // Enable everything else for js.
+  if (options.target === 'js') {
+    presetSets[0] = presetSets[0].concat([
       require('babel-plugin-transform-es2015-template-literals'),
       require('babel-plugin-transform-es2015-literals'),
       require('babel-plugin-transform-es2015-arrow-functions'),
@@ -44,18 +68,13 @@ module.exports = function(options) {
       require('babel-plugin-transform-es2015-modules-commonjs'),
       require('babel-plugin-transform-es3-member-expression-literals'),
       require('babel-plugin-transform-es3-property-literals'),
+      require('babel-plugin-transform-flow-strip-types'),
       require('babel-plugin-transform-object-rest-spread'),
+    ]);
+  }
 
-      options.autoImport ? require('./plugins/auto-importer') : null,
-      options.rewriteModules ?
-        [require('./plugins/rewrite-modules'), options.rewriteModules || {}] :
-        null,
-    ],
-    [
-      options.inlineRequires ? require('./plugins/inline-requires') : null,
-      options.stripDEV ? require('./plugins/dev-expression') : null,
-    ],
-  ].map(function(plugins) {
+  // Use two passes to circumvent bug with auto-importer and inline-requires.
+  const passPresets = presetSets.map(function(plugins) {
     return {
       plugins: plugins.filter(function(plugin) {
         return plugin != null;

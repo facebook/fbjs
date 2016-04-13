@@ -15,11 +15,7 @@
     "typecheck": "flow check src"
   },
   "devDependencies": {
-    "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.3",
-    "babel-plugin-syntax-flow": "^6.5.0",
-    "babel-plugin-syntax-object-rest-spread": "^6.5.0",
-    "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
     "babel-preset-fbjs": "file:babel-preset",
     "del": "^2.2.0",
     "eslint": "^2.8.0",

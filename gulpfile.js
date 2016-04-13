@@ -85,12 +85,12 @@ gulp.task('flow', function() {
     .pipe(gulpModuleMap(rewriteOptions))
     .pipe(gulpBabel({
       presets: [
-        fbjsConfigurePreset(paths.lib.presetOptions),
-      ],
-      plugins: [
-        require('babel-plugin-syntax-flow'),
-        require('babel-plugin-syntax-trailing-function-commas'),
-        require('babel-plugin-syntax-object-rest-spread'),
+        fbjsConfigurePreset({
+          target: 'flow',
+          rewriteModules: {
+            map: require('fbjs-scripts/third-party-module-map'),
+          },
+        }),
       ],
     }))
     .pipe(flatten())

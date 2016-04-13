@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "babel-plugin-check-es2015-constants": "^6.7.2",
+    "babel-plugin-syntax-flow": "^6.5.0",
+    "babel-plugin-syntax-object-rest-spread": "^6.5.0",
     "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
     "babel-plugin-transform-class-properties": "^6.6.0",
     "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
