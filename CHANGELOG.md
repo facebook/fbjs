@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 
+## [0.8.1] - 2016-04-18
+
+## Added
+- We now include a `Promise` class definition in `flow/lib` to account for the changes in Flow v0.23 which removed non-spec methods. This will allow our code to continue typechecking while using these methods.
+
+
 ## [0.8.0] - 2016-04-04
 
 ### Added
