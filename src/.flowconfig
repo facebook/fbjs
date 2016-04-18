@@ -13,4 +13,4 @@ module.system=haste
 suppress_type=$FlowIssue
 
 [version]
-0.22.1
+0.23.0

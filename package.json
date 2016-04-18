@@ -44,7 +44,7 @@
     "del": "^2.2.0",
     "eslint": "1.10.3",
     "fbjs-scripts": "file:scripts",
-    "flow-bin": "^0.22.1",
+    "flow-bin": "^0.23.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.0.0",
     "gulp-flatten": "^0.2.0",
