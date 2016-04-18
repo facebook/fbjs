@@ -1,4 +1,3 @@
 node_modules
-lib
+lib/*
 module-map.json
-flow/include
