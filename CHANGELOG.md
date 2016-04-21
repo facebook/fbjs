@@ -1,7 +1,15 @@
 ## [Unreleased]
 
+### Added
+- `Deferred`: added `Deferred.prototype.catch` to avoid having to call this directly on the Promise.
+- `UnicodeUtilsExtra`: added several methods for escaping strings.
+
+### Changed
+- More Flow annotations: `containsNode`, `emptyFunction`, `memoizeStringOnly`
+
 ### Fixed
 - Type imports in .js.flow files are now properly using relative paths.
+- `DataTransfer`: handle Firefox better
 
 
 ## [0.8.2] - 2016-05-05
