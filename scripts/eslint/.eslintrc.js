@@ -36,9 +36,13 @@ const ERROR = 2;
 //   var Foo = require('Foo');
 //   var Bar = require('Foo').Bar;
 //   var BarFoo = require(Bar + 'Foo');
+//   var {Bar, Foo} = require('Foo');
+//   import type {Bar, Foo} from 'Foo';
 // Also supports 'let' and 'const'.
-const maxLenIgnorePattern = '^(?:var|let|const)\\s+[a-zA-Z_\\$][a-zA-Z_\\$\\d]*' +
-  '\\s*=\\s*require\\(["\'a-zA-Z_\\+\\.\\s\\d_\\-\\/]+\\)[^;\\n]*[;\\n]';
+const variableNamePattern = String.raw`\s*[a-zA-Z_$][a-zA-Z_$\d]*\s*`;
+const maxLenIgnorePattern = String.raw`^(?:var|let|const|import type)\s+` +
+  '{?' + variableNamePattern + '(?:,' + variableNamePattern + ')*}?' +
+  String.raw`\s*(?:=\s*require\(|from)[a-zA-Z_+./"'\s\d\-]+\)?[^;\n]*[;\n]`;
 
 function getBaseConfig() {
   return {
