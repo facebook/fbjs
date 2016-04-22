@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Changed
+- [lint] Upgraded config to match latest internal config. Requires ESLint >= v2.0.0 (may be using newer rules).
+
 
 ## [0.6.0] - 2016-04-04
 

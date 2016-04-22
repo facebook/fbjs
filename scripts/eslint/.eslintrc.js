@@ -43,14 +43,9 @@ const maxLenIgnorePattern = '^(?:var|let|const)\\s+[a-zA-Z_\\$][a-zA-Z_\\$\\d]*'
 function getBaseConfig() {
   return {
     parser: 'babel-eslint',
-
-    // babel-eslint handles most of these, but ESLint checks some of these flags
-    // in a few places, so we need to set them here as well.
-    ecmaFeatures: {
-      // needed for context.markVariableAsUsed to work
-      // the upstream eslint-plugin-react implementation has it's own copy of
-      // markVariableAsUsed which ignores the check, but we don't.
-      modules: true,
+    parserOptions: {
+      ecmaVersion: 6,
+      sourceType: 'module',
     },
 
     // Tries to match the jshint configuration as closely as possible, with the
@@ -153,8 +148,6 @@ function getBaseConfig() {
       'no-div-regex': OFF,
       // we don't do this/care about this
       'no-else-return': OFF,
-      // equivalent to jshint W028
-      'no-empty-label': ERROR,
       // avoid mistaken variables when destructuring
       'no-empty-pattern': WARNING,
       // see eqeqeq: we explicitly allow this, equivalent to jshint eqnull
@@ -177,8 +170,10 @@ function getBaseConfig() {
       'no-invalid-this': OFF,
       // babel should handle this fine
       'no-iterator': OFF,
-      // this is occasionally useful, and jshint allowed it
-      'no-labels': OFF,
+      // Should be effectively equivalent to jshint W028 - allowing the use
+      // of labels in very specific situations. ESLint no-empty-labels was
+      // deprecated.
+      'no-labels': [ERROR, {allowLoop: true, allowSwitch: true}],
       // lone blocks create no scope, will ignore blocks with let/const
       'no-lone-blocks': WARNING,
       // equivalent to jshint loopfunc
@@ -308,6 +303,7 @@ function getBaseConfig() {
       'jsx-quotes': [WARNING, 'prefer-double'],
       // we may use extra spaces for alignment
       'key-spacing': [OFF, {beforeColon: false, afterColon: true}],
+      'keyword-spacing': [WARNING],
       'lines-around-comment': OFF,
       // should be handled by a generic TXT linter instead
       'linebreak-style': [OFF, 'unix'],
@@ -365,8 +361,6 @@ function getBaseConfig() {
       // equivalent to jshint asi/W032
       'semi': [WARNING, 'always'],
       'sort-vars': OFF,
-      // require `if ()` instead of `if()`
-      'space-after-keywords': [WARNING, 'always'],
       // require `if () {` instead of `if (){`
       'space-before-blocks': [WARNING, 'always'],
       // require `function foo()` instead of `function foo ()`
@@ -374,13 +368,9 @@ function getBaseConfig() {
         WARNING,
         {anonymous: 'never', named: 'never'},
       ],
-      // require `} else {` instead of `}else {`
-      'space-before-keywords': [WARNING, 'always'],
       // incompatible with our legacy inline type annotations
       'space-in-parens': [OFF, 'never'],
       'space-infix-ops': OFF,
-      // require `return -a` instead of `return-a`
-      'space-return-throw-case': WARNING,
       // Currently broken: https://github.com/eslint/eslint/issues/2764
       'space-unary-ops': [OFF, {words: true, nonwords: false}],
       // TODO: Figure out a way to do this that doesn't break typechecks
@@ -399,8 +389,8 @@ function getBaseConfig() {
       'constructor-super': ERROR,
       // https://github.com/babel/babel-eslint#known-issues
       'generator-star-spacing': OFF,
-      'no-arrow-condition': OFF,
       'no-class-assign': WARNING,
+      'no-confusing-arrow': OFF,
       // this is a runtime error
       'no-const-assign': ERROR,
       'no-dupe-class-members': ERROR,
@@ -421,6 +411,7 @@ function getBaseConfig() {
     // Defines a basic set of globals
     env: {
       browser: true,
+      es6: true,
     },
 
     // The jshint code had more globals, which may have had something to do with
@@ -530,7 +521,6 @@ var extendedConfig = {
     node: true,
     jest: true,
     jasmine: true,
-    es6: true,
   },
   rules: {
     // just turned into an error here since we almost always do that anyway.
