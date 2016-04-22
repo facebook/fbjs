@@ -18,7 +18,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "babel-core": "^6.0.0",
-    "babel-eslint": "^5.0.0",
+    "babel-eslint": "^6.0.3",
     "babel-plugin-check-es2015-constants": "^6.5.0",
     "babel-plugin-syntax-object-rest-spread": "^6.3.13",
     "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
@@ -42,7 +42,7 @@
     "babel-plugin-transform-flow-strip-types": "^6.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.5.0",
     "del": "^2.2.0",
-    "eslint": "1.10.3",
+    "eslint": "^2.8.0",
     "fbjs-scripts": "file:scripts",
     "flow-bin": "^0.23.0",
     "gulp": "^3.9.0",
