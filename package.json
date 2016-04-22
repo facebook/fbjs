@@ -11,7 +11,7 @@
     "prepublish": "npm run build",
     "pretest": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "test": "NODE_ENV=test jest",
-    "test-plugins": "cd babel-preset && npm install && cd plugins && npm test",
+    "test-babel-presets": "cd babel-preset && npm install && npm test",
     "typecheck": "flow check src"
   },
   "devDependencies": {
