@@ -86,6 +86,7 @@ gulp.task('flow', function() {
     .pipe(gulpBabel({
       presets: [
         fbjsConfigurePreset({
+          autoImport: false,
           target: 'flow',
           rewriteModules: {
             map: require('fbjs-scripts/third-party-module-map'),
