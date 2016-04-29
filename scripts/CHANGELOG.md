@@ -2,6 +2,10 @@
 
 ### Changed
 - [lint] Upgraded config to match latest internal config. Requires ESLint >= v2.0.0 (may be using newer rules).
+- [babel] `babel/default-options` expects Babel 6 and `babel-preset-fbjs` to be installed.
+
+### Removed
+- [babel] Moved all plugins into new `babel-preset-fbjs` package.
 
 
 ## [0.6.0] - 2016-04-04

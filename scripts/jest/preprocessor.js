@@ -9,23 +9,27 @@
 
 'use strict';
 
-const assign = require('object-assign');
-const babel = require('babel');
-const babelDefaultOptions = require('../babel/default-options');
+const babel = require('babel-core');
 const createCacheKeyFunction = require('./createCacheKeyFunction');
+const path = require('path');
 
 module.exports = {
   process(src, filename) {
-    return babel.transform(src, assign(
-      {},
-      babelDefaultOptions,
-      {
-        filename: filename,
-        retainLines: true,
-      }
-    )).code;
+    const options = {
+      presets: [
+        require('babel-preset-fbjs'),
+      ],
+      filename: filename,
+      retainLines: true,
+    };
+    return babel.transform(src, options).code;
   },
 
-  // Generate a cache key that is based on the module and transform data.
-  getCacheKey: createCacheKeyFunction([__filename]),
+  // Generate a cache key that is based on the contents of this file and the
+  // fbjs preset package.json (used as a proxy for determining if the preset has
+  // changed configuration at all).
+  getCacheKey: createCacheKeyFunction([
+    __filename,
+    path.join(path.dirname(require.resolve('babel-preset-fbjs')), 'package.json')
+  ]),
 };

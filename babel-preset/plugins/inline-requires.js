@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -28,50 +28,54 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
   var t = babel.types;
 
   function buildRequireCall(name) {
-    return t.callExpression(
+    var call = t.callExpression(
       t.identifier('require'),
-      [t.literal(inlineRequiredDependencyMap[name])]
+      [t.stringLiteral(inlineRequiredDependencyMap[name])]
     );
+    call.new = true;
+    return call;
   }
 
-  return new babel.Transformer('fbjs.inline-requires', {
-    Program: {
-      enter: function(node, parent, scope, state) {
+  return {
+    visitor: {
+      Program: function() {
         resetCollection();
       },
-    },
 
-    /**
-     * Collect top-level require(...) aliases.
-     */
-    CallExpression: {
-      enter: function(node, parent, scope) {
-        if (isTopLevelRequireAlias(this)) {
-          var varName = parent.id.name;
+      /**
+       * Collect top-level require(...) aliases.
+       */
+      CallExpression: function(path) {
+        var node = path.node;
+
+        if (isTopLevelRequireAlias(path)) {
+          var varName = path.parent.id.name;
           var moduleName = node.arguments[0].value;
 
           inlineRequiredDependencyMap[varName] = moduleName;
 
           // Remove the declaration.
-          this.parentPath.parentPath.dangerouslyRemove();
+          path.parentPath.parentPath.remove();
           // And the associated binding in the scope.
-          scope.removeBinding(varName);
+          path.scope.removeBinding(varName);
         }
       },
-    },
 
-    /**
-     * Inline require(...) aliases.
-     */
-    Identifier: {
-      enter: function(node, parent, scope, state) {
+      /**
+       * Inline require(...) aliases.
+       */
+      Identifier: function(path) {
+        var node = path.node;
+        var parent = path.parent;
+        var scope = path.scope;
+
         if (!shouldInlineRequire(node, scope)) {
-          return node;
+          return;
         }
 
         if (
           parent.type === 'AssignmentExpression' &&
-          this.isBindingIdentifier() &&
+          path.isBindingIdentifier() &&
           !scope.bindingIdentifierEquals(node.name, node)
         ) {
           throw new Error(
@@ -80,10 +84,12 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
           );
         }
 
-        return this.isReferenced() ? buildRequireCall(node.name) : node;
+        path.replaceWith(
+          path.isReferenced() ? buildRequireCall(node.name) : node
+        );
       },
     },
-  });
+  };
 };
 
 function resetCollection() {
@@ -103,11 +109,12 @@ function isTopLevelRequireAlias(path) {
 
 function isRequireCall(node) {
   return (
+    !node.new &&
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
     node.callee.name === 'require' &&
     node['arguments'].length === 1 &&
-    node['arguments'][0].type === 'Literal'
+    node['arguments'][0].type === 'StringLiteral'
   );
 }
 

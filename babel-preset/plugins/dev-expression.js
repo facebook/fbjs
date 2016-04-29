@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2015, Facebook, Inc.
+ * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -34,7 +34,7 @@ module.exports = function(babel) {
         enter: function(path) {
           // Do nothing when testing
           if (process.env.NODE_ENV === 'test') {
-            return undefined;
+            return;
           }
           // replace __DEV__ with process.env.NODE_ENV !== 'production'
           if (path.isIdentifier({name: '__DEV__'})) {

@@ -1,4 +1,2 @@
 node_modules
 npm-debug.log
-lib/*
-module-map.json

@@ -1,0 +1,54 @@
+{
+  "name": "babel-preset-fbjs",
+  "version": "1.0.0",
+  "description": "Babel preset for Facebook projects.",
+  "repository": "facebook/fbjs",
+  "license": "BSD-3-Clause",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test jest"
+  },
+  "dependencies": {
+    "babel-plugin-check-es2015-constants": "^6.7.2",
+    "babel-plugin-syntax-flow": "^6.5.0",
+    "babel-plugin-syntax-object-rest-spread": "^6.5.0",
+    "babel-plugin-syntax-trailing-function-commas": "^6.5.0",
+    "babel-plugin-transform-class-properties": "^6.6.0",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
+    "babel-plugin-transform-es2015-block-scoped-functions": "^6.6.5",
+    "babel-plugin-transform-es2015-block-scoping": "^6.7.1",
+    "babel-plugin-transform-es2015-classes": "^6.6.5",
+    "babel-plugin-transform-es2015-computed-properties": "^6.6.5",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.5",
+    "babel-plugin-transform-es2015-for-of": "^6.6.0",
+    "babel-plugin-transform-es2015-literals": "^6.5.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.7.0",
+    "babel-plugin-transform-es2015-object-super": "^6.6.5",
+    "babel-plugin-transform-es2015-parameters": "^6.7.0",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-plugin-transform-es2015-spread": "^6.6.5",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.5",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.5.0",
+    "babel-plugin-transform-es3-property-literals": "^6.5.0",
+    "babel-plugin-transform-flow-strip-types": "^6.7.0",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "object-assign": "^4.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.2",
+    "jest-cli": "^0.9.1"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "persistModuleRegistryBetweenSpecs": true,
+    "rootDir": "",
+    "testPathDirs": [
+      "<rootDir>"
+    ],
+    "unmockedModulePathPatterns": [
+      ""
+    ]
+  }
+}
