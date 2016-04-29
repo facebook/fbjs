@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## [0.7.0] - 2016-04-28
+
 ### Changed
 - [lint] Upgraded config to match latest internal config. Requires ESLint >= v2.0.0 (may be using newer rules).
 - [babel] `babel/default-options` expects Babel 6 and `babel-preset-fbjs` to be installed.
