@@ -35,7 +35,7 @@ Right now these packages represent a subset of packages that we use internally a
 
 ### Process
 
-Since we use `@providesModule`, we need to rewrite requires to be relative. Thanks to `@providesModule` requiring global uniqueness, we can do this easily. Eventually we'll try to make this part of the process go away by making more projects use CommmonJS.
+Since we use `@providesModule`, we need to rewrite requires to be relative. Thanks to `@providesModule` requiring global uniqueness, we can do this easily. Eventually we'll try to make this part of the process go away by making more projects use CommonJS.
 
 
 ## TODO
