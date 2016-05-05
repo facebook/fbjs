@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Changed
+- Upgraded `core-js` dependency
+
 
 ## [0.8.1] - 2016-04-18
 
