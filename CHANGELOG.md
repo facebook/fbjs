@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.8.2] - 2016-05-05
+
+## Removed
+- Removed extraneous production dependency
+
 
 ## [0.8.1] - 2016-04-18
 
