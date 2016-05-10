@@ -33,6 +33,7 @@ module.exports = function(options) {
   let presetSets = [
     [
       require('babel-plugin-syntax-flow'),
+      require('babel-plugin-syntax-jsx'),
       require('babel-plugin-syntax-trailing-function-commas'),
       require('babel-plugin-syntax-object-rest-spread'),
 
@@ -70,6 +71,8 @@ module.exports = function(options) {
       require('babel-plugin-transform-es3-property-literals'),
       require('babel-plugin-transform-flow-strip-types'),
       require('babel-plugin-transform-object-rest-spread'),
+      require('babel-plugin-transform-react-display-name'),
+      require('babel-plugin-transform-react-jsx'),
     ]);
   }
 
