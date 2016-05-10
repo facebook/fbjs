@@ -32,6 +32,7 @@ module.exports = function(options) {
   // to .js.flow files as well.
   let presetSets = [
     [
+      require('babel-plugin-syntax-class-properties'),
       require('babel-plugin-syntax-flow'),
       require('babel-plugin-syntax-jsx'),
       require('babel-plugin-syntax-trailing-function-commas'),
@@ -53,6 +54,7 @@ module.exports = function(options) {
     presetSets[0] = presetSets[0].concat([
       require('babel-plugin-transform-es2015-template-literals'),
       require('babel-plugin-transform-es2015-literals'),
+      require('babel-plugin-transform-es2015-function-name'),
       require('babel-plugin-transform-es2015-arrow-functions'),
       require('babel-plugin-transform-es2015-block-scoped-functions'),
       require('babel-plugin-transform-class-properties'),
