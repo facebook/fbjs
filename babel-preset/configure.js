@@ -11,10 +11,8 @@
 
 /* eslint-disable indent */
 
-const assign = require('object-assign');
-
 module.exports = function(options) {
-  options = assign({
+  options = Object.assign({
     autoImport: true,
     inlineRequires: process.env.NODE_ENV === 'test',
     objectAssign: true,
