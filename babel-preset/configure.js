@@ -17,6 +17,7 @@ module.exports = function(options) {
   options = assign({
     autoImport: true,
     inlineRequires: process.env.NODE_ENV === 'test',
+    objectAssign: true,
     rewriteModules: null, // {map: ?{[module: string]: string}, prefix: ?string}
     stripDEV: false,
     target: 'js',
@@ -75,6 +76,8 @@ module.exports = function(options) {
       require('babel-plugin-transform-object-rest-spread'),
       require('babel-plugin-transform-react-display-name'),
       require('babel-plugin-transform-react-jsx'),
+      // Don't enable this plugin unless we're compiling JS, even if the option is true
+      options.objectAssign ? require('./plugins/object-assign') : null,
     ]);
   }
 
