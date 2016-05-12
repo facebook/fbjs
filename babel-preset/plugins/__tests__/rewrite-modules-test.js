@@ -33,6 +33,20 @@ describe('rewrite-modules', function() {
         expect(result.code).toEqual('require(\'test/test\');');
       });
 
+      it('should replace the prefix on type imports', function() {
+        let result = babel.transform(
+          'import type Test from "test";',
+          {
+            plugins: [
+              'syntax-flow',
+              [rewriteModules, {map: {'test': 'test/test'}}]
+            ],
+          }
+        );
+
+        expect(result.code).toEqual('import type Test from "test/test";');
+      });
+
       it('should transform jest and requireActual methods', function() {
         const code = `function test() {
           'use strict';
