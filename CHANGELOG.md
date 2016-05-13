@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- Type imports in .js.flow files are now properly using relative paths.
+
+
 ## [0.8.2] - 2016-05-05
 
 ## Removed
