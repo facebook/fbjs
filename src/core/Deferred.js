@@ -48,6 +48,10 @@ class Deferred<Tvalue, Treason> {
     this._reject(reason);
   }
 
+  catch(): Promise {
+    return Promise.prototype.catch.apply(this._promise, arguments);
+  }
+
   then(): Promise {
     return Promise.prototype.then.apply(this._promise, arguments);
   }
