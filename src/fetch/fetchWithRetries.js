@@ -40,7 +40,7 @@ const DEFAULT_RETRIES = [1000, 3000];
 function fetchWithRetries(
   uri: string,
   initWithRetries?: ?InitWithRetries
-): Promise {
+): Promise<any> {
   const {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
   const _fetchTimeout = fetchTimeout != null ? fetchTimeout : DEFAULT_TIMEOUT;
   const _retryDelays = retryDelays != null ? retryDelays : DEFAULT_RETRIES;
