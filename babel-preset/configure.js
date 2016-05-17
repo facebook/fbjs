@@ -11,12 +11,11 @@
 
 /* eslint-disable indent */
 
-const assign = require('object-assign');
-
 module.exports = function(options) {
-  options = assign({
+  options = Object.assign({
     autoImport: true,
     inlineRequires: process.env.NODE_ENV === 'test',
+    objectAssign: true,
     rewriteModules: null, // {map: ?{[module: string]: string}, prefix: ?string}
     stripDEV: false,
     target: 'js',
@@ -32,7 +31,9 @@ module.exports = function(options) {
   // to .js.flow files as well.
   let presetSets = [
     [
+      require('babel-plugin-syntax-class-properties'),
       require('babel-plugin-syntax-flow'),
+      require('babel-plugin-syntax-jsx'),
       require('babel-plugin-syntax-trailing-function-commas'),
       require('babel-plugin-syntax-object-rest-spread'),
 
@@ -52,6 +53,7 @@ module.exports = function(options) {
     presetSets[0] = presetSets[0].concat([
       require('babel-plugin-transform-es2015-template-literals'),
       require('babel-plugin-transform-es2015-literals'),
+      require('babel-plugin-transform-es2015-function-name'),
       require('babel-plugin-transform-es2015-arrow-functions'),
       require('babel-plugin-transform-es2015-block-scoped-functions'),
       require('babel-plugin-transform-class-properties'),
@@ -70,6 +72,10 @@ module.exports = function(options) {
       require('babel-plugin-transform-es3-property-literals'),
       require('babel-plugin-transform-flow-strip-types'),
       require('babel-plugin-transform-object-rest-spread'),
+      require('babel-plugin-transform-react-display-name'),
+      require('babel-plugin-transform-react-jsx'),
+      // Don't enable this plugin unless we're compiling JS, even if the option is true
+      options.objectAssign ? require('./plugins/object-assign') : null,
     ]);
   }
 
