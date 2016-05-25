@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 
+## [0.7.1] - 2016-05-25
+
+### Added
+- `object-assign` and `immutable` are now included in `third-party-module-map.json`.
+
+### Changed
+- Upgraded `cross-spawn` dependency
+
+
 ## [0.7.0] - 2016-04-28
 
 ### Changed
