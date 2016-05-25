@@ -22,13 +22,13 @@ const invariant = require('invariant');
  * Also unlike a normal map, a key can either be resolved or rejected.
  */
 class PromiseMap<Tvalue, Treason> {
-  _deferred: {[key:string]: Deferred};
+  _deferred: {[key:string]: Deferred<any, any>};
 
   constructor() {
     this._deferred = {};
   }
 
-  get(key: string): Promise {
+  get(key: string): Promise<any> {
     return getDeferred(this._deferred, key).getPromise();
   }
 
@@ -46,9 +46,9 @@ class PromiseMap<Tvalue, Treason> {
 }
 
 function getDeferred(
-  entries: {[key: string]: Deferred},
+  entries: {[key: string]: Deferred<any, any>},
   key: string
-): Deferred {
+): Deferred<any, any> {
   if (!entries.hasOwnProperty(key)) {
     entries[key] = new Deferred();
   }
