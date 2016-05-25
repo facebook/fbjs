@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## [2.0.0] - 2016-05-25
+
 ### Added
 - More syntaxes are parsed for `.js.flow` file generation: `babel-plugin-syntax-class-properties` & `babel-plugin-syntax-jsx`
 - More transforms are applied for ES2015 and React support: `babel-plugin-transform-es2015-function-name`, `babel-plugin-transform-react-display-name`, `babel-plugin-transform-react-jsx`
