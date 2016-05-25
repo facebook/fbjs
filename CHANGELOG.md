@@ -1,11 +1,16 @@
 ## [Unreleased]
 
+
+## [0.8.3] - 2016-05-25
+
 ### Added
 - `Deferred`: added `Deferred.prototype.catch` to avoid having to call this directly on the Promise.
 - `UnicodeUtilsExtra`: added several methods for escaping strings.
 
 ### Changed
 - More Flow annotations: `containsNode`, `emptyFunction`, `memoizeStringOnly`
+- Added explicit `<any>` type arguments to in anticipation of a future Flow change requiring them.
+- `Object.assign` calls now replaced with usage of `object-assign` module.
 
 ### Fixed
 - Type imports in .js.flow files are now properly using relative paths.
