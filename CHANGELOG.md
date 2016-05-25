@@ -14,13 +14,13 @@
 
 ## [0.8.2] - 2016-05-05
 
-## Removed
+### Removed
 - Removed extraneous production dependency
 
 
 ## [0.8.1] - 2016-04-18
 
-## Added
+### Added
 - We now include a `Promise` class definition in `flow/lib` to account for the changes in Flow v0.23 which removed non-spec methods. This will allow our code to continue typechecking while using these methods.
 
 
@@ -47,11 +47,13 @@
 ### Removed
 - Backed out rejection tracking for React Native `Promise` implementation. That code now lives in React Native.
 
+
 ## [0.7.1] - 2016-02-02
 
 ### Fixed
 
 - Corrected require path issue for native `Promise` module
+
 
 ## [0.7.0] - 2016-01-27
 
@@ -67,20 +69,24 @@
 - `fetch`: Switched to `isomorphic-fetch` when a global implementation is missing
 - `shallowEqual`: handles `NaN` values appropriately (as equal), now using `Object.is` semantics
 
+
 ## [0.6.1] - 2016-01-06
 
 ### Changed
 - `getActiveElement`: no longer throws in non-browser environment (again)
+
 
 ## [0.6.0] - 2015-12-29
 
 ### Changed
 - Flow: Original source files in `fbjs/flow/include` have been removed in favor of placing original files alongside compiled files in lib with a `.flow` suffix. This requires Flow version 0.19 or greater and a change to `.flowconfig` files to remove the include path.
 
+
 ## [0.5.1] - 2015-12-13
 
 ### Added
 - `base62` module
+
 
 ## [0.5.0] - 2015-12-04
 
@@ -88,21 +94,25 @@
 
 - `getActiveElement`: No longer handles a non-existent `document`
 
+
 ## [0.4.0] - 2015-10-16
 
 ### Changed
 
 - `invariant`: Message is no longer prefixed with "Invariant Violation: ".
 
+
 ## [0.3.2] - 2015-10-12
 
 ### Added
 - Apply appropriate transform (`loose-envify`) when bundling with `browserify`
 
+
 ## [0.3.1] - 2015-10-01
 
 ### Fixed
 - Ensure the build completes correctly before packaging
+
 
 ## [0.3.0] - 2015-10-01
 
