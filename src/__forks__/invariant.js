@@ -31,7 +31,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
   if (!condition) {
     var error;
-    if (format === undefined) {
+    if (typeof format !== 'string') {
       error = new Error(
         'Minified exception occurred; use the non-minified dev environment ' +
         'for the full error message and additional helpful warnings.'
