@@ -8,7 +8,7 @@ To make it easier for Facebook to share and consume our own JavaScript. Primaril
 
 ## Usage
 
-Any `@providesModule` modules that are used by your project should be added to `src/`. They will be built and added to `module-map.json`. This file will contain a map from `@providesModule` name to what will be published as `fbjs`. The `module-map.json` file can then be consumed in your own project, along with the [rewrite-modules](https://github.com/facebook/fbjs/blob/master/scripts/babel/rewrite-modules.js) Babel plugin (which we'll publish with this), to rewrite requires in your own project. Then, just make sure `fbjs` is a dependency in your `package.json` and your package will consume the shared code.
+Any `@providesModule` modules that are used by your project should be added to `src/`. They will be built and added to `module-map.json`. This file will contain a map from `@providesModule` name to what will be published as `fbjs`. The `module-map.json` file can then be consumed in your own project, along with the [rewrite-modules](https://github.com/facebook/fbjs/blob/master/babel-preset/plugins/rewrite-modules.js) Babel plugin (which we'll publish with this), to rewrite requires in your own project. Then, just make sure `fbjs` is a dependency in your `package.json` and your package will consume the shared code.
 
 ```js
 // Before transform
