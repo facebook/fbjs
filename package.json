@@ -1,0 +1,15 @@
+{
+  "name": "fbjs-build",
+  "private": true,
+  "devDependencies": {
+    "babel-eslint": "^6.1.0",
+    "eslint": "^3.0.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "fbjs:build": "cd packages/fbjs && npm install && npm run build",
+    "fbjs:test": "cd packages/fbjs && npm install && npm run test",
+    "fbjs:flow": "cd packages/fbjs && npm install && npm run flow",
+    "preset:test": "cd packages/babel-preset-fbjs && npm install && npm run test"
+  }
+}

@@ -1,4 +1,4 @@
 node_modules
 npm-debug.log
-lib/*
-module-map.json
+packages/fbjs/lib/*
+packages/fbjs/module-map.json
