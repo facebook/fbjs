@@ -50,6 +50,12 @@ function getBaseConfig() {
       sourceType: 'module',
     },
 
+    plugins: [
+      'babel',
+      'flow-vars',
+      'react',
+    ],
+
     // Tries to match the jshint configuration as closely as possible, with the
     // exeception of a few things that jshint doesn't check, but that we really
     // shouldn't be using anyways.
@@ -407,6 +413,76 @@ function getBaseConfig() {
       'prefer-template': OFF,
       // there are legitimate use-cases for an empty generator
       'require-yield': OFF,
+
+      // eslint-plugin-babel <https://github.com/babel/eslint-plugin-babel>
+      'babel/generator-star-spacing': OFF,
+      'babel/new-cap': OFF,
+      'babel/array-bracket-spacing': OFF,
+      'babel/object-curly-spacing': OFF,
+      'babel/object-shorthand': OFF,
+      'babel/arrow-parens': OFF,
+      'babel/no-await-in-loop': OFF,
+      'babel/flow-object-type': [WARNING, 'comma'],
+
+      // eslint-plugin-react <https://github.com/yannickcr/eslint-plugin-react>
+      // TODO: We're being extremely conservative here as we roll out eslint on
+      // www. As we finish rollout, we can turn on more of these, and replace
+      // some legacy regex rules in the process.
+      'react/display-name': OFF,
+      'react/forbid-prop-types': OFF,
+      'react/jsx-boolean-value': OFF,
+      'react/jsx-closing-bracket-location': OFF,
+      'react/jsx-curly-spacing': OFF,
+      'react/jsx-equals-spacing': WARNING,
+      'react/jsx-filename-extension': OFF,
+      'react/jsx-first-prop-new-line': OFF,
+      'react/jsx-handler-names': OFF,
+      'react/jsx-indent': OFF,
+      'react/jsx-indent-props': OFF,
+      'react/jsx-key': OFF,
+      'react/jsx-max-props-per-line': OFF,
+      'react/jsx-no-bind': OFF,
+      'react/jsx-no-duplicate-props': ERROR,
+      'react/jsx-no-literals': OFF,
+      'react/jsx-no-target-blank': OFF,
+      'react/jsx-no-undef': ERROR,
+      'react/jsx-pascal-case': OFF,
+      'react/jsx-sort-props': OFF,
+      'react/jsx-space-before-closing': OFF,
+      // forked to fb-www/jsx-uses-react
+      'react/jsx-uses-react': OFF,
+      'react/jsx-uses-vars': ERROR,
+      'react/no-comment-textnodes': OFF,
+      'react/no-danger': OFF,
+      'react/no-deprecated': OFF,
+      'react/no-did-mount-set-state': OFF,
+      'react/no-did-update-set-state': OFF,
+      'react/no-direct-mutation-state': OFF,
+      'react/no-is-mounted': WARNING,
+      'react/no-multi-comp': OFF,
+      'react/no-render-return-value': OFF,
+      'react/no-set-state': OFF,
+      'react/no-string-refs': OFF,
+      'react/no-unknown-property': OFF,
+      'react/prefer-es6-class': OFF,
+      'react/prefer-stateless-function': OFF,
+      'react/prop-types': OFF,
+      // forked to fb-www/react-in-jsx-scope
+      'react/react-in-jsx-scope': OFF,
+      'react/require-extension': OFF,
+      'react/require-optimization': OFF,
+      'react/require-render-return': OFF,
+      'react/self-closing-comp': OFF,
+      'react/sort-comp': OFF,
+      'react/sort-prop-types': OFF,
+      'react/wrap-multilines': OFF,
+
+      // eslint-plugin-flow-vars
+      // These don't actually result in warnings. Enabling them ensures they run
+      // and mark variables as used, avoiding false positives with Flow
+      // annotations.
+      'flow-vars/define-flow-type': WARNING,
+      'flow-vars/use-flow-type': WARNING,
     },
 
     // Defines a basic set of globals
@@ -526,6 +602,13 @@ var extendedConfig = {
   rules: {
     // just turned into an error here since we almost always do that anyway.
     'no-undef': ERROR,
+
+    // Re-enable some forked rules. Good enough for open source
+    'comma-dangle': [WARNING, 'always-multiline'],
+
+    'react/jsx-uses-react': ERROR,
+    'react/react-in-jsx-scope': ERROR,
+
   },
 };
 

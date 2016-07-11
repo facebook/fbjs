@@ -5,7 +5,6 @@ For the most part, this configuration matches the ESLint configuration we have i
 There are several exceptions:
 
 - **No special cases for projects.** Some projects have stricter lint rules. Those configurations are not present here. If you open source a project with different configuration, just specify the overrides in your own repository's `.eslintrc`
-- **No plugins.** We make use of a number of third-party plugins internally. We don't sync that part of the config (yet).
 - **No fb-specific rules.** We have a number of custom rules internally that are not synced out. We may do that in the future. This means there are several things which we will not catch here but will be caught in Phabricator. Beware of that when relying on this configuration as your only linting process.
 
 ## Usage
@@ -13,7 +12,7 @@ There are several exceptions:
 ### Install:
 
 ```js
-npm install --save-dev eslint-config-fbjs
+npm install --save-dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flow-vars eslint-plugin-react eslint babel-eslint
 ```
 
 ### Configure

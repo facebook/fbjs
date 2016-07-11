@@ -5,6 +5,18 @@
 var ourRules = new Set(Object.keys(require('..').rules));
 var supportedRules = new Set(Object.keys(require('eslint/lib/load-rules')()));
 
+// Get plugins from package.json. Assume they're all in peerDependencies.
+var plugins =
+  Object.keys(require('../package.json').peerDependencies)
+    .filter((dep) => dep.startsWith('eslint-plugin'))
+    .map((dep) => dep.replace('eslint-plugin-', ''));
+
+plugins.forEach((plugin) => {
+  Object.keys(require(`eslint-plugin-${plugin}`).rules).forEach((rule) => {
+    supportedRules.add(`${plugin}/${rule}`);
+  });
+});
+
 var missing = new Set();
 var extra = new Set();
 
