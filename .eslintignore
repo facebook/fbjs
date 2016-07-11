@@ -1,6 +1,5 @@
-flow/
-lib/
-node_modules/
-scripts/node_modules/
+packages/fbjs/flow/
+packages/fbjs/lib/
+node_modules
 # TODO: Fix warnings upstream so this output becomes useful
-src/
+packages/fbjs/src/

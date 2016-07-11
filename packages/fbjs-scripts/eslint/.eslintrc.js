@@ -25,8 +25,6 @@
 
 'use strict';
 
-var assign = require('object-assign');
-
 // see http://eslint.org/docs/user-guide/configuring.html#configuring-rules
 const OFF = 0;
 const WARNING = 1;
@@ -533,7 +531,7 @@ var extendedConfig = {
 };
 
 Object.keys(extendedConfig).forEach((key) => {
-  config[key] = assign(config[key], extendedConfig[key]);
+  config[key] = Object.assign(config[key], extendedConfig[key]);
 });
 
 module.exports = config;

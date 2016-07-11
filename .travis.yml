@@ -2,9 +2,9 @@ language: node_js
 node_js:
   - "4"
 env:
-  - CMD=build
-  - CMD=test
-  - CMD=typecheck
   - CMD=lint
-  - CMD=test-babel-presets
+  - CMD=fbjs:build
+  - CMD=fbjs:test
+  - CMD=fbjs:flow
+  - CMD=preset:test
 script: npm run $CMD
