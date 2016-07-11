@@ -372,9 +372,8 @@ function getBaseConfig() {
       ],
       // incompatible with our legacy inline type annotations
       'space-in-parens': [OFF, 'never'],
-      'space-infix-ops': OFF,
-      // Currently broken: https://github.com/eslint/eslint/issues/2764
-      'space-unary-ops': [OFF, {words: true, nonwords: false}],
+      'space-infix-ops': [WARNING, {int32Hint: true}],
+      'space-unary-ops': [WARNING, {words: true, nonwords: false}],
       // TODO: Figure out a way to do this that doesn't break typechecks
       // or wait for https://github.com/eslint/eslint/issues/2897
       'spaced-comment':
