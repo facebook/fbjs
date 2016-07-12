@@ -5,7 +5,7 @@
  */
 
 jest
-  .dontMock('partitionObject');
+  .unmock('partitionObject');
 
 var partitionObject = require('partitionObject');
 

@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('filterObject');
+jest.unmock('filterObject');
 
 var filterObject = require('filterObject');
 
@@ -25,7 +25,7 @@ describe('filterObject', () => {
       bar: 2,
       baz: 3
     };
-    mockCallback = jest.genMockFunction();
+    mockCallback = jest.fn();
   });
 
   it('should accept null', () => {

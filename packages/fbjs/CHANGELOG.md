@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Changed
+- More flow annotations: `joinClasses`, `flatMapArray`
+
 
 ## [0.8.3] - 2016-05-25
 

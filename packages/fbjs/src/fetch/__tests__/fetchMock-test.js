@@ -23,7 +23,7 @@ describe('fetchMock', () => {
     expect(fetch.mock.deferreds.length).toBe(1);
     var deferred = fetch.mock.deferreds[0];
     expect(deferred instanceof Deferred).toBe(true);
-    var mockCallback = jest.genMockFunction();
+    var mockCallback = jest.fn();
     var mockResult = {};
     expect(mockCallback).not.toBeCalled();
     promise.then(mockCallback);

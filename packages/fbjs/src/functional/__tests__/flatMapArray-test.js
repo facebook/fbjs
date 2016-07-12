@@ -10,7 +10,7 @@
   */
 
 jest
-  .dontMock('flatMapArray');
+  .unmock('flatMapArray');
 
 var flatMapArray = require('flatMapArray');
 

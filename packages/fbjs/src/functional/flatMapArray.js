@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule flatMapArray
+ * @flow
  * @typechecks
  */
 
@@ -20,7 +21,10 @@ var push = Array.prototype.push;
  * @param {function} fn
  * @return {array}
  */
-function flatMapArray(array, fn) {
+function flatMapArray<TValue, TNext>(
+  array: Array<TValue>,
+  fn: (value: TValue, index: number) => Array<TNext>,
+): Array<TNext> {
   var ret = [];
   for (var ii = 0; ii < array.length; ii++) {
     var result = fn.call(array, array[ii], ii);

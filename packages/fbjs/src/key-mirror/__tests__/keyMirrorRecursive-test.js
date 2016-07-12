@@ -12,7 +12,7 @@
 
 'use strict';
 
-jest.dontMock('keyMirrorRecursive');
+jest.unmock('keyMirrorRecursive');
 
 var keyMirrorRecursive = require('keyMirrorRecursive');
 

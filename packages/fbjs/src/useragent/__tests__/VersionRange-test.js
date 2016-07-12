@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('VersionRange');
+jest.unmock('VersionRange');
 
 var VersionRange = require('VersionRange');
 

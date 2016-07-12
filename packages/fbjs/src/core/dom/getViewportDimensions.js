@@ -11,7 +11,7 @@
  * @typechecks
  */
 
-type ViewportDimensions = {width: number; height: number};
+type ViewportDimensions = {width: number, height: number};
 
 function getViewportWidth(): number {
   let width;

@@ -9,6 +9,6 @@
 
 'use strict';
 
-jest.dontMock('nullthrows');
+jest.unmock('nullthrows');
 
 module.exports = require('nullthrows');

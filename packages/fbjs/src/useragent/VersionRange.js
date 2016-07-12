@@ -262,7 +262,7 @@ function normalizeVersions(a, b) {
   zeroPad(a, b.length);
 
   // mark "x" and "*" components as equal
-  for (let i = 0; i < b.length; i ++) {
+  for (let i = 0; i < b.length; i++) {
     const matches = b[i].match(/^[x*]$/i);
     if (matches) {
       b[i] = a[i] = '0';

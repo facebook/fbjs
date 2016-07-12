@@ -10,7 +10,7 @@
 
 'use strict';
 
-jest.dontMock('getActiveElement');
+jest.unmock('getActiveElement');
 
 var getActiveElement = require('getActiveElement');
 

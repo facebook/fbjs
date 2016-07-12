@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('forEachObject');
+jest.unmock('forEachObject');
 
 var forEachObject = require('forEachObject');
 
@@ -21,7 +21,7 @@ describe('forEachObject', function() {
 
   beforeEach(() => {
     mockObject = {foo: 1, bar: 2, baz: 3};
-    mockCallback = jest.genMockFunction();
+    mockCallback = jest.fn();
   });
 
   it('should handle null', () => {
@@ -109,7 +109,7 @@ describe('forEachObject', function() {
   it('should handle objects with `hasOwnProperty`', () => {
     /* jshint -W001 */
     var chainedObject = Object.create(mockObject);
-    chainedObject.hasOwnProperty = jest.genMockFunction().mockReturnValue(true);
+    chainedObject.hasOwnProperty = jest.fn(() => true);
 
     forEachObject(chainedObject, mockCallback);
 

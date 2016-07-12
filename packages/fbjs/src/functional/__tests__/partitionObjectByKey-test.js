@@ -5,8 +5,8 @@
  */
 
 jest
-  .dontMock('partitionObject')
-  .dontMock('partitionObjectByKey');
+  .unmock('partitionObject')
+  .unmock('partitionObjectByKey');
 
 var Set = require('Set');
 

@@ -10,7 +10,7 @@
 
 'use strict';
 
-jest.dontMock('minBy');
+jest.unmock('minBy');
 
 var minBy = require('minBy');
 
@@ -29,7 +29,7 @@ describe('minBy', () =>
     ).toBe('and');
 
     expect(
-      minBy([3, 1, 4, 2], x => x, (a, b) => - (a - b))
+      minBy([3, 1, 4, 2], x => x, (a, b) => -(a - b))
     ).toBe(4);
 
     expect(

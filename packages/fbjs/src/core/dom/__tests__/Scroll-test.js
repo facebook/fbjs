@@ -9,12 +9,11 @@
  * @emails oncall+ui_infra
  */
 
-jest.dontMock('Scroll');
+jest.unmock('Scroll');
 
 var Scroll = require('Scroll');
 
-// Skip this entire suite. Something is different with jsdom and this doesn't work.
-xdescribe('Scroll', function() {
+describe('Scroll', function() {
   var SET_TEST_VALUE = 150;
   var GET_TEST_VALUE = 200;
 
@@ -37,6 +36,7 @@ xdescribe('Scroll', function() {
       );
 
       Object.defineProperty(Element.prototype, 'scrollTop', {
+        configurable: true,
         set: setTopSpyFunc = jasmine.createSpy(),
         get: getTopSpyFunc = jasmine.createSpy().and.returnValue(
           GET_TEST_VALUE
@@ -49,6 +49,7 @@ xdescribe('Scroll', function() {
       );
 
       Object.defineProperty(Element.prototype, 'scrollLeft', {
+        configurable: true,
         set: setLeftSpyFunc = jasmine.createSpy(),
         get: getLeftSpyFunc = jasmine.createSpy().and.returnValue(
           GET_TEST_VALUE
@@ -57,27 +58,37 @@ xdescribe('Scroll', function() {
     });
 
     afterEach(function() {
-      Object.defineProperty(Element.prototype,
-        'scrollTop', scrollTopDescriptor);
-      Object.defineProperty(Element.prototype,
-        'scrollLeft', scrollLeftDescriptor);
+      if (scrollTopDescriptor) {
+        Object.defineProperty(
+          Element.prototype,
+          'scrollTop',
+          scrollTopDescriptor
+        );
+      }
+      if (scrollLeftDescriptor) {
+        Object.defineProperty(
+          Element.prototype,
+          'scrollLeft',
+          scrollLeftDescriptor
+        );
+      }
     });
 
     var defineObjectScrollProperties = function() {
       Object.defineProperty(Object.prototype, 'scrollTop', {
+        configurable: true,
         set: setTopSpyFunc = jasmine.createSpy(),
         get: getTopSpyFunc = jasmine.createSpy().and.returnValue(
           GET_TEST_VALUE
         ),
-        configurable: true,
       });
 
       Object.defineProperty(Object.prototype, 'scrollLeft', {
+        configurable: true,
         set: setLeftSpyFunc = jasmine.createSpy(),
         get: getLeftSpyFunc = jasmine.createSpy().and.returnValue(
           GET_TEST_VALUE
         ),
-        configurable: true,
       });
     };
 
@@ -118,16 +129,14 @@ xdescribe('Scroll', function() {
       testGetFunc(el);
     });
 
-    it('still gets scrollTop/Left values if non-HTMLElement is passed in',
-      function() {
+    it('still gets scrollTop/Left values if non-Element is passed in', () => {
       defineObjectScrollProperties();
       var el = {};
       testGetFunc(el);
       deleteObjectScrollProperties();
     });
 
-    it('still sets scrollTop/Left values if non-HTMLElement is passed in',
-      function() {
+    it('still sets scrollTop/Left values if non-Element is passed in', () => {
       defineObjectScrollProperties();
       var el = {};
       testSetFunc(el);
@@ -251,8 +260,13 @@ xdescribe('Scroll', function() {
       delete document.documentElement.scrollLeft;
     });
 
-    it('gets same scroll values ' +
-        'when documentElement is provided', function() {
+    it('gets same scroll values when documentElement is provided', function() {
+      const body = document.body;
+      Object.defineProperty(document, 'body', {
+        configurable: true,
+        value: document.documentElement,
+      });
+
       var docElValue = Scroll.getTop(document.documentElement);
       var bodyValue  = Scroll.getTop(document.body);
 
@@ -266,10 +280,14 @@ xdescribe('Scroll', function() {
       expect(getLeftSpyFunc.calls.count()).toBe(2);
       expect(bodyValue).toBe(docElValue);
       expect(bodyValue).toBe(GET_TEST_VALUE);
+
+      Object.defineProperty(document, 'body', {
+        configurable: true,
+        value: body,
+      });
     });
 
-    it('sets same scrollTop ' +
-       'when documentElement is provided', function() {
+    it('sets same scrollTop when documentElement is provided', function() {
       var setTopBodySpyFunc;
       Object.defineProperty(document.body, 'scrollTop', {
         set: setTopBodySpyFunc = jasmine.createSpy(),

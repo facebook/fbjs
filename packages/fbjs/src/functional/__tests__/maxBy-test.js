@@ -11,8 +11,8 @@
 'use strict';
 
 jest
-  .dontMock('maxBy')
-  .dontMock('minBy');
+  .unmock('maxBy')
+  .unmock('minBy');
 
 var maxBy = require('maxBy');
 
@@ -31,7 +31,7 @@ describe('maxBy', () =>
     ).toBe('score');
 
     expect(
-      maxBy([3, 1, 4, 2], x => x, (a, b) => - (a - b))
+      maxBy([3, 1, 4, 2], x => x, (a, b) => -(a - b))
     ).toBe(1);
 
     expect(

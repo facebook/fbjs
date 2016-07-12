@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('someObject');
+jest.unmock('someObject');
 
 var someObject = require('someObject');
 
@@ -21,7 +21,7 @@ describe('someObject', function() {
 
   beforeEach(() => {
     mockObject = {foo: 1, bar: 2, baz: 3};
-    mockCallback = jest.genMockFunction();
+    mockCallback = jest.fn();
   });
 
   it('handles null', () => {

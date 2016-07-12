@@ -152,7 +152,7 @@ function substr(str, start, length) {
     }
   } else if (start < 0) {
     for (posA = size; start < 0 && 0 < posA; start++) {
-      posA -= getUTF16Length(str, posA-1);
+      posA -= getUTF16Length(str, posA - 1);
     }
     if (posA < 0) {
       posA = 0;

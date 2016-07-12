@@ -9,7 +9,7 @@
  * @emails oncall+unicode, oncall+jsinfra
  */
 
-jest.autoMockOff();
+jest.disableAutomock();
 
 var UnicodeUtils = require('UnicodeUtils');
 

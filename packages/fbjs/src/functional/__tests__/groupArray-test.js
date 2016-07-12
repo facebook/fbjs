@@ -9,7 +9,7 @@
  * @emails oncall+jsinfra
  */
 
-jest.dontMock('groupArray');
+jest.unmock('groupArray');
 
 var groupArray = require('groupArray');
 

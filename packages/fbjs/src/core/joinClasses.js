@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule joinClasses
+ * @flow
  * @typechecks static-only
  */
 
@@ -14,26 +15,20 @@
 
 /**
  * Combines multiple className strings into one.
- * http://jsperf.com/joinclasses-args-vs-array
- *
- * @param {...?string} className
- * @return {string}
  */
-function joinClasses(className/*, ... */) {
-  if (!className) {
-    className = '';
-  }
-  let nextClass;
+function joinClasses(className: mixed): string {
+  let newClassName = ((className: any): string) || '';
   const argLength = arguments.length;
+
   if (argLength > 1) {
-    for (let ii = 1; ii < argLength; ii++) {
-      nextClass = arguments[ii];
+    for (let index = 1; index < argLength; index++) {
+      const nextClass = arguments[index];
       if (nextClass) {
-        className = (className ? className + ' ' : '') + nextClass;
+        newClassName = (newClassName ? newClassName + ' ' : '') + nextClass;
       }
     }
   }
-  return className;
+  return newClassName;
 }
 
 module.exports = joinClasses;

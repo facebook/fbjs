@@ -12,8 +12,8 @@
 'use strict';
 
 jest
-  .dontMock('UserAgent')
-  .dontMock('VersionRange');
+  .unmock('UserAgent')
+  .unmock('VersionRange');
 
 var UserAgent = require('UserAgent');
 var UserAgentData = require('UserAgentData');

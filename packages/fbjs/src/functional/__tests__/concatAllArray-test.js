@@ -10,7 +10,7 @@
   */
 
 jest
-  .dontMock('concatAllArray');
+  .unmock('concatAllArray');
 
 var concatAllArray = require('concatAllArray');
 

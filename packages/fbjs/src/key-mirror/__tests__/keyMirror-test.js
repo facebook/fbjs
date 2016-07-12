@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('keyMirror');
+jest.unmock('keyMirror');
 
 var keyMirror = require('keyMirror');
 
@@ -61,4 +61,3 @@ describe('keyMirror', function() {
     expect('constructor' in mirror).toBe(true);
   });
 });
-

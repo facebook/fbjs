@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('everySet');
+jest.unmock('everySet');
 
 var Set = require('Set');
 var everySet = require('everySet');
