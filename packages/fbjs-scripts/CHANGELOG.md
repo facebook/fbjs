@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Removed
+- [lint] Moved config to new `eslint-config-fbjs` package.
+
 
 ## [0.7.1] - 2016-05-25
 

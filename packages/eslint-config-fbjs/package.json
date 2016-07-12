@@ -1,0 +1,25 @@
+{
+  "name": "eslint-config-fbjs",
+  "version": "1.0.0",
+  "description": "",
+  "repository": "facebook/fbjs",
+  "license": "BSD-3-Clause",
+  "main": "index.js",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "PATENTS",
+    "README.md",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.0.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-flow-vars": "^0.4.0",
+    "eslint-plugin-react": "^5.2.2"
+  }
+}

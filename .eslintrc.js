@@ -1,6 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
   extends: [
-    './packages/fbjs-scripts/eslint/.eslintrc.js',
+    require.resolve('./packages/eslint-config-fbjs'),
   ],
 };
