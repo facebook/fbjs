@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('fetchWithRetries');
+jest.unmock('fetchWithRetries');
 
 var fetch = require('fetch');
 var fetchWithRetries = require('fetchWithRetries');
@@ -26,7 +26,7 @@ describe('fetchWithRetries', () => {
   beforeEach(() => {
     jest.resetModuleRegistry();
 
-    handleNext = jest.genMockFunction();
+    handleNext = jest.fn();
 
     spyOn(console, 'error').and.callFake(message => {
       expect(message).toBe(
@@ -91,7 +91,7 @@ describe('fetchWithRetries', () => {
   it('gives up if response failed after retries', () => {
     var init = {retryDelays: [600]};
     var failedResponse = mockResponse(500);
-    var handleCatch = jest.genMockFunction();
+    var handleCatch = jest.fn();
     fetchWithRetries('https://localhost', init)
       .then(handleNext).catch(handleCatch);
     expect(fetch.mock.calls.length).toBe(1);
@@ -148,7 +148,7 @@ describe('fetchWithRetries', () => {
     setTimeout(() => {
       expect(handleNext).not.toBeCalled();
     }, 14999);
-    var callback = jest.genMockFunction();
+    var callback = jest.fn();
     setTimeout(callback.mockImplementation(() => {
       expect(handleNext).toBeCalled();
     }), 15001);
@@ -164,7 +164,7 @@ describe('fetchWithRetries', () => {
       retryDelays: [],
     }).catch(handleNext);
 
-    var callback = jest.genMockFunction();
+    var callback = jest.fn();
     setTimeout(callback.mockImplementation(() => {
       expect(handleNext).toBeCalled();
     }), 1);

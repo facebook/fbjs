@@ -20,14 +20,14 @@ const fetch = require('fetch');
 const warning = require('warning');
 
 export type InitWithRetries = {
-  body?: mixed;
-  cache?: ?string;
-  credentials?: ?string;
-  fetchTimeout?: ?number;
-  headers?: mixed;
-  method?: ?string;
-  mode?: ?string;
-  retryDelays?: ?Array<number>;
+  body?: mixed,
+  cache?: ?string,
+  credentials?: ?string,
+  fetchTimeout?: ?number,
+  headers?: mixed,
+  method?: ?string,
+  mode?: ?string,
+  retryDelays?: ?Array<number>,
 };
 
 const DEFAULT_TIMEOUT = 15000;

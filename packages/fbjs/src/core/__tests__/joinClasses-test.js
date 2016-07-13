@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('joinClasses');
+jest.unmock('joinClasses');
 
 const joinClasses = require('joinClasses');
 

@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('mapObject');
+jest.unmock('mapObject');
 
 var mapObject = require('mapObject');
 
@@ -25,7 +25,7 @@ describe('mapObject', () => {
       bar: 2,
       baz: 3
     };
-    mockCallback = jest.genMockFunction();
+    mockCallback = jest.fn();
   });
 
   it('should accept null', () => {

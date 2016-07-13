@@ -8,6 +8,8 @@
 
 'use strict';
 
+import type Set from 'Set';
+
 var partitionObject = require('partitionObject');
 
 /**

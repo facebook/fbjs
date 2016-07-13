@@ -10,7 +10,7 @@
  * @flow
  */
 
-jest.autoMockOff();
+jest.disableAutomock();
 var nullthrows = require('nullthrows');
 
 describe('nullthrows', () => {

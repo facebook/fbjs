@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('shallowEqual');
+jest.unmock('shallowEqual');
 
 const shallowEqual = require('shallowEqual');
 

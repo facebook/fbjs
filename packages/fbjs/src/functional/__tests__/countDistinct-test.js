@@ -11,7 +11,7 @@
  */
 
 jest
-  .dontMock('countDistinct');
+  .unmock('countDistinct');
 
 var Immutable = require('immutable');
 var countDistinct = require('countDistinct');

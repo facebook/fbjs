@@ -10,7 +10,7 @@
  */
 
 jest
-  .dontMock('sprintf');
+  .unmock('sprintf');
 
 const sprintf = require('sprintf');
 

@@ -11,7 +11,7 @@
  */
 
 jest
-  .dontMock('compactArray');
+  .unmock('compactArray');
 
 var compactArray = require('compactArray');
 

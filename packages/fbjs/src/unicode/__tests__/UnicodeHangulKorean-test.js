@@ -9,7 +9,7 @@
  * @emails oncall+unicode
  */
 
-jest.autoMockOff();
+jest.disableAutomock();
 
 var UnicodeHangulKorean = require('UnicodeHangulKorean');
 

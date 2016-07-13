@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('equalsIterable');
+jest.unmock('equalsIterable');
 
 var Immutable = require('immutable');
 var Map = require('Map');

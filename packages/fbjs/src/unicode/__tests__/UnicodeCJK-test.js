@@ -10,7 +10,7 @@
  * @nolint
  */
 
-jest.autoMockOff();
+jest.disableAutomock();
 
 var UnicodeCJK = require('UnicodeCJK');
 

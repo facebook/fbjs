@@ -11,8 +11,8 @@
 'use strict';
 
 jest
-  .dontMock('distinctArray')
-  .dontMock('Set');
+  .unmock('distinctArray')
+  .unmock('Set');
 
 var distinctArray = require('distinctArray');
 

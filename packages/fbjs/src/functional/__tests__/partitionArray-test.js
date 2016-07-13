@@ -10,7 +10,7 @@
   */
 
 jest
-  .dontMock('partitionArray');
+  .unmock('partitionArray');
 
 var partitionArray = require('partitionArray');
 

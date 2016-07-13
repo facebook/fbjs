@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('equalsSet');
+jest.unmock('equalsSet');
 
 var Set = require('Set');
 var equalsSet = require('equalsSet');

@@ -11,7 +11,7 @@
 
 'use strict';
 
-jest.dontMock('areEqual');
+jest.unmock('areEqual');
 
 const areEqual = require('areEqual');
 

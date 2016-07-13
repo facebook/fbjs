@@ -9,7 +9,7 @@
  * @emails oncall+unicode, oncall+jsinfra
  */
 
-jest.autoMockOff();
+jest.disableAutomock();
 
 var Dir = require('UnicodeBidiDirection');
 var UnicodeBidi = require('UnicodeBidi');
