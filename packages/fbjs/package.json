@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "core-js": "^1.0.0",
+    "fbjs-css-vars": "^1.0.0",
     "immutable": "^3.7.6",
     "isomorphic-fetch": "^2.1.1",
     "loose-envify": "^1.0.0",
