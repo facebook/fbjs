@@ -3,6 +3,9 @@
 ### Added
 - More modules, primarily focused on the requirements of Fixed Data Table.
 
+### Removed
+- Remove whitelisting of React PropType warning from `warning` module.
+
 ### Changed
 - More flow annotations: `joinClasses`, `flatMapArray`
 
