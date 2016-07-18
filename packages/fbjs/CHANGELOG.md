@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Added
+- More modules, primarily focused on the requirements of Fixed Data Table.
+
 ### Changed
 - More flow annotations: `joinClasses`, `flatMapArray`
 
