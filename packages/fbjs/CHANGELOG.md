@@ -8,6 +8,7 @@
 
 ### Changed
 - More flow annotations: `joinClasses`, `flatMapArray`
+- Upgraded `core-js` dependency to ^2.4.1
 
 
 ## [0.8.3] - 2016-05-25
