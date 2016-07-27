@@ -41,6 +41,9 @@ if (__DEV__) {
       if (typeof console !== 'undefined') {
         console.error(message);
       }
+      if (typeof __showWarning !== 'undefined') { // react-dom's yellow box entry
+        __showWarning(format, args);
+      }
       try {
         // --- Welcome to debugging React ---
         // This error was thrown as a convenience so that you can use this stack
