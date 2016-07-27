@@ -42,7 +42,7 @@ if (__DEV__) {
         console.error(message);
       }
       if (typeof __showWarning !== 'undefined') { // react-dom's yellow box entry
-        __showWarning(format, args);
+        __showWarning({message, format, args});
       }
       try {
         // --- Welcome to debugging React ---
