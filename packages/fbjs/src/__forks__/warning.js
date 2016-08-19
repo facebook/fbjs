@@ -23,6 +23,20 @@ var emptyFunction = require('emptyFunction');
 var warning = emptyFunction;
 
 if (__DEV__) {
+  function printWarning(format, ...args) {
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, () => args[argIndex++]);
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  }
+
   warning = function(condition, format, ...args) {
     if (format === undefined) {
       throw new Error(
@@ -30,19 +44,8 @@ if (__DEV__) {
         'message argument'
       );
     }
-
     if (!condition) {
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, () => args[argIndex++]);
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
+      printWarning(format, ...args);
     }
   };
 }
