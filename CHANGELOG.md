@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.8.4] - 2016-08-19
+
+### Changed
+- Moved `try/catch` in `warning` module to helper function to prevent deopts.
+
 
 ## [0.8.3] - 2016-05-25
 
