@@ -2,6 +2,7 @@
 
 ### Removed
 - [lint] Moved config to new `eslint-config-fbjs` package.
+- [gulp] Improve error handling in `check-dependencies` script.
 
 
 ## [0.7.1] - 2016-05-25
