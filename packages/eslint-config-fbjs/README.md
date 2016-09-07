@@ -12,9 +12,15 @@ There are several exceptions:
 ### Install:
 
 ```js
-npm install --save-dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flow-vars eslint-plugin-react eslint babel-eslint
+npm install --save-dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flowtype eslint-plugin-react eslint babel-eslint
 ```
 
 ### Configure
 
 Add `extends: 'fbjs'` to your local `.eslintrc`
+
+#### Strict Configuration
+
+This package also comes with a *strict* version of the config. This can be used to make all warnings be reported as errors. While this can be overly strict, it can be helpful to avoid the case where some CI configurations don't fail for warnings.
+
+Use `extends: fbjs/strict` in your `.eslintrc`
