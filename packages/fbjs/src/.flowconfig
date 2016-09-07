@@ -3,7 +3,6 @@
 .*/node_modules/.*
 
 [include]
-../node_modules/promise
 
 [options]
 module.system=haste
