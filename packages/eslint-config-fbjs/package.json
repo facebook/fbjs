@@ -10,7 +10,8 @@
     "LICENSE",
     "PATENTS",
     "README.md",
-    "index.js"
+    "index.js",
+    "strict.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
