@@ -52,7 +52,7 @@ function getBaseConfig() {
 
     plugins: [
       'babel',
-      'flow-vars',
+      'flowtype',
       'react',
     ],
 
@@ -477,12 +477,12 @@ function getBaseConfig() {
       'react/sort-prop-types': OFF,
       'react/wrap-multilines': OFF,
 
-      // eslint-plugin-flow-vars
+      // eslint-plugin-flowtype
       // These don't actually result in warnings. Enabling them ensures they run
       // and mark variables as used, avoiding false positives with Flow
       // annotations.
-      'flow-vars/define-flow-type': WARNING,
-      'flow-vars/use-flow-type': WARNING,
+      'flowtype/define-flow-type': WARNING,
+      'flowtype/use-flow-type': WARNING,
     },
 
     // Defines a basic set of globals
