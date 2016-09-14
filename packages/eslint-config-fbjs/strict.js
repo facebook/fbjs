@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+'use strict';
+
 let config = JSON.parse(JSON.stringify(require('.')));
 
 Object.keys(config.rules).forEach((rule) => {
