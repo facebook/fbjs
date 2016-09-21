@@ -57,7 +57,16 @@ class Deferred<Tvalue, Treason> {
   }
 
   done(): void {
-    Promise.prototype.done.apply(this._promise, arguments);
+    // Embed the polyfill for the non-standard Promise.prototype.done so that
+    // users of the open source fbjs don't need a custom lib for Promise
+    const promise = arguments.length ?
+      this._promise.then.apply(this._promise, arguments) :
+      this._promise;
+    promise.then(undefined, function(err) {
+      setTimeout(function() {
+        throw err;
+      }, 0);
+    });
   }
 
   isSettled(): boolean {

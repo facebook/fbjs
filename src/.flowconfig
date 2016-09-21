@@ -2,15 +2,9 @@
 .*/__tests__/.*
 
 [include]
-../node_modules/promise
-
-[libs]
-../flow/lib
 
 [options]
 module.system=haste
 
-suppress_type=$FlowIssue
-
 [version]
-^0.25.0
+^0.32.0

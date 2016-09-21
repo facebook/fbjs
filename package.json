@@ -20,7 +20,7 @@
     "del": "^2.2.0",
     "eslint": "^2.8.0",
     "fbjs-scripts": "file:scripts",
-    "flow-bin": "^0.25.0",
+    "flow-bin": "^0.32.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-flatten": "^0.2.0",
