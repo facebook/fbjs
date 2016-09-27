@@ -141,10 +141,10 @@ module.exports = function(babel) {
       },
       ImportDeclaration: {
         exit(path, state) {
-          if (path.node.importKind !== 'type') {
-            return;
+          let importKind = path.node.importKind;
+          if (importKind === 'type' || importKind === 'typeof') {
+            transformTypeImport(path, state);
           }
-          transformTypeImport(path, state);
         }
       }
     },
