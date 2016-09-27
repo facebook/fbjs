@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+
+## [0.8.5] - 2016-09-27
+
+### Fixed
+- Fixed all remaining issues resulting in Flow errors when `fbjs` is a dependency of a dependency.
+
+### Removed
+- Removed now extraneous `flow/lib/Promise.js`.
+
 ## [0.8.4] - 2016-08-19
 
 ### Changed
