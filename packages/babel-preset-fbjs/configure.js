@@ -48,6 +48,12 @@ module.exports = function(options) {
     ]
   ];
 
+  // We only want to add declarations for flow transforms and not for js. So we
+  // have to do this separate from above.
+  if (options.target === 'flow') {
+    presetSets[0].push(require('./plugins/dev-declaration'));
+  }
+
   // Enable everything else for js.
   if (options.target === 'js') {
     presetSets[0] = presetSets[0].concat([
