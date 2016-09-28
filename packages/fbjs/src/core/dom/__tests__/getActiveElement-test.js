@@ -19,4 +19,17 @@ describe('getActiveElement', () => {
     var element = getActiveElement();
     expect(element.tagName).toEqual('BODY');
   });
+
+  it('uses optional document parameter when provided', () => {
+    var iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    var iframeDocument = iframe.contentDocument;
+    var element = getActiveElement(iframeDocument);
+    try {
+      expect(element.ownerDocument).toBe(iframeDocument);
+      expect(element.ownerDocument).not.toBe(document);
+    } finally {
+      document.body.removeChild(iframe);
+    }
+  });
 });
