@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- `typeof` imports are properly rewritten.
+
 
 ## [2.0.0] - 2016-05-25
 

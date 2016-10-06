@@ -47,6 +47,22 @@ describe('rewrite-modules', function() {
         expect(result.code).toEqual('import type Test from "test/test";');
       });
 
+      it('should transform typeof imports', function() {
+        const code = `import typeof Type from 'test';`;
+        const expected = `import typeof Type from 'test/test';`;
+        const result = babel.transform(
+          code,
+          {
+            plugins: [
+              'syntax-flow',
+              [rewriteModules, {map: {test: 'test/test'}}],
+            ],
+          }
+        );
+
+        expect(result.code).toEqual(expected);
+      });
+
       it('should transform jest and requireActual methods', function() {
         const code = `function test() {
           'use strict';
