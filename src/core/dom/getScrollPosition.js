@@ -28,15 +28,15 @@ const getUnboundedScrollPosition = require('getUnboundedScrollPosition');
  * @return {object} Map with `x` and `y` keys.
  */
 function getScrollPosition(scrollable) {
-  const documentScrollElement = getDocumentScrollElement();
-  if (scrollable === window) {
+  const documentScrollElement = getDocumentScrollElement(scrollable.ownerDocument || scrollable.document);
+  if (scrollable.Window && scrollable instanceof scrollable.Window) {
     scrollable = documentScrollElement;
   }
   const scrollPosition = getUnboundedScrollPosition(scrollable);
 
   const viewport =
     scrollable === documentScrollElement ?
-      document.documentElement :
+      scrollable.ownerDocument.documentElement :
       scrollable;
 
   const xMax = scrollable.scrollWidth - viewport.clientWidth;
