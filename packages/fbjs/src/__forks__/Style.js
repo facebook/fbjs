@@ -48,7 +48,8 @@ var Style = {
     if (!node) {
       return null;
     }
-    while (node && node !== document.body) {
+    var ownerDocument = node.ownerDocument;
+    while (node && node !== ownerDocument.body) {
       if (_isNodeScrollable(node, 'overflow') ||
           _isNodeScrollable(node, 'overflowY') ||
           _isNodeScrollable(node, 'overflowX')) {
@@ -56,7 +57,7 @@ var Style = {
       }
       node = node.parentNode;
     }
-    return window;
+    return ownerDocument.defaultView || ownerDocument.parentWindow;
   },
 
 };
