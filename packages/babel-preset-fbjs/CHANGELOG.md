@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## [2.1.0] - 2016-10-07
+
 ### Added
 - Modules using `__DEV__` will have the declaration inlined for `.js.flow` file generation.
 
