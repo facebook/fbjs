@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Added
+- Modules using `__DEV__` will have the declaration inlined for `.js.flow` file generation.
+
 ### Fixed
 - `typeof` imports are properly rewritten.
 
