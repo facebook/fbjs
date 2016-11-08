@@ -28,6 +28,7 @@ export type InitWithRetries = {
   method?: ?string,
   mode?: ?string,
   retryDelays?: ?Array<number>,
+  onError?(error: any, initConfig: any): ?boolean,
 };
 
 const DEFAULT_TIMEOUT = 15000;
