@@ -32,6 +32,7 @@ export type InitWithRetries = {
 
 const DEFAULT_TIMEOUT = 15000;
 const DEFAULT_RETRIES = [1000, 3000];
+const DEFAULT_ONERROR = function(error) { return true; };
 
 /**
  * Makes a POST request to the server with the given data as the payload.
@@ -41,9 +42,10 @@ function fetchWithRetries(
   uri: string,
   initWithRetries?: ?InitWithRetries
 ): Promise<any> {
-  const {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
+  const {fetchTimeout, retryDelays, onError, ...init} = initWithRetries || {};
   const _fetchTimeout = fetchTimeout != null ? fetchTimeout : DEFAULT_TIMEOUT;
   const _retryDelays = retryDelays != null ? retryDelays : DEFAULT_RETRIES;
+  const _onError = onError ? onError : DEFAULT_ONERROR;
 
   let requestsAttempted = 0;
   let requestStartTime = 0;
@@ -78,7 +80,7 @@ function fetchWithRetries(
           if (response.status >= 200 && response.status < 300) {
             // Got a response code that indicates success, resolve the promise.
             resolve(response);
-          } else if (shouldRetry(requestsAttempted)) {
+          } else if (shouldRetry(requestsAttempted) && _onError(response)) {
             // Fetch was not successful, retrying.
             // TODO(#7595849): Only retry on transient HTTP errors.
             warning(false, 'fetchWithRetries: HTTP error, retrying.'),
@@ -96,7 +98,7 @@ function fetchWithRetries(
         }
       }).catch(error => {
         clearTimeout(requestTimeout);
-        if (shouldRetry(requestsAttempted)) {
+        if (shouldRetry(requestsAttempted) && _onError(response)) {
           retryRequest();
         } else {
           reject(error);
