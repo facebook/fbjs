@@ -33,7 +33,7 @@ export type InitWithRetries = {
 
 const DEFAULT_TIMEOUT = 15000;
 const DEFAULT_RETRIES = [1000, 3000];
-const DEFAULT_ONERROR = function(error) { return true; };
+const DEFAULT_ONERROR = function(error, init) { return false; };
 
 /**
  * Makes a POST request to the server with the given data as the payload.
@@ -111,17 +111,17 @@ function fetchWithRetries(
      * Schedules another run of sendTimedRequest based on how much time has
      * passed between the time the last request was sent and now.
      */
-		function retryRequest(retryDirectly: boolean = false): void {
-			if(retryDirectly) {
-				sendTimedRequest();
-			}
-			else {
-				const retryDelay = _retryDelays[requestsAttempted - 1];
-				const retryStartTime = requestStartTime + retryDelay;
-				// Schedule retry for a configured duration after last request started.
-				setTimeout(sendTimedRequest, retryStartTime - Date.now());
-			}
-		}
+    function retryRequest(retryDirectly: boolean = false): void {
+        if(retryDirectly) {
+            sendTimedRequest();
+        }
+        else {
+            const retryDelay = _retryDelays[requestsAttempted - 1];
+            const retryStartTime = requestStartTime + retryDelay;
+            // Schedule retry for a configured duration after last request started.
+            setTimeout(sendTimedRequest, retryStartTime - Date.now());
+        }
+    }
 
     /**
      * Checks if another attempt should be done to send a request to the server.
