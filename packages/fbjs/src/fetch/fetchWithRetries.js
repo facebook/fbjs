@@ -81,11 +81,11 @@ function fetchWithRetries(
           if (response.status >= 200 && response.status < 300) {
             // Got a response code that indicates success, resolve the promise.
             resolve(response);
-          } else if (shouldRetry(requestsAttempted) && _onError(response)) {
+          } else if (shouldRetry(requestsAttempted)) {
             // Fetch was not successful, retrying.
             // TODO(#7595849): Only retry on transient HTTP errors.
             warning(false, 'fetchWithRetries: HTTP error, retrying.'),
-            retryRequest();
+            retryRequest(_onError(response, init));
           } else {
             // Request was not successful, giving up.
             const error: any = new Error(sprintf(
@@ -99,8 +99,8 @@ function fetchWithRetries(
         }
       }).catch(error => {
         clearTimeout(requestTimeout);
-        if (shouldRetry(requestsAttempted) && _onError(response)) {
-          retryRequest();
+        if (shouldRetry(requestsAttempted)) {
+          retryRequest(_onError(response, init));
         } else {
           reject(error);
         }
@@ -111,12 +111,17 @@ function fetchWithRetries(
      * Schedules another run of sendTimedRequest based on how much time has
      * passed between the time the last request was sent and now.
      */
-    function retryRequest(): void {
-      const retryDelay = _retryDelays[requestsAttempted - 1];
-      const retryStartTime = requestStartTime + retryDelay;
-      // Schedule retry for a configured duration after last request started.
-      setTimeout(sendTimedRequest, retryStartTime - Date.now());
-    }
+		function retryRequest(retryDirectly: boolean = false): void {
+			if(retryDirectly) {
+				sendTimedRequest();
+			}
+			else {
+				const retryDelay = _retryDelays[requestsAttempted - 1];
+				const retryStartTime = requestStartTime + retryDelay;
+				// Schedule retry for a configured duration after last request started.
+				setTimeout(sendTimedRequest, retryStartTime - Date.now());
+			}
+		}
 
     /**
      * Checks if another attempt should be done to send a request to the server.
