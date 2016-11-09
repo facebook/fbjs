@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 
+## [0.8.6] - 2016-11-09
+
+### Removed
+- Removed runtime dependency on immutable, reducing package size.
+
+
 ## [0.8.5] - 2016-09-27
 
 ### Fixed
