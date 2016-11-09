@@ -3,7 +3,6 @@
   "core-js/library/es6/set": "core-js/library/es6/set",
   "fbjs-css-vars": "fbjs-css-vars",
   "isomorphic-fetch": "isomorphic-fetch",
-  "immutable": "immutable",
   "object-assign": "object-assign",
   "promise": "promise",
   "promise/setimmediate/done": "promise/setimmediate/done",
