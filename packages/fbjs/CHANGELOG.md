@@ -5,6 +5,7 @@
 
 ### Removed
 - Remove whitelisting of React PropType warning from `warning` module.
+- Removed runtime dependency on immutable, reducing package size.
 
 ### Changed
 - More flow annotations: `joinClasses`, `flatMapArray`
