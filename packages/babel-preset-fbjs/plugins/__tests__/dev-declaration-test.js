@@ -27,12 +27,10 @@ function compare(input, output) {
 
 describe('dev-declaration', function() {
 
-  // Babel currently compiles booleanTypeAnnotation to `bool`. Will be `boolean`
-  // in the future.
   it('should replace calls', () => {
     compare(
 `if (__DEV__) console.log();`,
-`declare var __DEV__: bool;
+`declare var __DEV__: boolean;
 if (__DEV__) console.log();`);
   });
 
