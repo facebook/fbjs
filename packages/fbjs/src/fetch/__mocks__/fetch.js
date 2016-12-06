@@ -13,16 +13,12 @@
 
 var Deferred = require.requireActual('Deferred');
 
-function fetch(uri: string, options: Object): Promise {
+const fetch = jest.fn((uri: string, options: Object): Promise => {
   var deferred = new Deferred();
-  fetch.mock.calls.push([uri, options]);
   fetch.mock.deferreds.push(deferred);
   return deferred.getPromise();
-}
+});
 
-fetch.mock = {
-  calls: [],
-  deferreds: [],
-};
+fetch.mock.deferreds = [];
 
 module.exports = fetch;

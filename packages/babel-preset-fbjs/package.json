@@ -40,19 +40,15 @@
   },
   "devDependencies": {
     "babel-core": "^6.8.0",
-    "jest-cli": "^13.2.3"
+    "jest-cli": "^17.0.3"
   },
   "jest": {
     "modulePathIgnorePatterns": [
       "/node_modules/"
     ],
-    "persistModuleRegistryBetweenSpecs": true,
     "rootDir": "",
     "testPathDirs": [
       "<rootDir>"
-    ],
-    "unmockedModulePathPatterns": [
-      ""
     ]
   }
 }

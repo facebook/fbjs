@@ -24,7 +24,7 @@
     "gulp-flatten": "^0.2.0",
     "gulp-rename": "^1.2.2",
     "immutable": "^3.7.6",
-    "jest-cli": "^13.2.3",
+    "jest-cli": "^17.0.3",
     "merge-stream": "^1.0.0",
     "run-sequence": "^1.1.5"
   },
@@ -39,20 +39,20 @@
     "module-map.json"
   ],
   "jest": {
+    "automock": true,
     "modulePathIgnorePatterns": [
       "/lib/",
       "/node_modules/"
     ],
     "persistModuleRegistryBetweenSpecs": true,
-    "preprocessorIgnorePatterns": [
-      "/node_modules/"
-    ],
     "rootDir": "",
-    "scriptPreprocessor": "node_modules/fbjs-scripts/jest/preprocessor.js",
-    "setupEnvScriptFile": "node_modules/fbjs-scripts/jest/environment.js",
+    "setupFiles": ["node_modules/fbjs-scripts/jest/environment.js"],
     "testPathDirs": [
       "<rootDir>/src"
     ],
+    "timers": "fake",
+    "transform": {".*": "node_modules/fbjs-scripts/jest/preprocessor.js"},
+    "transformIgnorePatterns": ["/node_modules/"],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/src/(?!(__forks__/fetch.js$|fetch/))"
