@@ -11,16 +11,21 @@
     "PATENTS",
     "README.md",
     "index.js",
-    "strict.js"
+    "opensource/",
+    "shared.js",
+    "strict.js",
+    "utils/"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "babel-eslint": "^6.1.2",
-    "eslint": "^3.0.0",
-    "eslint-plugin-babel": "^3.3.0",
-    "eslint-plugin-flowtype": "^2.15.0",
-    "eslint-plugin-react": "^5.2.2"
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.11.1",
+    "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-flowtype": "^2.28.0",
+    "eslint-plugin-jasmine": "^2.1.0",
+    "eslint-plugin-prefer-object-spread": "^1.1.0",
+    "eslint-plugin-react": "^6.7.1"
   }
 }

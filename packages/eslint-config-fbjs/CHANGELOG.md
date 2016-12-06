@@ -1,3 +1,8 @@
+## [Unreleased]
+
+### Added
+- `fbjs/opensource` config, as a new ideal config for our open source projects
+
 ## [1.1.1] - 2016-09-13
 
 ### Fixed
