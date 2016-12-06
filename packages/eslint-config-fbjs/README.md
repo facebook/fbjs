@@ -11,8 +11,14 @@ There are several exceptions:
 
 ### Install:
 
+#### `npm`
 ```sh
 npm install --save-dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flowtype eslint-plugin-jasmine eslint-plugin-prefer-object-spread eslint-plugin-react eslint babel-eslint
+```
+
+#### `yarn`
+```sh
+yarn add --dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flowtype eslint-plugin-jasmine eslint-plugin-prefer-object-spread eslint-plugin-react eslint babel-eslint
 ```
 
 ### Configure
