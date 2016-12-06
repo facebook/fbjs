@@ -2,9 +2,10 @@
 .*/__tests__/.*
 
 [include]
+../node_modules
 
 [options]
 module.system=haste
 
 [version]
-^0.32.0
+^0.36.0
