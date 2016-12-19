@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 
+## [0.8.7] - 2016-12-19
+
+### Added
+- New module: `setImmediate`.
+
+
 ## [0.8.6] - 2016-11-09
 
 ### Removed
