@@ -6,5 +6,6 @@
   "promise": "promise",
   "promise/setimmediate/done": "promise/setimmediate/done",
   "promise/setimmediate/es6-extensions": "promise/setimmediate/es6-extensions",
+  "setimmediate": "setimmediate",
   "ua-parser-js": "ua-parser-js"
 }
