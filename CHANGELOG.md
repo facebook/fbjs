@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 
+## [0.8.8] - 2016-12-20
+
+### Changed
+- `invariant`: Moved `process.env.NODE_ENV` check to module scope, eliminating check on each call.
+
+
 ## [0.8.7] - 2016-12-19
 
 ### Added
