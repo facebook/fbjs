@@ -1,0 +1,28 @@
+{
+  "name": "eslint-config-fbjs-opensource",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "repository": "facebook/fbjs",
+  "main": "index.js",
+  "license": "BSD-3-Clause",
+  "files": [
+    "LICENCE",
+    "PATENTS",
+    "README.md",
+    "index.js",
+    "warning.js"
+  ],
+  "dependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint-plugin-babel": "^4.0.1",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-plugin-jasmine": "^2.2.0",
+    "eslint-plugin-prefer-object-spread": "^1.1.0",
+    "eslint-plugin-react": "^6.9.0",
+    "fbjs-eslint-utils": "^1.0.0"
+  },
+  "peerDependencies": {
+    "eslint": "^3.0.0"
+  }
+}
