@@ -1,0 +1,18 @@
+{
+  "name": "fbjs-eslint-utils",
+  "version": "1.0.0",
+  "description": "Shared utilities for our eslint configuration packages.",
+  "author": "",
+  "repository": "facebook/fbjs",
+  "main": "index.js",
+  "license": "BSD-3-Clause",
+  "files": [
+    "LICENCE",
+    "PATENTS",
+    "README.md",
+    "change-error-level.js",
+    "globals.js",
+    "index.js",
+    "shared.js"
+  ]
+}
