@@ -18,7 +18,7 @@
     "babel-preset-fbjs": "file:../babel-preset-fbjs",
     "del": "^2.2.0",
     "fbjs-scripts": "file:../fbjs-scripts",
-    "flow-bin": "^0.36.0",
+    "flow-bin": "^0.38.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-flatten": "^0.2.0",

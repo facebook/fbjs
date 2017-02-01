@@ -21,7 +21,7 @@ var partitionObject = require('partitionObject');
 function partitionObjectByKey(
   source: Object,
   whitelist: Set<string>
-): Array<Object> {
+): [Object, Object] {
   return partitionObject(source, (_, key) => whitelist.has(key));
 }
 
