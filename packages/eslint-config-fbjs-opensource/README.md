@@ -8,12 +8,12 @@ This configuration is a new ideal setup based on Facebook's internal configurati
 
 #### `npm`
 ```sh
-npm install --save-dev eslint eslint-config-fbjs
+npm install --save-dev eslint eslint-config-fbjs-opensource
 ```
 
 #### `yarn`
 ```sh
-yarn add --dev eslint eslint-config-fbjs
+yarn add --dev eslint eslint-config-fbjs-opensource
 ```
 
 ### Configure
