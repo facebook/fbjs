@@ -24,4 +24,4 @@ Add `extends: 'fbjs-opensource'` to your local `.eslintrc`
 
 This package also comes with a *warning* version of the config. This can be used to make all rules that would normally be reported as errors to be reported as warnings.
 
-Use `extends: fbjs-opensource/strict` in your `.eslintrc`
+Use `extends: fbjs-opensource/warning` in your `.eslintrc`
