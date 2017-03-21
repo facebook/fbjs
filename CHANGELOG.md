@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+
+## [0.8.10] - 2017-03-20
+- Made DOM utilities work in nested browsing contexts.
+
+
 ## [0.8.9] - 2017-01-31
 
 ### Fixed
