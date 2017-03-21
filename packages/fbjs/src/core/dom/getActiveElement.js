@@ -23,7 +23,7 @@
  * @return {?DOMElement}
  */
 function getActiveElement(doc) /*?DOMElement*/ {
-  doc = doc || document;
+  doc = doc || global.document;
   if (typeof doc === 'undefined') {
     return null;
   }
