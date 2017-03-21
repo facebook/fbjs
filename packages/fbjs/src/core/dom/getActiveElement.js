@@ -23,10 +23,10 @@
  * @return {?DOMElement}
  */
 function getActiveElement(doc) /*?DOMElement*/ {
-  doc = doc || document;
-  if (typeof doc === 'undefined') {
+  if (!doc && typeof document === 'undefined') {
     return null;
   }
+  doc = doc || document;
   try {
     return doc.activeElement || doc.body;
   } catch (e) {
