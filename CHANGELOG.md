@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 
+## [0.8.12] - 2017-03-29
+
+### Fixed
+- Fix use of `global` working inconsistently.
+
+
 ## [0.8.11] - 2017-03-21
 
 ### Fixed
