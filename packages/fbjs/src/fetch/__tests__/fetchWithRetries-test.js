@@ -28,7 +28,7 @@ describe('fetchWithRetries', () => {
 
     handleNext = jest.fn();
 
-    spyOn(console, 'error').and.callFake(message => {
+    spyOn(console, 'warn').and.callFake(message => {
       expect(message).toBe(
         'Warning: fetchWithRetries: HTTP timeout, retrying.'
       );
