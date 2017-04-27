@@ -55,11 +55,13 @@ describe('inline-requires', function() {
       '}',
       'var bar = require("baz");',
       'foo();',
+      'bar();',
     ], [
       'function foo() {',
       'require("baz")();',
       '}',
       'foo();',
+      'require("baz")();',
     ]);
   });
 });
