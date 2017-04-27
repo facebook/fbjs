@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [2.1.1] - 2017-04-26
+
+### Fixed
+- `inline-requires` transform properly handles identifiers within functions whose definitions appear earlier in the file than the require call
 
 ## [2.1.0] - 2016-10-07
 
