@@ -47,6 +47,23 @@ describe('inline-requires', function() {
       ]);
     }).toThrow();
   });
+
+  it('should properly handle identifiers declared before their corresponding require statement', function() {
+    compare([
+      'function foo() {',
+      'bar();',
+      '}',
+      'var bar = require("baz");',
+      'foo();',
+      'bar();',
+    ], [
+      'function foo() {',
+      'require("baz")();',
+      '}',
+      'foo();',
+      'require("baz")();',
+    ]);
+  });
 });
 
 function transform(input) {

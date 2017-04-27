@@ -36,16 +36,21 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
     return call;
   }
 
-  return {
-    visitor: {
-      Program: function() {
+  /**
+   * Collect top-level require(...) aliases.
+   */
+  var firstPassVisitor = {
+    Program: {
+      enter() {
         resetCollection();
       },
+      exit(path, state) {
+        path.traverse(secondPassVisitor, state);
+      }
+    },
 
-      /**
-       * Collect top-level require(...) aliases.
-       */
-      CallExpression: function(path) {
+    CallExpression: {
+      enter(path) {
         var node = path.node;
 
         if (isTopLevelRequireAlias(path)) {
@@ -59,12 +64,16 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
           // And the associated binding in the scope.
           path.scope.removeBinding(varName);
         }
-      },
+      }
+    }
+  };
 
-      /**
-       * Inline require(...) aliases.
-       */
-      Identifier: function(path) {
+  /**
+   * Inline require(...) aliases.
+   */
+  var secondPassVisitor = {
+    Identifier: {
+      enter(path) {
         var node = path.node;
         var parent = path.parent;
         var scope = path.scope;
@@ -87,8 +96,12 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
         path.replaceWith(
           path.isReferenced() ? buildRequireCall(node.name) : node
         );
-      },
-    },
+      }
+    }
+  };
+
+  return {
+    visitor: firstPassVisitor
   };
 };
 
