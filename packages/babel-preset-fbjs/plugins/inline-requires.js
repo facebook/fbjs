@@ -40,15 +40,6 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
    * Collect top-level require(...) aliases.
    */
   var firstPassVisitor = {
-    Program: {
-      enter() {
-        resetCollection();
-      },
-      exit(path, state) {
-        path.traverse(secondPassVisitor, state);
-      }
-    },
-
     CallExpression: {
       enter(path) {
         var node = path.node;
@@ -101,7 +92,17 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
   };
 
   return {
-    visitor: firstPassVisitor
+    visitor: {
+      Program: {
+        enter(path, state) {
+          resetCollection();
+        },
+        exit(path, state) {
+          path.traverse(firstPassVisitor, state);
+          path.traverse(secondPassVisitor, state);
+        }
+      }
+    }
   };
 };
 
