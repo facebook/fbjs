@@ -93,14 +93,11 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
 
   return {
     visitor: {
-      Program: {
-        enter(path, state) {
-          resetCollection();
-        },
-        exit(path, state) {
-          path.traverse(firstPassVisitor, state);
-          path.traverse(secondPassVisitor, state);
-        }
+      Program: function(path, state) {
+        resetCollection();
+
+        path.traverse(firstPassVisitor, state);
+        path.traverse(secondPassVisitor, state);
       }
     }
   };
