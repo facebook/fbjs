@@ -1,9 +1,14 @@
 ## [Unreleased]
 
+## [2.1.2] - 2017-05-02
+
+### Fixed
+- `inline-requires` works better with other transforms (eg 'babel-plugin-transform-es2015-modules-commonjs').
+
 ## [2.1.1] - 2017-04-26
 
 ### Fixed
-- `inline-requires` transform properly handles identifiers within functions whose definitions appear earlier in the file than the require call
+- `inline-requires` transform properly handles identifiers within functions whose definitions appear earlier in the file than the require call.
 
 ## [2.1.0] - 2016-10-07
 
