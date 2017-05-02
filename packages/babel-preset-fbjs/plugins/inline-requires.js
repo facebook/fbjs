@@ -18,15 +18,11 @@
 var inlineRequiredDependencyMap;
 
 /**
- * Map of variable names that were not inlined.
+ * Map of variable names that have not yet been inlined.
+ * We track them in case we later remove their require()s,
+ * In which case we have to come back and update them.
  */
-var unmappedIdentifiersMap;
-
-/**
- * Do a second transform pass on the current Program to catch skipped variables.
- * This covers an edge-case where we remove a require() after passing references to it.
- */
-var orphanedIdentifiersFound;
+var identifierToPathsMap;
 
 /**
  * This transform inlines top-level require(...) aliases with to enable lazy
@@ -47,29 +43,8 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
     return call;
   }
 
-  function Identifier(path) {
+  function inlineRequire(path) {
     var node = path.node;
-    var parent = path.parent;
-    var scope = path.scope;
-
-    if (!shouldInlineRequire(node, scope)) {
-      // Monitor this variable name in case we later remove its require().
-      // This won't happen often but if it does we need to do a second pass.
-      unmappedIdentifiersMap[node.name] = true;
-
-      return;
-    }
-
-    if (
-      parent.type === 'AssignmentExpression' &&
-      path.isBindingIdentifier() &&
-      !scope.bindingIdentifierEquals(node.name, node)
-    ) {
-      throw new Error(
-        'Cannot assign to a require(...) alias, ' + node.name +
-        '. Line: ' + node.loc.start.line + '.'
-      );
-    }
 
     path.replaceWith(
       path.isReferenced() ? buildRequireCall(node.name) : node
@@ -78,17 +53,8 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
 
   return {
     visitor: {
-      Program: {
-        enter: function() {
-          resetCollection();
-        },
-        exit: function(path, state) {
-          // If we removed require() statements for variables we've already seen,
-          // We need to do a second pass on this program to replace them with require().
-          if (orphanedIdentifiersFound) {
-            path.traverse({ Identifier: Identifier }, state);
-          }
-        }
+      Program: function() {
+        resetCollection();
       },
 
       /**
@@ -105,8 +71,10 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
 
           // If we removed require() statements for variables we've already seen,
           // We need to do a second pass on this program to replace them with require().
-          if (unmappedIdentifiersMap.hasOwnProperty(varName)) {
-            orphanedIdentifiersFound = true;
+          var maybePaths = identifierToPathsMap[varName];
+          if (Array.isArray(maybePaths)) {
+            maybePaths.forEach(inlineRequire);
+            identifierToPathsMap[varName] = null;
           }
 
           // Remove the declaration.
@@ -119,15 +87,46 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
       /**
        * Inline require(...) aliases.
        */
-      Identifier: Identifier,
+      Identifier: function (path) {
+        var node = path.node;
+        var parent = path.parent;
+        var scope = path.scope;
+
+        var isInRequireMap = inlineRequiredDependencyMap.hasOwnProperty(node.name);
+        var scopeHasBinding = scope.hasBinding(node.name, true /* noGlobals */);
+
+        if (!shouldInlineRequire(node, scope)) {
+          // Monitor this name in case we later remove its require().
+          // This won't happen often but if it does we need to come back and update here.
+          if (Array.isArray(identifierToPathsMap[node.name])) {
+            identifierToPathsMap[node.name].push(path);
+          } else {
+            identifierToPathsMap[node.name] = [path];
+          }
+
+          return;
+        }
+
+        if (
+          parent.type === 'AssignmentExpression' &&
+          path.isBindingIdentifier() &&
+          !scope.bindingIdentifierEquals(node.name, node)
+        ) {
+          throw new Error(
+            'Cannot assign to a require(...) alias, ' + node.name +
+            '. Line: ' + node.loc.start.line + '.'
+          );
+        }
+
+        inlineRequire(path);
+      },
     },
   };
 };
 
 function resetCollection() {
+  identifierToPathsMap = {};
   inlineRequiredDependencyMap = {};
-  unmappedIdentifiersMap = {};
-  orphanedIdentifiersFound = false;
 }
 
 function isTopLevelRequireAlias(path) {
@@ -141,6 +140,13 @@ function isTopLevelRequireAlias(path) {
   );
 }
 
+function shouldInlineRequire(node, scope) {
+  return (
+    inlineRequiredDependencyMap.hasOwnProperty(node.name) &&
+    !scope.hasBinding(node.name, true /* noGlobals */)
+  );
+}
+
 function isRequireCall(node) {
   return (
     !node.new &&
@@ -149,12 +155,5 @@ function isRequireCall(node) {
     node.callee.name === 'require' &&
     node['arguments'].length === 1 &&
     node['arguments'][0].type === 'StringLiteral'
-  );
-}
-
-function shouldInlineRequire(node, scope) {
-  return (
-    inlineRequiredDependencyMap.hasOwnProperty(node.name) &&
-    !scope.hasBinding(node.name, true /* noGlobals */)
   );
 }
