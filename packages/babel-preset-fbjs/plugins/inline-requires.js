@@ -18,6 +18,13 @@
 var inlineRequiredDependencyMap;
 
 /**
+ * Map of variable names that have not yet been inlined.
+ * We track them in case we later remove their require()s,
+ * In which case we have to come back and update them.
+ */
+var identifierToPathsMap;
+
+/**
  * This transform inlines top-level require(...) aliases with to enable lazy
  * loading of dependencies.
  *
@@ -36,21 +43,24 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
     return call;
   }
 
-  /**
-   * Collect top-level require(...) aliases.
-   */
-  var firstPassVisitor = {
-    Program: {
-      enter() {
+  function inlineRequire(path) {
+    var node = path.node;
+
+    path.replaceWith(
+      path.isReferenced() ? buildRequireCall(node.name) : node
+    );
+  }
+
+  return {
+    visitor: {
+      Program: function() {
         resetCollection();
       },
-      exit(path, state) {
-        path.traverse(secondPassVisitor, state);
-      }
-    },
 
-    CallExpression: {
-      enter(path) {
+      /**
+       * Collect top-level require(...) aliases.
+       */
+      CallExpression: function(path) {
         var node = path.node;
 
         if (isTopLevelRequireAlias(path)) {
@@ -59,26 +69,41 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
 
           inlineRequiredDependencyMap[varName] = moduleName;
 
+          // If we removed require() statements for variables we've already seen,
+          // We need to do a second pass on this program to replace them with require().
+          var maybePaths = identifierToPathsMap[varName];
+          if (Array.isArray(maybePaths)) {
+            maybePaths.forEach(inlineRequire);
+            identifierToPathsMap[varName] = null;
+          }
+
           // Remove the declaration.
           path.parentPath.parentPath.remove();
           // And the associated binding in the scope.
           path.scope.removeBinding(varName);
         }
-      }
-    }
-  };
+      },
 
-  /**
-   * Inline require(...) aliases.
-   */
-  var secondPassVisitor = {
-    Identifier: {
-      enter(path) {
+      /**
+       * Inline require(...) aliases.
+       */
+      Identifier: function (path) {
         var node = path.node;
         var parent = path.parent;
         var scope = path.scope;
 
+        var isInRequireMap = inlineRequiredDependencyMap.hasOwnProperty(node.name);
+        var scopeHasBinding = scope.hasBinding(node.name, true /* noGlobals */);
+
         if (!shouldInlineRequire(node, scope)) {
+          // Monitor this name in case we later remove its require().
+          // This won't happen often but if it does we need to come back and update here.
+          if (Array.isArray(identifierToPathsMap[node.name])) {
+            identifierToPathsMap[node.name].push(path);
+          } else {
+            identifierToPathsMap[node.name] = [path];
+          }
+
           return;
         }
 
@@ -93,19 +118,14 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
           );
         }
 
-        path.replaceWith(
-          path.isReferenced() ? buildRequireCall(node.name) : node
-        );
-      }
-    }
-  };
-
-  return {
-    visitor: firstPassVisitor
+        inlineRequire(path);
+      },
+    },
   };
 };
 
 function resetCollection() {
+  identifierToPathsMap = {};
   inlineRequiredDependencyMap = {};
 }
 
@@ -120,6 +140,13 @@ function isTopLevelRequireAlias(path) {
   );
 }
 
+function shouldInlineRequire(node, scope) {
+  return (
+    inlineRequiredDependencyMap.hasOwnProperty(node.name) &&
+    !scope.hasBinding(node.name, true /* noGlobals */)
+  );
+}
+
 function isRequireCall(node) {
   return (
     !node.new &&
@@ -128,12 +155,5 @@ function isRequireCall(node) {
     node.callee.name === 'require' &&
     node['arguments'].length === 1 &&
     node['arguments'][0].type === 'StringLiteral'
-  );
-}
-
-function shouldInlineRequire(node, scope) {
-  return (
-    inlineRequiredDependencyMap.hasOwnProperty(node.name) &&
-    !scope.hasBinding(node.name, true /* noGlobals */)
   );
 }
