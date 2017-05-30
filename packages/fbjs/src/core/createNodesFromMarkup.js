@@ -19,12 +19,6 @@ const getMarkupWrap = require('getMarkupWrap');
 const invariant = require('invariant');
 
 /**
- * Dummy container used to render all markup.
- */
-const dummyNode =
-  ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
-
-/**
  * Pattern used by `getNodeName`.
  */
 const nodeNamePattern = /^\s*<(\w+)/;
@@ -51,6 +45,11 @@ function getNodeName(markup) {
  * @return {array<DOMElement|DOMTextNode>} An array of rendered nodes.
  */
 function createNodesFromMarkup(markup, handleScript) {
+  /**
+   * Dummy container used to render all markup.
+   */
+  const dummyNode = ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
+
   let node = dummyNode;
   invariant(!!dummyNode, 'createNodesFromMarkup dummy not initialized');
   const nodeName = getNodeName(markup);

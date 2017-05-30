@@ -16,12 +16,6 @@ const ExecutionEnvironment = require('ExecutionEnvironment');
 const invariant = require('invariant');
 
 /**
- * Dummy container used to detect which wraps are necessary.
- */
-const dummyNode =
-  ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
-
-/**
  * Some browsers cannot use `innerHTML` to render certain elements standalone,
  * so we wrap them, render the wrapped nodes, then extract the desired node.
  *
@@ -95,6 +89,11 @@ svgElements.forEach((nodeName) => {
  * @return {?array} Markup wrap configuration, if applicable.
  */
 function getMarkupWrap(nodeName) {
+  /**
+   * Dummy container used to detect which wraps are necessary.
+   */
+  const dummyNode = ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
+  
   invariant(!!dummyNode, 'Markup wrapping node not initialized');
   if (!markupWrap.hasOwnProperty(nodeName)) {
     nodeName = '*';
