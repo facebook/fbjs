@@ -4,6 +4,9 @@
 [include]
 ../node_modules
 
+[libs]
+../flow/lib
+
 [options]
 module.system=haste
 
