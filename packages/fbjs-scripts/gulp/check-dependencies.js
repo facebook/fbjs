@@ -35,7 +35,10 @@ module.exports = function(opts) {
     });
 
     outdated.on('exit', function(code) {
-      if (code !== 0) {
+      // exitCode set to 1 in npm 4
+      if (code === 1) {
+        process.exitCode = 0
+      } else if (code !== 0) {
         cb(new gutil.PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
