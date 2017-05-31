@@ -33,7 +33,7 @@ function compare(name, version, query, normalizer) {
   }
 
   // check for non-matching names
-  if (!query.startsWith(name)) {
+  if (query.indexOf(name) !== 0) {
     return false;
   }
 
