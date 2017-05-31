@@ -61,7 +61,7 @@ var EventListener = {
       };
     } else {
       if (__DEV__) {
-        console.error(
+        console.warn(
           'Attempted to listen to events during the capture phase on a ' +
           'browser that does not support the capture phase. Your application ' +
           'will not receive some events.'
