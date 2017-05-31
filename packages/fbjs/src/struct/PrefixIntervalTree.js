@@ -66,7 +66,7 @@ class PrefixIntervalTree {
   /**
    * Binary heap
    */
-  _heap: Array<number>;
+  _heap: Int32Array;
 
   constructor(xs: Array<number>) {
     this._size = xs.length;
