@@ -1,8 +1,19 @@
-## [Unreleased]
+## [0.8.0] - 2017-05-31
+
+### Added
+- `fbjs-css-vars` and `setimmediate` are now included in `third-party-module-map.json`.
 
 ### Removed
 - [lint] Moved config to new `eslint-config-fbjs` package.
-- [gulp] Improve error handling in `check-dependencies` script.
+- `immutable` has been removed from `third-party-module-map.json` (no longer a requirement for anything in `fbjs` - should be added to own library module maps if used).
+
+### Changed
+- Upgraded `cross-spawn` dependency (used in gulp scripts).
+- Upgraded `core-js` dependency (used in jest scripts).
+
+### Fixed
+- [gulp] Fixed issue preventing `check-dependencies` from working with npm 4+.
+- [gulp] Fixed issue where `check-dependencies` would error for extraneous packages.
 
 
 ## [0.7.1] - 2016-05-25
