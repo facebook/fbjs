@@ -87,13 +87,10 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
       /**
        * Inline require(...) aliases.
        */
-      Identifier: function (path) {
+      Identifier: function(path) {
         var node = path.node;
         var parent = path.parent;
         var scope = path.scope;
-
-        var isInRequireMap = inlineRequiredDependencyMap.hasOwnProperty(node.name);
-        var scopeHasBinding = scope.hasBinding(node.name, true /* noGlobals */);
 
         if (!shouldInlineRequire(node, scope)) {
           // Monitor this name in case we later remove its require().
