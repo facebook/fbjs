@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [2.1.3] - 2017-06-08
+
+### Fixed
+- `inline-requires` will stop unintentionally using Flow declarations as bindings.
+
 ## [2.1.2] - 2017-05-02
 
 ### Fixed
