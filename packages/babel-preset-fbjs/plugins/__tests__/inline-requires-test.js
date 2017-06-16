@@ -75,6 +75,21 @@ describe('inline-requires', function() {
       'console.log(_foo2.default);',
     ]);
   });
+
+  it('should be compatible with `transform-es2015-modules-commonjs` when using named imports', function() {
+    compare(`
+      import { a } from './a';
+
+      var D = {
+        b: function(c) { c ? a(c.toString()) : a('No c!'); },
+      };`, [
+      'var D = {',
+      '  b: function (c) {',
+      `    c ? (0, require('./a').a)(c.toString()) : (0, require('./a').a)('No c!');`,
+      '  }',
+      '};',
+    ]);
+  });
 });
 
 function transform(input) {
