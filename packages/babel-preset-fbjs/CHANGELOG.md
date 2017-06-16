@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [2.1.4] - 2017-06-16
+
+### Fixed
+- `inline-requires` works with named imports and no longer leaks paths after use.
+
 ## [2.1.3] - 2017-06-08
 
 ### Fixed
