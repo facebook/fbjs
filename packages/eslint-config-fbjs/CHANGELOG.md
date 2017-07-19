@@ -1,7 +1,11 @@
-## [Unreleased]
+## [2.0.0] - 2017-07-19
 
 ### Added
-- `fbjs/opensource` config, as a new ideal config for our open source projects
+- Includes `eslint-plugin-jsx-a11y` and `eslint-plugin-relay`
+
+### Changed
+- Upgraded ESLint and other peer dependencies to latest versions.
+
 
 ## [1.1.1] - 2016-09-13
 
