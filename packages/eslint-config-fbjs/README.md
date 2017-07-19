@@ -13,12 +13,28 @@ There are several exceptions:
 
 #### `npm`
 ```sh
-npm install --save-dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flowtype eslint-plugin-react eslint babel-eslint
+npm install --save-dev \
+  eslint-config-fbjs \
+  eslint-plugin-babel \
+  eslint-plugin-flowtype \
+  eslint-plugin-jsx-a11y \
+  eslint-plugin-react \
+  eslint-plugin-relay \
+  eslint \
+  babel-eslint
 ```
 
 #### `yarn`
 ```sh
-yarn add --dev eslint-config-fbjs eslint-plugin-babel eslint-plugin-flowtype eslint-plugin-react eslint babel-eslint
+yarn add --dev
+  eslint-config-fbjs \
+  eslint-plugin-babel \
+  eslint-plugin-flowtype \
+  eslint-plugin-jsx-a11y \
+  eslint-plugin-react \
+  eslint-plugin-relay \
+  eslint \
+  babel-eslint
 ```
 
 ### Configure
