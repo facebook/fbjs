@@ -22,8 +22,12 @@ function buildCacheKey(files, base) {
 module.exports = files => {
   const presetVersion = require('../package').dependencies['babel-preset-fbjs'];
   const cacheKey = buildCacheKey(files, presetVersion);
-  return (src, file, configString) => crypto.createHash('md5')
-    .update(cacheKey)
-    .update(src + file + configString)
-    .digest('hex');
+  return (src, file, configString, options) => {
+    return crypto
+      .createHash('md5')
+      .update(cacheKey)
+      .update(src + file + configString)
+      .update(options && options.instrument ? 'instrument' : '')
+      .digest('hex');
+  };
 };
