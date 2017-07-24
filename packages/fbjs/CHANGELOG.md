@@ -11,6 +11,8 @@
 - More flow annotations: `joinClasses`, `flatMapArray`
 - Upgraded `core-js` dependency to ^2.4.1
 
+### Fixed
+- Fixed strict argument arity issues with `Deferred` module.
 
 ## [0.8.5] - 2016-09-27
 
