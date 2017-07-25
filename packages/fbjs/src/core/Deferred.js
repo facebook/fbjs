@@ -49,7 +49,7 @@ class Deferred<Tvalue, Treason> {
   }
 
   catch(
-    onReject?: ?(error: any) => mixed,
+    onReject?: ?(error: any) => mixed
   ): Promise<any> {
     return Promise.prototype.catch.apply(this._promise, arguments);
   }
