@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Fixed strict argument arity issues with `Deferred` module.
+
 
 ## [0.8.12] - 2017-03-29
 
