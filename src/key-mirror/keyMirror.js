@@ -8,7 +8,6 @@
  *
  * @providesModule keyMirror
  * @typechecks static-only
- * @flow
  */
 
 'use strict';
@@ -33,7 +32,7 @@ var invariant = require('invariant');
  * @param {object} obj
  * @return {object}
  */
-var keyMirror = function<T: {}>(obj: T): $ObjMapi<T, <K>(K) => K> {
+var keyMirror = function(obj) {
   var ret = {};
   var key;
   invariant(
