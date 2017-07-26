@@ -1,6 +1,12 @@
 ## [Unreleased]
 
 
+## [0.8.14] - 2017-07-25
+
+### Removed
+- Flow annotations for `keyMirror` module. The annotation generates a syntax error after being re-printed by Babel.
+
+
 ## [0.8.13] - 2017-07-25
 
 ### Added
