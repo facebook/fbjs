@@ -1,7 +1,14 @@
 ## [Unreleased]
 
+
+## [0.8.13] - 2017-07-25
+
+### Added
+- Flow annotations for `keyMirror` module.
+
 ### Fixed
 - Fixed strict argument arity issues with `Deferred` module.
+- Corrected License header in `EventListener`.
 
 
 ## [0.8.12] - 2017-03-29
