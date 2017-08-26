@@ -26,7 +26,7 @@ npm install --save-dev \
 
 #### `yarn`
 ```sh
-yarn add --dev
+yarn add --dev \
   eslint-config-fbjs \
   eslint-plugin-babel \
   eslint-plugin-flowtype \
