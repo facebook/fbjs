@@ -1,5 +1,6 @@
 ## [Unreleased]
 
+- `getDocumentScrollElement` now correctly returns the `<html>` element in Chrome 61 instead of `<body>`.
 
 ## [0.8.14] - 2017-07-25
 
