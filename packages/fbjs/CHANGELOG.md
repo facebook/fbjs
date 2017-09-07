@@ -13,6 +13,7 @@
 
 ### Fixed
 - Fixed strict argument arity issues with `Deferred` module.
+- `getDocumentScrollElement` now correctly returns the `<html>` element in Chrome 61 instead of `<body>`.
 
 ## [0.8.5] - 2016-09-27
 
