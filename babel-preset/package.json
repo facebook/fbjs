@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Babel preset for Facebook projects.",
   "repository": "facebook/fbjs",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test jest"
