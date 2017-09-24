@@ -5,10 +5,9 @@
   "author": "",
   "repository": "facebook/fbjs",
   "main": "index.js",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "files": [
     "LICENCE",
-    "PATENTS",
     "README.md",
     "index.js",
     "warning.js"
