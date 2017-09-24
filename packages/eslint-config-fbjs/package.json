@@ -3,12 +3,11 @@
   "version": "2.0.0",
   "description": "",
   "repository": "facebook/fbjs",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "main": "index.js",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
-    "PATENTS",
     "README.md",
     "index.js",
     "opensource/",
