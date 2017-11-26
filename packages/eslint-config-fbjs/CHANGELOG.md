@@ -1,3 +1,9 @@
+## [2.0.1] - 2017-11-26
+
+### Changed
+- Updated peer dependency of `eslint-plugin-relay` to allow a range.
+
+
 ## [2.0.0] - 2017-07-19
 
 ### Added
