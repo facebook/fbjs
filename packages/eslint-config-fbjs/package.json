@@ -19,7 +19,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^7.2.3 || ^8.0.0",
     "eslint": "^4.2.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-flowtype": "^2.35.0",
