@@ -223,12 +223,12 @@ function resolveBlockDir(
   str: string,
   fallback: ?BidiDirection,
 ): BidiDirection {
-  fallback = fallback || UnicodeBidiDirection.NEUTRAL;
+  const validFallback = fallback || UnicodeBidiDirection.NEUTRAL;
   if (!str.length) {
-    return fallback;
+    return validFallback;
   }
   const blockDir = firstStrongCharDir(str);
-  return (blockDir === UnicodeBidiDirection.NEUTRAL) ? fallback : blockDir;
+  return (blockDir === UnicodeBidiDirection.NEUTRAL) ? validFallback : blockDir;
 }
 
 
