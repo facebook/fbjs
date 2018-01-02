@@ -7,7 +7,7 @@
 
 'use strict';
 
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
 var through = require('through2');
 var PM_REGEXP = require('./shared/provides-module').regexp;
 
@@ -19,7 +19,7 @@ module.exports = function(opts) {
     }
 
     if (file.isStream()) {
-      cb(new gutil.PluginError('module-map', 'Streaming not supported'));
+      cb(new PluginError('module-map', 'Streaming not supported'));
       return;
     }
 
