@@ -8,28 +8,12 @@ This configuration is a new ideal setup based on Facebook's internal configurati
 
 #### `npm`
 ```sh
-npm install --save-dev \
-  eslint-config-fbjs-opensource \
-  eslint-plugin-babel \
-  eslint-plugin-flowtype \
-  eslint-plugin-react \
-  eslint-plugin-jasmine \
-  eslint-plugin-prefer-object-spread \
-  eslint \
-  babel-eslint
+npm install --save-dev eslint eslint-config-fbjs-opensource
 ```
 
 #### `yarn`
 ```sh
-yarn add --dev \
-  eslint-config-fbjs-opensource \
-  eslint-plugin-babel \
-  eslint-plugin-flowtype \
-  eslint-plugin-react \
-  eslint-plugin-jasmine \
-  eslint-plugin-prefer-object-spread \
-  eslint \
-  babel-eslint
+yarn add --dev eslint eslint-config-fbjs-opensource
 ```
 
 ### Configure
