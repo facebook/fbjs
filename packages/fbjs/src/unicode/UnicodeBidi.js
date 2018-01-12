@@ -221,14 +221,14 @@ function firstStrongCharDir(str: string): BidiDirection {
  */
 function resolveBlockDir(
   str: string,
-  fallback: ?BidiDirection,
+  fallback_: ?BidiDirection,
 ): BidiDirection {
-  const validFallback = fallback || UnicodeBidiDirection.NEUTRAL;
+  const fallback = fallback_ || UnicodeBidiDirection.NEUTRAL;
   if (!str.length) {
-    return validFallback;
+    return fallback;
   }
   const blockDir = firstStrongCharDir(str);
-  return (blockDir === UnicodeBidiDirection.NEUTRAL) ? validFallback : blockDir;
+  return (blockDir === UnicodeBidiDirection.NEUTRAL) ? fallback : blockDir;
 }
 
 
