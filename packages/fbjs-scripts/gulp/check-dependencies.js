@@ -7,13 +7,13 @@
 
 'use strict';
 
-var gutil = require('gulp-util');
 var path = require('path');
 var semver = require('semver');
 var spawn = require('cross-spawn');
 var through = require('through2');
-
-var colors = gutil.colors;
+var PluginError = require('plugin-error');
+var colors = require('ansi-colors');
+var fancyLog = require('fancy-log');
 
 var PLUGIN_NAME = 'check-dependencies';
 
@@ -39,7 +39,7 @@ module.exports = function(opts) {
       try {
         var outdatedData = JSON.parse(data);
       } catch (e) {
-        cb(new gutil.PluginError(PLUGIN_NAME, 'npm broke'));
+        cb(new PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
       var failures = [];
@@ -49,7 +49,7 @@ module.exports = function(opts) {
         var requested = pkgData[type][name];
 
         if (!requested) {
-          gutil.log('Found extraneous outdated dependency. Consider running `npm prune`');
+          fancyLog('Found extraneous outdated dependency. Consider running `npm prune`');
           return;
         }
 
@@ -61,7 +61,7 @@ module.exports = function(opts) {
 
       if (failures.length) {
         failures.forEach((failure) => {
-          gutil.log(
+          fancyLog(
             `${colors.bold(failure.name)} is outdated ` +
             `(${colors.red(failure.current)} does not satisfy ` +
             `${colors.yellow(failure.requested)})`
@@ -70,7 +70,7 @@ module.exports = function(opts) {
         var msg =
           'Some of your dependencies are outdated. Please run ' +
           `${colors.bold('npm update')} to ensure you are up to date.`;
-        cb(new gutil.PluginError(PLUGIN_NAME, msg));
+        cb(new PluginError(PLUGIN_NAME, msg));
         return;
       }
 
