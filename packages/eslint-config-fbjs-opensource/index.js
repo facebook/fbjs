@@ -90,6 +90,7 @@ module.exports = {
     'eqeqeq': [1, 'allow-null'],
     'guard-for-in': 0,
     'no-alert': 1,
+    'no-await-in-loop': 1,
     'no-caller': 2,
     'no-case-declarations': 1,
     'no-div-regex': 1,
@@ -295,8 +296,7 @@ module.exports = {
     'babel/new-cap': 0,
     'babel/object-curly-spacing': 0,
     'babel/no-invalid-this': 0,
-    // Babel (not in eslint)
-    'babel/no-await-in-loop': 1,
+    'babel/no-await-in-loop': 0, // deprecated; now using 'no-await-in-loop' from eslint core
 
     // flowtype (https://github.com/gajus/eslint-plugin-flowtype)
     'flowtype/boolean-style': 1,
@@ -386,8 +386,7 @@ module.exports = {
     'react/jsx-no-undef': 2,
     'react/jsx-pascal-case': 0,
     'react/jsx-sort-props': 0,
-    'react/jsx-space-before-closing': 1,
-    'react/jsx-tag-spacing': 1,
+    'react/jsx-tag-spacing': [1, {beforeSelfClosing: 'always'}],
     'react/jsx-uses-react': 1,
     'react/jsx-uses-vars': 1,
     'react/jsx-wrap-multilines': 1,
