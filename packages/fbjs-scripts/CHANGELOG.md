@@ -1,3 +1,14 @@
+## [0.8.3] - 2018-04-18
+
+### Changed
+- Dropped use of `gulp-util`
+- Relicensed to MIT
+
+
+## [0.8.2] - 2018-03-27
+- Pulled, mistakenly shipped identical code to v0.8.1
+
+
 ## [0.8.1] - 2017-07-25
 
 ### Added
