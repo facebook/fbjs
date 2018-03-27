@@ -1,6 +1,6 @@
 {
   "name": "fbjs-scripts",
-  "version": "0.8.1",
+  "version": "0.8.3",
   "description": "A bundle of helpful scripts used in projects consuming fbjs.",
   "repository": "facebook/fbjs",
   "license": "MIT",
