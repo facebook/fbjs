@@ -11,6 +11,7 @@
 'use strict';
 
 const hyphenate = require('hyphenate');
+const memoizeStringOnly = require('memoizeStringOnly');
 
 const msPattern = /^ms-/;
 
@@ -34,4 +35,4 @@ function hyphenateStyleName(string) {
   return hyphenate(string).replace(msPattern, '-ms-');
 }
 
-module.exports = hyphenateStyleName;
+module.exports = memoizeStringOnly(hyphenateStyleName);
