@@ -60,3 +60,22 @@ if (devEngines.npm !== undefined) {
     );
   });
 }
+
+if (devEngines.yarn !== undefined) {
+  // First check that devEngines are valid semver
+  assert(
+    semver.validRange(devEngines.yarn),
+    f('devEngines.yarn (%s) is not a valid semver range', devEngines.yarn)
+  );
+
+  // Then actually check that our version satisfies
+  exec('yarn --version', function(err, stdout, stderr) {
+    assert(err === null, f('Failed to get yarn version... %s'), stderr);
+
+    var yarnVersion = stdout.trim();
+    assert(
+      semver.satisfies(yarnVersion, devEngines.yarn),
+      f('Current yarn version is not supported for development, expected "%s" to satisfy "%s".', yarnVersion, devEngines.yarn)
+    );
+  });
+}
