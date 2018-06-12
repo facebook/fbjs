@@ -45,13 +45,19 @@
     ],
     "persistModuleRegistryBetweenSpecs": true,
     "rootDir": "",
-    "setupFiles": ["node_modules/fbjs-scripts/jest/environment.js"],
+    "setupFiles": [
+      "node_modules/fbjs-scripts/jest/environment.js"
+    ],
     "testPathDirs": [
       "<rootDir>/src"
     ],
     "timers": "fake",
-    "transform": {".*": "node_modules/fbjs-scripts/jest/preprocessor.js"},
-    "transformIgnorePatterns": ["/node_modules/"],
+    "transform": {
+      ".*": "node_modules/fbjs-scripts/jest/preprocessor.js"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/src/(?!(__forks__/fetch.js$|fetch/))"
