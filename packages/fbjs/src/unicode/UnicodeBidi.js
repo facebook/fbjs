@@ -221,9 +221,9 @@ function firstStrongCharDir(str: string): BidiDirection {
  */
 function resolveBlockDir(
   str: string,
-  fallback: ?BidiDirection,
+  fallback_: ?BidiDirection,
 ): BidiDirection {
-  fallback = fallback || UnicodeBidiDirection.NEUTRAL;
+  const fallback = fallback_ || UnicodeBidiDirection.NEUTRAL;
   if (!str.length) {
     return fallback;
   }
