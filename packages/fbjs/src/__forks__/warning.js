@@ -31,6 +31,9 @@ if (__DEV__) {
       // --- Welcome to debugging React ---
       // This error was thrown as a convenience so that you can use this stack
       // to find the callsite that caused this warning to fire.
+      //
+      // To use this, you can set a breakpoint on the following line,
+      // or configure your browser to 'break on caught exceptions'.
       throw new Error(message);
     } catch (x) {}
   }
