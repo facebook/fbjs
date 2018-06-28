@@ -12,7 +12,7 @@
     "pretest": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "test": "NODE_ENV=test jest",
     "test-babel-presets": "cd babel-preset && npm install && npm test",
-    "flow": "flow check src"
+    "flow": "flow check --include ../lib src"
   },
   "devDependencies": {
     "babel-preset-fbjs": "file:../babel-preset-fbjs",
