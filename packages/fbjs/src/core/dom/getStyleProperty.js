@@ -12,9 +12,7 @@ const camelize = require('camelize');
 const hyphenate = require('hyphenate');
 
 function asString(value) /*?string*/ {
-  return value == null
-    ? value
-    : String(value);
+  return value == null ? value : String(value);
 }
 
 function getStyleProperty(/*DOMNode*/ node, /*string*/ name) /*?string*/ {
@@ -23,14 +21,17 @@ function getStyleProperty(/*DOMNode*/ node, /*string*/ name) /*?string*/ {
   // W3C Standard
   if (window.getComputedStyle) {
     // In certain cases such as within an iframe in FF3, this returns null.
-    computedStyle = window.getComputedStyle(node, null);
+    computedStyle = window.getComputedStyle(node.host ? node.host : node, null);
     if (computedStyle) {
       return asString(computedStyle.getPropertyValue(hyphenate(name)));
     }
   }
   // Safari
   if (document.defaultView && document.defaultView.getComputedStyle) {
-    computedStyle = document.defaultView.getComputedStyle(node, null);
+    computedStyle = document.defaultView.getComputedStyle(
+      node.host ? node.host : node,
+      null,
+    );
     // A Safari bug causes this to return null for `display: none` elements.
     if (computedStyle) {
       return asString(computedStyle.getPropertyValue(hyphenate(name)));
@@ -42,8 +43,9 @@ function getStyleProperty(/*DOMNode*/ node, /*string*/ name) /*?string*/ {
   // Internet Explorer
   if (node.currentStyle) {
     if (name === 'float') {
-      return asString(node.currentStyle.cssFloat
-                      || node.currentStyle.styleFloat);
+      return asString(
+        node.currentStyle.cssFloat || node.currentStyle.styleFloat,
+      );
     }
     return asString(node.currentStyle[camelize(name)]);
   }
