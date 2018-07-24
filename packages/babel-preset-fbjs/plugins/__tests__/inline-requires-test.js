@@ -68,22 +68,22 @@ describe('inline-requires', function() {
       'import Imported from "foo";',
       'console.log(Imported);',
     ], [
-      'var _foo2 = _interopRequireDefault(require(\"foo\"));',
+      'var _foo2 = _interopRequireDefault(require("foo"));',
       'function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }',
       'console.log(_foo2.default);',
     ]);
   });
 
   it('should be compatible with `transform-es2015-modules-commonjs` when using named imports', function() {
-    compare(`
-      import { a } from './a';
-
-      var D = {
-        b: function(c) { c ? a(c.toString()) : a('No c!'); },
-      };`, [
+    compare([
+      'import {a} from "./a";',
+      'var D = {',
+      '  b: function(c) { c ? a(c.toString()) : a("No c!"); },',
+      '};',
+    ], [
       'var D = {',
       '  b: function (c) {',
-      `    c ? (0, require('./a').a)(c.toString()) : (0, require('./a').a)('No c!');`,
+      '    c ? (0, require("./a").a)(c.toString()) : (0, require("./a").a)("No c!");',
       '  }',
       '};',
     ]);
