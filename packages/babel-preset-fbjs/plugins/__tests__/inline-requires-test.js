@@ -21,6 +21,34 @@ describe('inline-requires', function() {
     ]);
   });
 
+  it('should inline multiple usage', function() {
+    compare([
+      'var foo = require("foo");',
+      'foo.bar()',
+      'foo.baz()',
+    ], [
+      'require("foo").bar();',
+      'require("foo").baz();',
+    ]);
+  });
+
+  it('should not matter the variable declaration length', function() {
+    compare([
+      'var foo = require("foo"), bar = require("bar"), baz = 4;',
+      'foo.method()',
+    ], [
+      'var baz = 4;',
+      'require("foo").method();',
+    ]);
+
+    compare([
+      'var foo = require("foo"), bar = require("bar");',
+      'foo.method()',
+    ], [
+      'require("foo").method();',
+    ]);
+  });
+
   it('should inline requires that are not assigned', function() {
     compare([
       'require("foo");',
@@ -43,7 +71,21 @@ describe('inline-requires', function() {
         'var foo = require("foo");',
         'foo = "bar";',
       ]);
-    }).toThrow();
+    }).toThrow(ReferenceError);
+
+    expect(function() {
+      transform([
+        'var foo = require("foo");',
+        'foo = "bar";',
+      ]);
+    }).toThrow(/\bline: 2\b/);
+
+    expect(function() {
+      transform([
+        'var foo = require("foo");',
+        'foo = "bar";',
+      ]);
+    }).toThrow(/\bname: foo\b/);
   });
 
   it('should properly handle identifiers declared before their corresponding require statement', function() {
@@ -63,27 +105,43 @@ describe('inline-requires', function() {
     ]);
   });
 
+  it('should be compatible with destructuring', function() {
+    compare([
+      'var tmp = require("./a");',
+      'var a = tmp.a',
+      'var D = {',
+      '  b: function(c) { c ? a(c.toString()) : a("No c!"); },',
+      '};',
+    ], [
+      'var D = {',
+      '  b: function (c) {',
+      '    c ? require("./a").a(c.toString()) : require("./a").a("No c!");',
+      '  }',
+      '};',
+    ]);
+  });
+
   it('should be compatible with other transforms like transform-es2015-modules-commonjs', function() {
     compare([
       'import Imported from "foo";',
       'console.log(Imported);',
     ], [
-      'var _foo2 = _interopRequireDefault(require(\"foo\"));',
+      'var _foo2 = _interopRequireDefault(require("foo"));',
       'function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }',
       'console.log(_foo2.default);',
     ]);
   });
 
   it('should be compatible with `transform-es2015-modules-commonjs` when using named imports', function() {
-    compare(`
-      import { a } from './a';
-
-      var D = {
-        b: function(c) { c ? a(c.toString()) : a('No c!'); },
-      };`, [
+    compare([
+      'import {a} from "./a";',
+      'var D = {',
+      '  b: function(c) { c ? a(c.toString()) : a("No c!"); },',
+      '};',
+    ], [
       'var D = {',
       '  b: function (c) {',
-      `    c ? (0, require('./a').a)(c.toString()) : (0, require('./a').a)('No c!');`,
+      '    c ? (0, require("./a").a)(c.toString()) : (0, require("./a").a)("No c!");',
       '  }',
       '};',
     ]);
