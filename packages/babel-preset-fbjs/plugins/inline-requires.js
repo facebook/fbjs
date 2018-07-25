@@ -30,33 +30,32 @@
 module.exports = function fbjsInlineRequiresTransform() {
   return {
     visitor: {
-      CallExpression: function(path) {
-        var declaratorPath = requireAlias(path) || requireMemberAlias(path);
-        var declarator = declaratorPath && declaratorPath.node;
-
-        if (declarator) {
-          declaratorPath.scope.crawl();
-
-          var init = declarator.init;
-          var name = declarator.id && declarator.id.name;
-          var binding = declaratorPath.scope.getBinding(name);
-          var constantViolations = binding.constantViolations;
-
-          if (constantViolations.length) {
-            var line = constantViolations[0].node.loc.start.line;
-
-            throw new ReferenceError(
-              'Cannot re-assign a require; name: ' + name + ', line: ' + line
-            );
-          }
-
-          binding.referencePaths.forEach(ref => ref.replaceWith(init));
-          declaratorPath.remove();
-        }
+      Program: {
+        exit(path) {
+          path.scope.crawl();
+          path.traverse({CallExpression});
+        },
       },
     },
   };
 };
+
+function CallExpression(path) {
+  var declaratorPath = requireAlias(path) || requireMemberAlias(path);
+  var declarator = declaratorPath && declaratorPath.node;
+
+  if (declarator) {
+    var init = declarator.init;
+    var name = declarator.id && declarator.id.name;
+    var binding = declaratorPath.scope.getBinding(name);
+    var constantViolations = binding.constantViolations;
+
+    if (!constantViolations.length) {
+      binding.referencePaths.forEach(ref => ref.replaceWith(init));
+      declaratorPath.remove();
+    }
+  }
+}
 
 function requireAlias(path) {
   const isValid = (
