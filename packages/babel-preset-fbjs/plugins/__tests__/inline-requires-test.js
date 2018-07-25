@@ -65,27 +65,14 @@ describe('inline-requires', function() {
     ]);
   });
 
-  it('should throw when assigning to a require', function() {
-    expect(function() {
-      transform([
-        'var foo = require("foo");',
-        'foo = "bar";',
-      ]);
-    }).toThrow(ReferenceError);
-
-    expect(function() {
-      transform([
-        'var foo = require("foo");',
-        'foo = "bar";',
-      ]);
-    }).toThrow(/\bline: 2\b/);
-
-    expect(function() {
-      transform([
-        'var foo = require("foo");',
-        'foo = "bar";',
-      ]);
-    }).toThrow(/\bname: foo\b/);
+  it('should avoid inlining when re-assigning to a require', function() {
+    compare([
+      'var foo = require("foo");',
+      'foo = "bar";',
+    ], [
+      'var foo = require("foo");',
+      'foo = "bar";',
+    ]);
   });
 
   it('should properly handle identifiers declared before their corresponding require statement', function() {
