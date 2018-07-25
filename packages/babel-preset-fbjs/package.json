@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-fbjs",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "Babel preset for Facebook projects.",
   "repository": "facebook/fbjs",
   "license": "MIT",
