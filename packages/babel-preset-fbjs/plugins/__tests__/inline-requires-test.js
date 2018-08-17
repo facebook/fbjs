@@ -134,6 +134,21 @@ describe('inline-requires', function() {
     ]);
   });
 
+  it('should inline the given method calls', function() {
+    compare([
+      'const inlinedCustom = customStuff("foo");',
+      'const inlinedRequire = require("bar");',
+      '',
+      'inlinedCustom();',
+      'inlinedRequire();',
+    ], [
+      'customStuff("foo")();',
+      'require("bar")();',
+    ], {
+      inlineableCalls: ['customStuff'],
+    });
+  });
+
   it('should remove loc information from nodes', function() {
     var ast = transform(['var x = require("x"); x']).ast;
     var expression = ast.program.body[0].expression;
@@ -149,16 +164,16 @@ describe('inline-requires', function() {
   });
 });
 
-function transform(input) {
+function transform(input, opts) {
   return babel.transform(input.join('\n'), {
     compact: true,
     plugins: [
       [require('babel-plugin-transform-es2015-modules-commonjs'), {strict: false}],
-      require('../inline-requires.js')
+      [require('../inline-requires.js'), opts],
     ],
   });
 }
 
-function compare(input, output) {
-  expect(transform(input).code).toBe(transform(output).code);
+function compare(input, output, opts) {
+  expect(transform(input, opts).code).toBe(transform(output, opts).code);
 }
