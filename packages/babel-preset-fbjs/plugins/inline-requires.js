@@ -26,21 +26,28 @@
  *
  * Will be transformed into:
  *     g(require('foo').bar);
+ *
+ * Destructuring also works the same way. For instance:
+ *     const {Baz} = require('foo');
+ *     h(Baz);
+ *
+ * Is also successfully inlined into:
+ *     g(require('foo').Baz);
  */
-module.exports = function fbjsInlineRequiresTransform() {
+module.exports = function fbjsInlineRequiresTransform(babel) {
   return {
     visitor: {
       Program: {
         exit(path) {
           path.scope.crawl();
-          path.traverse({CallExpression});
+          path.traverse({CallExpression: call.bind(null, babel)});
         },
       },
     },
   };
 };
 
-function CallExpression(path) {
+function call(babel, path) {
   var declaratorPath = requireAlias(path) || requireMemberAlias(path);
   var declarator = declaratorPath && declaratorPath.node;
 
@@ -51,10 +58,23 @@ function CallExpression(path) {
     var constantViolations = binding.constantViolations;
 
     if (!constantViolations.length) {
+      deleteLocation(init);
+
+      babel.traverse(init, {
+        noScope: true,
+        enter: path => deleteLocation(path.node),
+      });
+
       binding.referencePaths.forEach(ref => ref.replaceWith(init));
       declaratorPath.remove();
     }
   }
+}
+
+function deleteLocation(node) {
+  delete node.start;
+  delete node.end;
+  delete node.loc;
 }
 
 function requireAlias(path) {

@@ -133,27 +133,32 @@ describe('inline-requires', function() {
       '};',
     ]);
   });
+
+  it('should remove loc information from nodes', function() {
+    var ast = transform(['var x = require("x"); x']).ast;
+    var expression = ast.program.body[0].expression;
+
+    function noLoc(node) {
+      expect(node.start).toBeUndefined();
+      expect(node.end).toBeUndefined();
+      expect(node.loc).toBeUndefined();
+    }
+
+    noLoc(expression);
+    noLoc(expression.arguments[0]);
+  });
 });
 
 function transform(input) {
-  return babel.transform(normalise(input), {
+  return babel.transform(input.join('\n'), {
+    compact: true,
     plugins: [
       [require('babel-plugin-transform-es2015-modules-commonjs'), {strict: false}],
       require('../inline-requires.js')
     ],
-  }).code;
-}
-
-function normalise(input) {
-  return Array.isArray(input) ? input.join('\n') : input;
+  });
 }
 
 function compare(input, output) {
-  var compiled = transform(input);
-  output = normalise(output);
-  expect(strip(compiled)).toEqual(strip(output));
-}
-
-function strip(input) {
-  return input.trim().replace(/\n\n/g, '\n');
+  expect(transform(input).code).toBe(transform(output).code);
 }
