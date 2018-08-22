@@ -38,17 +38,28 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
   return {
     visitor: {
       Program: {
-        exit(path) {
+        exit(path, state) {
+          var inlineableCalls = {require: true};
+
+          if (state.opts && state.opts.inlineableCalls) {
+            state.opts.inlineableCalls.forEach(function(name) {
+              inlineableCalls[name] = true;
+            });
+          }
+
           path.scope.crawl();
-          path.traverse({CallExpression: call.bind(null, babel)});
+          path.traverse(
+            {CallExpression: call.bind(null, babel)},
+            {inlineableCalls: inlineableCalls}
+          );
         },
       },
     },
   };
 };
 
-function call(babel, path) {
-  var declaratorPath = requireAlias(path) || requireMemberAlias(path);
+function call(babel, path, state) {
+  var declaratorPath = inlineableAlias(path, state) || inlineableMemberAlias(path, state);
   var declarator = declaratorPath && declaratorPath.node;
 
   if (declarator) {
@@ -62,7 +73,7 @@ function call(babel, path) {
 
       babel.traverse(init, {
         noScope: true,
-        enter: path => deleteLocation(path.node),
+        enter: path => deleteLocation(path.node)
       });
 
       binding.referencePaths.forEach(ref => ref.replaceWith(init));
@@ -77,9 +88,9 @@ function deleteLocation(node) {
   delete node.loc;
 }
 
-function requireAlias(path) {
+function inlineableAlias(path, state) {
   const isValid = (
-    isRequireCall(path.node) &&
+    isInlineableCall(path.node, state) &&
     path.parent.type === 'VariableDeclarator' &&
     path.parent.id.type === 'Identifier' &&
     path.parentPath.parent.type === 'VariableDeclaration' &&
@@ -89,9 +100,9 @@ function requireAlias(path) {
   return isValid ? path.parentPath : null;
 }
 
-function requireMemberAlias(path) {
+function inlineableMemberAlias(path, state) {
   const isValid = (
-    isRequireCall(path.node) &&
+    isInlineableCall(path.node, state) &&
     path.parent.type === 'MemberExpression' &&
     path.parentPath.parent.type === 'VariableDeclarator' &&
     path.parentPath.parent.id.type === 'Identifier' &&
@@ -102,11 +113,11 @@ function requireMemberAlias(path) {
   return isValid ? path.parentPath.parentPath : null;
 }
 
-function isRequireCall(node) {
+function isInlineableCall(node, state) {
   return (
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
-    node.callee.name === 'require' &&
+    state.inlineableCalls.hasOwnProperty(node.callee.name) &&
     node['arguments'].length === 1 &&
     node['arguments'][0].type === 'StringLiteral'
   );
