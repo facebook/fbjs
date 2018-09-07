@@ -29,7 +29,7 @@ $ babel script.js --presets fbjs
 ### Via Node API
 
 ```javascript
-require('babel-core').transform('code', {
+require('@babel/core').transform('code', {
   presets: ['fbjs']
 });
 ```
@@ -37,7 +37,7 @@ require('babel-core').transform('code', {
 ## Advanced Usage
 
 ```javascript
-require('babel-core').transform('code', {
+require('@babel/core').transform('code', {
   presets: [
     require('babel-preset-fbjs/configure')({
       autoImport: true,
