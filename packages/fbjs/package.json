@@ -15,12 +15,13 @@
     "flow": "flow check src"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "babel-preset-fbjs": "file:../babel-preset-fbjs",
     "del": "^2.2.0",
     "fbjs-scripts": "file:../fbjs-scripts",
     "flow-bin": "^0.80.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^8.0.0",
     "gulp-flatten": "^0.2.0",
     "gulp-rename": "^1.2.2",
     "immutable": "^3.7.6",

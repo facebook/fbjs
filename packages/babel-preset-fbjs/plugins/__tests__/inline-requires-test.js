@@ -9,7 +9,7 @@
 
 jest.autoMockOff();
 
-var babel = require('babel-core');
+var babel = require('@babel/core');
 
 describe('inline-requires', function() {
   it('should inline single usage', function() {
@@ -108,18 +108,18 @@ describe('inline-requires', function() {
     ]);
   });
 
-  it('should be compatible with other transforms like transform-es2015-modules-commonjs', function() {
+  it('should be compatible with other transforms like transform-modules-commonjs', function() {
     compare([
       'import Imported from "foo";',
       'console.log(Imported);',
     ], [
-      'var _foo2 = _interopRequireDefault(require("foo"));',
+      'var _foo = _interopRequireDefault(require("foo"));',
       'function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }',
-      'console.log(_foo2.default);',
+      'console.log(_foo.default);',
     ]);
   });
 
-  it('should be compatible with `transform-es2015-modules-commonjs` when using named imports', function() {
+  it('should be compatible with `transform-modules-commonjs` when using named imports', function() {
     compare([
       'import {a} from "./a";',
       'var D = {',
@@ -166,9 +166,10 @@ describe('inline-requires', function() {
 
 function transform(input, opts) {
   return babel.transform(input.join('\n'), {
+    ast: true,
     compact: true,
     plugins: [
-      [require('babel-plugin-transform-es2015-modules-commonjs'), {strict: false}],
+      [require('@babel/plugin-transform-modules-commonjs'), {strict: false}],
       [require('../inline-requires.js'), opts],
     ],
   });

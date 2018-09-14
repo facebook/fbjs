@@ -22,8 +22,8 @@ module.exports = function(opts) {
     var cwd = path.dirname(file.path);
     var pkgData = JSON.parse(file.contents.toString());
     var outdated = spawn(
-      'npm',
-      ['outdated', '--json', '--long'],
+      'yarn',
+      ['outdated', '--json'],
       { cwd: cwd }
     );
     var data = '';
@@ -33,19 +33,22 @@ module.exports = function(opts) {
     });
 
     outdated.on('exit', function(code) {
-      // npm outdated now exits with non-zero when there are outdated deps, so
-      // we'll handle that gracefully across npm versions and just assume that
-      // things are fine unless we can't parse stdout as JSON.
       try {
-        var outdatedData = JSON.parse(data);
+        // Parse the yarn outdated format (http://jsonlines.org/)
+        var outdatedData = data
+          .split('\n')
+          .filter(Boolean)
+          .map(d => JSON.parse(d))[1]['data']['body'];
       } catch (e) {
+        console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
       var failures = [];
-      Object.keys(outdatedData).forEach(function(name) {
-        var current = outdatedData[name].current;
-        var type = outdatedData[name].type;
+      outdatedData.forEach(function(row) {
+        var name = row[0];
+        var current = row[1];
+        var type = row[4];
         var requested = pkgData[type][name];
 
         if (!requested) {

@@ -9,7 +9,7 @@
 
 /* eslint-disable max-len */
 
-let babel = require('babel-core');
+let babel = require('@babel/core');
 let assign = require('../object-assign');
 
 function transform(input) {
@@ -41,6 +41,7 @@ Object.assign(Object.prototype, null)`,
 `var _assign = require("object-assign");
 
 _assign({}, null);
+
 _assign(Object.prototype, null);`
     );
   });
