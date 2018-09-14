@@ -9,12 +9,12 @@
 
 /* eslint-disable max-len */
 
-let babel = require('babel-core');
+let babel = require('@babel/core');
 let devDeclaration = require('../dev-declaration');
 
 function transform(input) {
   return babel.transform(input, {
-    plugins: ['syntax-flow', devDeclaration],
+    plugins: ['@babel/plugin-syntax-flow', devDeclaration],
   }).code;
 }
 
