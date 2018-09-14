@@ -32,7 +32,7 @@ module.exports = function(options) {
       require('@babel/plugin-syntax-class-properties'),
       require('@babel/plugin-syntax-flow'),
       require('@babel/plugin-syntax-jsx'),
-      require('@babel/plugin-syntax-trailing-function-commas'),
+      require('babel-plugin-syntax-trailing-function-commas'),
       require('@babel/plugin-syntax-object-rest-spread'),
 
       options.autoImport ? require('./plugins/auto-importer') : null,
