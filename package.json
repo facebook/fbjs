@@ -14,9 +14,9 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "fbjs:build": "cd packages/fbjs && npm install && npm run build",
-    "fbjs:test": "cd packages/fbjs && npm install && npm run test",
-    "fbjs:flow": "cd packages/fbjs && npm install && npm run flow",
-    "preset:test": "cd packages/babel-preset-fbjs && npm install && npm run test"
+    "fbjs:build": "cd packages/fbjs && yarn && yarn run build",
+    "fbjs:test": "cd packages/fbjs && yarn && yarn run test",
+    "fbjs:flow": "cd packages/fbjs && yarn && yarn run flow",
+    "preset:test": "cd packages/babel-preset-fbjs && yarn && yarn run test"
   }
 }
