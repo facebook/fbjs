@@ -1,12 +1,12 @@
 {
   "name": "fbjs-scripts",
-  "version": "0.8.3",
+  "version": "1.0.0",
   "description": "A bundle of helpful scripts used in projects consuming fbjs.",
   "repository": "facebook/fbjs",
   "license": "MIT",
   "dependencies": {
-    "ansi-colors": "^1.0.1",
     "@babel/core": "^7.0.0",
+    "ansi-colors": "^1.0.1",
     "babel-preset-fbjs": "file:../babel-preset-fbjs",
     "core-js": "^2.4.1",
     "cross-spawn": "^5.1.0",
