@@ -1,5 +1,5 @@
 {
-  "name": "@babel/preset-fbjs",
+  "name": "babel-preset-fbjs",
   "version": "3.0.0",
   "description": "Babel preset for Facebook projects.",
   "repository": "facebook/fbjs",
