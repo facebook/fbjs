@@ -1,19 +1,79 @@
 ## [Unreleased]
 
-### Added
-- More modules, primarily focused on the requirements of Fixed Data Table.
+## [0.8.17] - 2018-06-11
 
-### Removed
-- Remove whitelisting of React PropType warning from `warning` module.
-- Removed runtime dependency on immutable, reducing package size.
+### Fixed
+- Upgraded `ua-parser-js` dependency to address ReDoS vulnerability.
+
+
+## [0.8.16] - 2017-09-25
 
 ### Changed
-- More flow annotations: `joinClasses`, `flatMapArray`
-- Upgraded `core-js` dependency to ^2.4.1
+- Relicense to MIT as part of React relicense.
+
+
+## [0.8.15] - 2017-09-07
+
+### Fixed
+- `getDocumentScrollElement` now correctly returns the `<html>` element in Chrome 61 instead of `<body>`.
+
+
+## [0.8.14] - 2017-07-25
+
+### Removed
+- Flow annotations for `keyMirror` module. The annotation generates a syntax error after being re-printed by Babel.
+
+
+## [0.8.13] - 2017-07-25
+
+### Added
+- Flow annotations for `keyMirror` module.
 
 ### Fixed
 - Fixed strict argument arity issues with `Deferred` module.
-- `getDocumentScrollElement` now correctly returns the `<html>` element in Chrome 61 instead of `<body>`.
+- Corrected License header in `EventListener`.
+
+
+## [0.8.12] - 2017-03-29
+
+### Fixed
+- Fix use of `global` working inconsistently.
+
+
+## [0.8.11] - 2017-03-21
+
+### Fixed
+- Fixed a regression resulting from making DOM utilities work in nested browsing contexts.
+
+
+## [0.8.10] - 2017-03-20
+
+### Changed
+- Made DOM utilities work in nested browsing contexts.
+
+
+## [0.8.9] - 2017-01-31
+
+### Fixed
+- Updated `partitionObjectByKey` Flow annotations for Flow 0.38.
+
+
+## [0.8.8] - 2016-12-20
+
+### Changed
+- `invariant`: Moved `process.env.NODE_ENV` check to module scope, eliminating check on each call.
+
+
+## [0.8.7] - 2016-12-19
+
+### Added
+- New module: `setImmediate`.
+
+
+## [0.8.6] - 2016-11-09
+
+### Removed
+- Removed runtime dependency on immutable, reducing package size.
 
 ## [0.8.5] - 2016-09-27
 
