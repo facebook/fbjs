@@ -19,7 +19,8 @@
     "fbjs:build": "cd packages/fbjs && yarn && yarn run build",
     "fbjs:test": "cd packages/fbjs && yarn && yarn run test",
     "fbjs:flow": "cd packages/fbjs && yarn && yarn run flow",
-    "preset:test": "cd packages/babel-preset-fbjs && yarn && yarn run test"
+    "preset:test": "cd packages/babel-preset-fbjs && yarn && yarn run test",
+    "signedsource:test": "cd packages/signedsource && yarn && yarn run test"
   },
   "prettier": {
     "requirePragma": true,

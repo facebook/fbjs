@@ -8,4 +8,5 @@ env:
   - CMD=fbjs:test
   - CMD=fbjs:flow
   - CMD=preset:test
+  - CMD=signedsource:test
 script: yarn run $CMD
