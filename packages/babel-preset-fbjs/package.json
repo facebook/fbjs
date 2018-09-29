@@ -40,15 +40,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "jest-cli": "^17.0.3"
-  },
-  "jest": {
-    "modulePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "rootDir": "",
-    "testPathDirs": [
-      "<rootDir>"
-    ]
+    "jest-cli": "^23.6.0"
   }
 }
