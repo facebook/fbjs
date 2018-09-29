@@ -23,6 +23,6 @@ describe('memoizeStringOnly', function() {
     };
     const memoized = memoizeStringOnly(callback);
 
-    expect(memoized('foo'), callback('foo'));
+    expect(memoized('foo')).toEqual(callback('foo'));
   });
 });
