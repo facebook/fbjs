@@ -25,7 +25,7 @@
     "gulp-flatten": "^0.2.0",
     "gulp-rename": "^1.2.2",
     "immutable": "^3.7.6",
-    "jest-cli": "^17.0.3",
+    "jest-cli": "^23.6.0",
     "merge-stream": "^1.0.0",
     "run-sequence": "^1.1.5"
   },
@@ -44,17 +44,16 @@
       "/lib/",
       "/node_modules/"
     ],
-    "persistModuleRegistryBetweenSpecs": true,
     "rootDir": "",
     "setupFiles": [
-      "node_modules/fbjs-scripts/jest/environment.js"
+      "fbjs-scripts/jest/environment.js"
     ],
-    "testPathDirs": [
+    "roots": [
       "<rootDir>/src"
     ],
     "timers": "fake",
     "transform": {
-      ".*": "node_modules/fbjs-scripts/jest/preprocessor.js"
+      ".*": "fbjs-scripts/jest/preprocessor.js"
     },
     "transformIgnorePatterns": [
       "/node_modules/"
