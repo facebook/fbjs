@@ -10,6 +10,8 @@
 
 var performance = require('performance');
 
+var loadTime = Date.now();
+
 var performanceNow;
 
 /**
@@ -20,7 +22,7 @@ var performanceNow;
 if (performance.now) {
   performanceNow = () => performance.now();
 } else {
-  performanceNow = () => Date.now();
+  performanceNow = () => Date.now() - loadTime;
 }
 
 module.exports = performanceNow;
