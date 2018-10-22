@@ -66,7 +66,6 @@ module.exports = function(options) {
       require('@babel/plugin-transform-shorthand-properties'),
       require('@babel/plugin-transform-computed-properties'),
       require('@babel/plugin-transform-for-of'),
-      require('@babel/plugin-check-constants'),
       [require('@babel/plugin-transform-spread'), {loose: true}],
       require('@babel/plugin-transform-parameters'),
       [require('@babel/plugin-transform-destructuring'), {loose: true}],

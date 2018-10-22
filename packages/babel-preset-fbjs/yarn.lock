@@ -182,11 +182,6 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0.tgz#697655183394facffb063437ddf52c0277698775"
   integrity sha512-RgJhNdRinpO8zibnoHbzTTexNs4c8ROkXFBanNDZTLHjwbdLk8J5cJSKulx/bycWTLYmKVNCkxRtVCoJnqPk+g==
 
-"@babel/plugin-check-constants@^7.0.0-beta.38":
-  version "7.0.0-beta.38"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-check-constants/-/plugin-check-constants-7.0.0-beta.38.tgz#bbda6306d45a4f097ccb416c0b52d6503f6502cf"
-  integrity sha512-MjdGn/2sMLu0fnNFbkILut0OsegzRTeCOJ/uGHH88TwTXPzxONx2cTVJ36i3cTQXHMiIOUT3hX6HqzWM99Q6vA==
-
 "@babel/plugin-proposal-class-properties@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.0.0.tgz#a16b5c076ba6c3d87df64d2480a380e979543731"
