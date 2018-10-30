@@ -15,8 +15,8 @@ const pluginTester = require('babel-plugin-tester');
 
 pluginTester({
   plugin: inlineRequiresPlugin,
-  pluginName: 'inline-requires',
   pluginOptions: {
+    ignoredRequires: ['CommonFoo'],
     inlineableCalls: ['customStuff'],
   },
   tests: {
@@ -85,6 +85,25 @@ pluginTester({
         'inlinedRequire();',
       ].join('\n'),
       snapshot: true,
+    },
+
+    'ignores requires in `ignoredRequires`': {
+      code: [
+        'const CommonFoo = require("CommonFoo");',
+        '',
+        'CommonFoo();'
+      ].join('\n'),
+      snapshot: false,
+    },
+
+    'ignores destructured properties of requires in `ignoredRequires`': {
+      code: [
+        'const tmp = require("CommonFoo");',
+        'const a = require("CommonFoo").a;',
+        '',
+        'a();'
+      ].join('\n'),
+      snapshot: false,
     },
   },
 });

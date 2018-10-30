@@ -1,8 +1,10 @@
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ *
+ * @format
  */
 
 'use strict';
@@ -34,23 +36,35 @@
  * Is also successfully inlined into:
  *     g(require('foo').Baz);
  */
-module.exports = function fbjsInlineRequiresTransform(babel) {
+module.exports = babel => {
   return {
+    name: 'inline-requires',
     visitor: {
       Program: {
         exit(path, state) {
+          var ignoredRequires = {};
           var inlineableCalls = {require: true};
 
-          if (state.opts && state.opts.inlineableCalls) {
-            state.opts.inlineableCalls.forEach(function(name) {
-              inlineableCalls[name] = true;
-            });
+          if (state.opts) {
+            if (state.opts.ignoredRequires) {
+              state.opts.ignoredRequires.forEach(function(name) {
+                ignoredRequires[name] = true;
+              });
+            }
+            if (state.opts.inlineableCalls) {
+              state.opts.inlineableCalls.forEach(function(name) {
+                inlineableCalls[name] = true;
+              });
+            }
           }
 
           path.scope.crawl();
           path.traverse(
             {CallExpression: call.bind(null, babel)},
-            {inlineableCalls: inlineableCalls}
+            {
+              ignoredRequires: ignoredRequires,
+              inlineableCalls: inlineableCalls,
+            },
           );
         },
       },
@@ -59,12 +73,14 @@ module.exports = function fbjsInlineRequiresTransform(babel) {
 };
 
 function call(babel, path, state) {
-  var declaratorPath = inlineableAlias(path, state) || inlineableMemberAlias(path, state);
+  var declaratorPath =
+    inlineableAlias(path, state) || inlineableMemberAlias(path, state);
   var declarator = declaratorPath && declaratorPath.node;
 
   if (declarator) {
     var init = declarator.init;
     var name = declarator.id && declarator.id.name;
+
     var binding = declaratorPath.scope.getBinding(name);
     var constantViolations = binding.constantViolations;
 
@@ -73,7 +89,7 @@ function call(babel, path, state) {
 
       babel.traverse(init, {
         noScope: true,
-        enter: path => deleteLocation(path.node)
+        enter: path => deleteLocation(path.node),
       });
 
       binding.referencePaths.forEach(ref => ref.replaceWith(init));
@@ -89,26 +105,24 @@ function deleteLocation(node) {
 }
 
 function inlineableAlias(path, state) {
-  const isValid = (
+  const isValid =
     isInlineableCall(path.node, state) &&
     path.parent.type === 'VariableDeclarator' &&
     path.parent.id.type === 'Identifier' &&
     path.parentPath.parent.type === 'VariableDeclaration' &&
-    path.parentPath.parentPath.parent.type === 'Program'
-  );
+    path.parentPath.parentPath.parent.type === 'Program';
 
   return isValid ? path.parentPath : null;
 }
 
 function inlineableMemberAlias(path, state) {
-  const isValid = (
+  const isValid =
     isInlineableCall(path.node, state) &&
     path.parent.type === 'MemberExpression' &&
     path.parentPath.parent.type === 'VariableDeclarator' &&
     path.parentPath.parent.id.type === 'Identifier' &&
     path.parentPath.parentPath.parent.type === 'VariableDeclaration' &&
-    path.parentPath.parentPath.parentPath.parent.type === 'Program'
-  );
+    path.parentPath.parentPath.parentPath.parent.type === 'Program';
 
   return isValid ? path.parentPath.parentPath : null;
 }
@@ -119,6 +133,7 @@ function isInlineableCall(node, state) {
     node.callee.type === 'Identifier' &&
     state.inlineableCalls.hasOwnProperty(node.callee.name) &&
     node['arguments'].length === 1 &&
-    node['arguments'][0].type === 'StringLiteral'
+    node['arguments'][0].type === 'StringLiteral' &&
+    !state.ignoredRequires.hasOwnProperty(node['arguments'][0].value)
   );
 }
