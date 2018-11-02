@@ -100,7 +100,7 @@
 
 ### Changed
 - `ErrorUtils`: Re-uses any global instance that already exists
-- `fetch`: Switched to `isomorphic-fetch` when a global implementation is missing
+- `fetch`: Switched to `isomorphic-unfetch` when a global implementation is missing
 - `shallowEqual`: handles `NaN` values appropriately (as equal), now using `Object.is` semantics
 
 

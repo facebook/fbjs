@@ -15,5 +15,5 @@
 if (global.fetch) {
   module.exports = global.fetch.bind(global);
 } else {
-  module.exports = require('isomorphic-fetch');
+  module.exports = require('isomorphic-unfetch');
 }
