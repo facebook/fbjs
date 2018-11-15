@@ -8,21 +8,15 @@
  * @typechecks
  */
 
-var performance = require('performance');
+const performance = require('performance');
 
-var loadTime = Date.now();
-
-var performanceNow;
+const loadTime = Date.now();
 
 /**
  * Detect if we can use `window.performance.now()` and gracefully fallback to
  * `Date.now()` if it doesn't exist. We need to support Firefox < 15 for now
  * because of Facebook's testing infrastructure.
  */
-if (performance.now) {
-  performanceNow = () => performance.now();
-} else {
-  performanceNow = () => Date.now() - loadTime;
-}
-
-module.exports = performanceNow;
+module.exports = performance.now
+  ? () => performance.now()
+  : () => Date.now() - loadTime;
