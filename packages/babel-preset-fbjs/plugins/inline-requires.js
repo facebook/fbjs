@@ -83,6 +83,7 @@ function call(babel, path, state) {
 
     var binding = declaratorPath.scope.getBinding(name);
     var constantViolations = binding.constantViolations;
+    var thrown = false;
 
     if (!constantViolations.length) {
       deleteLocation(init);
@@ -92,8 +93,21 @@ function call(babel, path, state) {
         enter: path => deleteLocation(path.node),
       });
 
-      binding.referencePaths.forEach(ref => ref.replaceWith(init));
-      declaratorPath.remove();
+      binding.referencePaths.forEach(ref => {
+        try {
+          ref.replaceWith(init);
+        } catch (err) {
+          thrown = true;
+        }
+      });
+
+      // If an error was thrown, it's most likely due to an invalid replacement
+      // happening (e.g. trying to replace a type annotation). It would usually
+      // be OK to ignore it, but to be safe, we will avoid removing the initial
+      // require.
+      if (!thrown) {
+        declaratorPath.remove();
+      }
     }
   }
 }
