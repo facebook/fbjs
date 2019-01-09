@@ -64,7 +64,7 @@ module.exports = babel => {
             {
               ignoredRequires: ignoredRequires,
               inlineableCalls: inlineableCalls,
-            },
+            }
           );
         },
       },
