@@ -1,3 +1,8 @@
+## [master]
+
+### Removed
+- Removed peer dependency of `eslint-plugin-relay`.
+
 ## [2.0.1] - 2017-11-26
 
 ### Changed
