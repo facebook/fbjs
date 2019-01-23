@@ -19,7 +19,6 @@ npm install --save-dev \
   eslint-plugin-flowtype \
   eslint-plugin-jsx-a11y \
   eslint-plugin-react \
-  eslint-plugin-relay \
   eslint \
   babel-eslint
 ```
@@ -32,7 +31,6 @@ yarn add --dev \
   eslint-plugin-flowtype \
   eslint-plugin-jsx-a11y \
   eslint-plugin-react \
-  eslint-plugin-relay \
   eslint \
   babel-eslint
 ```
