@@ -48,7 +48,7 @@ module.exports = function(opts) {
       outdatedData.forEach(function(row) {
         var name = row[0];
         var current = row[1];
-        var type = row[4];
+        var type = row[5];
         var requested = pkgData[type][name];
 
         if (!requested) {
