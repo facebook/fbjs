@@ -7,13 +7,13 @@
 
 'use strict';
 
+var PluginError = require('plugin-error');
+var colors = require('ansi-colors');
+var fancyLog = require('fancy-log');
 var path = require('path');
 var semver = require('semver');
 var spawn = require('cross-spawn');
 var through = require('through2');
-var PluginError = require('plugin-error');
-var colors = require('ansi-colors');
-var fancyLog = require('fancy-log');
 
 var PLUGIN_NAME = 'check-dependencies';
 
@@ -38,17 +38,27 @@ module.exports = function(opts) {
         var outdatedData = data
           .split('\n')
           .filter(Boolean)
-          .map(d => JSON.parse(d))[1]['data']['body'];
+          .map(d => JSON.parse(d))
+          .filter(j => j.type === 'table')[0].data;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
+      // Convert ["Package", "Current",...] to {"Package": 0, ...}
+      const name2idx = {};
+      outdatedData.head.forEach((key, idx) => name2idx[key] = idx);
+      const {
+        Package: NAME,
+        Current: CURRENT,
+        "Package Type": TYPE
+      } = name2idx;
+
       var failures = [];
-      outdatedData.forEach(function(row) {
-        var name = row[0];
-        var current = row[1];
-        var type = row[4];
+      outdatedData.body.forEach(function(row) {
+        var name = row[NAME];
+        var current = row[CURRENT];
+        var type = row[TYPE];
         var pkgDeps = pkgData[type];
 
         if (!pkgDeps) {
