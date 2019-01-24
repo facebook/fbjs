@@ -17,6 +17,10 @@ var fancyLog = require('fancy-log');
 
 var PLUGIN_NAME = 'check-dependencies';
 
+const NAME = 0;
+const CURRENT = 1;
+const TYPE = 5;
+
 module.exports = function(opts) {
   function read(file, enc, cb) {
     var cwd = path.dirname(file.path);
@@ -46,9 +50,9 @@ module.exports = function(opts) {
 
       var failures = [];
       outdatedData.forEach(function(row) {
-        var name = row[0];
-        var current = row[1];
-        var type = row[5];
+        var name = row[NAME];
+        var current = row[CURRENT];
+        var type = row[TYPE];
         var requested = pkgData[type][name];
 
         if (!requested) {
