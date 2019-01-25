@@ -114,6 +114,15 @@ pluginTester({
       ].join('\n'),
       snapshot: true,
     },
+
+    'inlines with multiple arguments': {
+      code: [
+        'const a = require("Foo", "Bar", 47);',
+        '',
+        'a();',
+      ].join('\n'),
+      snapshot: true,
+    },
   },
 });
 

@@ -110,3 +110,15 @@ foo.bar()
 require(\\"foo\\").bar();
 "
 `;
+
+exports[`inline-requires inlines with multiple arguments: inlines with multiple arguments 1`] = `
+"
+const a = require(\\"Foo\\", \\"Bar\\", 47);
+
+a();
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+require(\\"Foo\\", \\"Bar\\", 47)();
+"
+`;
