@@ -105,6 +105,15 @@ pluginTester({
       ].join('\n'),
       snapshot: false,
     },
+
+    'inlines require.resolve calls': {
+      code: [
+        'const a = require(require.resolve("Foo")).bar;',
+        '',
+        'a();',
+      ].join('\n'),
+      snapshot: true,
+    },
   },
 });
 

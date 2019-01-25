@@ -142,12 +142,29 @@ function inlineableMemberAlias(path, state) {
 }
 
 function isInlineableCall(node, state) {
-  return (
+  const isInlineable =
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
     state.inlineableCalls.hasOwnProperty(node.callee.name) &&
-    node['arguments'].length === 1 &&
+    node['arguments'].length >= 1;
+
+  // require('foo');
+  const isStandardCall =
+    isInlineable &&
     node['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.hasOwnProperty(node['arguments'][0].value)
-  );
+    !state.ignoredRequires.hasOwnProperty(node['arguments'][0].value);
+
+  // require(require.resolve('foo'));
+  const isRequireResolveCall =
+    isInlineable &&
+    node['arguments'][0].type === 'CallExpression' &&
+    node['arguments'][0].callee.type === 'MemberExpression' &&
+    node['arguments'][0].callee.object.type === 'Identifier' &&
+    node['arguments'][0].callee.object.name === 'require' &&
+    node['arguments'][0].callee.property.type === 'Identifier' &&
+    node['arguments'][0].callee.property.name === 'resolve' &&
+    node['arguments'][0]['arguments'][0].type === 'StringLiteral' &&
+    !state.ignoredRequires.hasOwnProperty(node['arguments'][0]['arguments'][0].value);
+
+  return isStandardCall || isRequireResolveCall;
 }

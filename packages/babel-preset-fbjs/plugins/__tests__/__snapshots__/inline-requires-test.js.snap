@@ -68,6 +68,18 @@ require(\\"foo\\").baz();
 "
 `;
 
+exports[`inline-requires inlines require.resolve calls: inlines require.resolve calls 1`] = `
+"
+const a = require(require.resolve(\\"Foo\\")).bar;
+
+a();
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+require(require.resolve(\\"Foo\\")).bar();
+"
+`;
+
 exports[`inline-requires inlines requires that are referenced before the require statement: inlines requires that are referenced before the require statement 1`] = `
 "
 function foo() {
