@@ -7,19 +7,16 @@
 
 'use strict';
 
+var PluginError = require('plugin-error');
+var colors = require('ansi-colors');
+var fancyLog = require('fancy-log');
+var invariant = require('invariant');
 var path = require('path');
 var semver = require('semver');
 var spawn = require('cross-spawn');
 var through = require('through2');
-var PluginError = require('plugin-error');
-var colors = require('ansi-colors');
-var fancyLog = require('fancy-log');
 
 var PLUGIN_NAME = 'check-dependencies';
-
-const NAME = 0;
-const CURRENT = 1;
-const TYPE = 5;
 
 module.exports = function(opts) {
   function read(file, enc, cb) {
@@ -39,20 +36,23 @@ module.exports = function(opts) {
     outdated.on('exit', function(code) {
       try {
         // Parse the yarn outdated format (http://jsonlines.org/)
-        var outdatedData = data
+        let rawData = data
           .split('\n')
           .filter(Boolean)
-          .map(d => JSON.parse(d))[1]['data']['body'];
+          .map(d => JSON.parse(d))
+          .filter(j => j.type === 'table');
+        invariant(outdatedData.length === 1, 'Expected only one "table" type');
+        let outdatedData = rawData[0].data;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
       var failures = [];
-      outdatedData.forEach(function(row) {
-        var name = row[NAME];
-        var current = row[CURRENT];
-        var type = row[TYPE];
+      outdatedData.body.forEach(function(row) {
+        var name = row[outdatedData.head['Package']];
+        var current = row[outdatedData.head['Current']];
+        var type = row[outdatedData.head['Packge Type']];
         var requested = pkgData[type][name];
 
         if (!requested) {
