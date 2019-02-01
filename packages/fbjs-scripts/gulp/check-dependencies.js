@@ -42,7 +42,7 @@ module.exports = function(opts) {
           .map(d => JSON.parse(d))
           .filter(j => j.type === 'table');
         invariant(outdatedData.length === 1, 'Expected only one "table" type');
-        let outdatedData = rawData[0].data;
+        var outdatedData = rawData[0].data;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
