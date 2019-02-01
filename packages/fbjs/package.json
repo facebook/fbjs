@@ -17,17 +17,15 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "babel-preset-fbjs": "file:../babel-preset-fbjs",
-    "del": "^2.2.0",
+    "del": "^3.0.0",
     "fbjs-scripts": "file:../fbjs-scripts",
     "flow-bin": "^0.99.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
-    "gulp-flatten": "^0.2.0",
+    "gulp-flatten": "^0.4.0",
     "gulp-rename": "^1.2.2",
     "immutable": "^3.7.6",
-    "jest-cli": "^23.6.0",
-    "merge-stream": "^1.0.0",
-    "run-sequence": "^1.1.5"
+    "jest-cli": "^23.6.0"
   },
   "license": "MIT",
   "files": [
