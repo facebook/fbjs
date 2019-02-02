@@ -10,7 +10,6 @@
 var PluginError = require('plugin-error');
 var colors = require('ansi-colors');
 var fancyLog = require('fancy-log');
-var invariant = require('invariant');
 var path = require('path');
 var semver = require('semver');
 var spawn = require('cross-spawn');
@@ -27,30 +26,30 @@ module.exports = function(opts) {
       ['outdated', '--json'],
       { cwd: cwd }
     );
-    var data = '';
+    var input = '';
 
     outdated.stdout.on('data', function(chunk) {
-      data += chunk.toString();
+      input += chunk.toString();
     });
 
     outdated.on('exit', function(code) {
       try {
         // Parse the yarn outdated format (http://jsonlines.org/)
-        let rawData = data
+        var data = input
           .split('\n')
           .filter(Boolean)
           .map(d => JSON.parse(d))
-          .filter(j => j.type === 'table');
-        var outdatedData = rawData ? rawData[0].data : {body: []};
+          .filter(j => j.type === 'table')[0].data;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
       // Convert ["Package", "Current",...] to {"Package": 0, ...}
-      const name2Idx = outdatedData.head.reduce((a, e, i) => ({...a, [e]: i}), {});
+      const reverseKeys = (obj, key, idx) => ({...obj, [key]: idx});
+      const name2Idx = data.head.reduce(reverseKeys, {});
       var failures = [];
-      outdatedData.body.forEach(function(row) {
+      data.body.forEach(function(row) {
         var name = row[name2Idx['Package']];
         var current = row[name2Idx['Current']];
         var type = row[name2Idx['Package Type']];
