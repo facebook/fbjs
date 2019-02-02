@@ -41,18 +41,21 @@ module.exports = function(opts) {
           .filter(Boolean)
           .map(d => JSON.parse(d))
           .filter(j => j.type === 'table');
-        invariant(outdatedData.length === 1, 'Expected only one "table" type');
+        invariant(rawData.length === 1, 'Expected only one "table" type');
         var outdatedData = rawData[0].data;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
       }
 
+      // Convert ["Package", "Current",...] to {"Package": 0, ...}
+      const name2Idx = outdatedData.head.reduce((a, e, i) => ({...a, [e]: i}), {});
       var failures = [];
       outdatedData.body.forEach(function(row) {
-        var name = row[outdatedData.head['Package']];
-        var current = row[outdatedData.head['Current']];
-        var type = row[outdatedData.head['Packge Type']];
+      debugger;
+        var name = row[name2Idx['Package']];
+        var current = row[name2Idx['Current']];
+        var type = row[name2Idx['Packge Type']];
         var requested = pkgData[type][name];
 
         if (!requested) {
