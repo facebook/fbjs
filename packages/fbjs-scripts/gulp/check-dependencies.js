@@ -46,8 +46,9 @@ module.exports = function(opts) {
       }
 
       // Convert ["Package", "Current",...] to {"Package": 0, ...}
-      const reverseKeys = (obj, key, idx) => ({...obj, [key]: idx});
-      const name2Idx = data.head.reduce(reverseKeys, {});
+      const name2Idx = {};
+      data.head.forEach((key, idx) => name2Idx[key] = idx);
+
       var failures = [];
       data.body.forEach(function(row) {
         var name = row[name2Idx['Package']];
