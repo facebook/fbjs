@@ -41,8 +41,7 @@ module.exports = function(opts) {
           .filter(Boolean)
           .map(d => JSON.parse(d))
           .filter(j => j.type === 'table');
-        invariant(rawData.length === 1, 'Expected only one "table" type');
-        var outdatedData = rawData[0].data;
+        var outdatedData = rawData ? rawData[0].data : {body: []};
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
@@ -52,10 +51,9 @@ module.exports = function(opts) {
       const name2Idx = outdatedData.head.reduce((a, e, i) => ({...a, [e]: i}), {});
       var failures = [];
       outdatedData.body.forEach(function(row) {
-      debugger;
         var name = row[name2Idx['Package']];
         var current = row[name2Idx['Current']];
-        var type = row[name2Idx['Packge Type']];
+        var type = row[name2Idx['Package Type']];
         var requested = pkgData[type][name];
 
         if (!requested) {
