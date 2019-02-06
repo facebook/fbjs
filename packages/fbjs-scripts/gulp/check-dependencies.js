@@ -28,7 +28,7 @@ module.exports = function(opts) {
     );
     var data = '';
 
-    outdated.stdout.on('outdatedData', function(chunk) {
+    outdated.stdout.on('data', function(chunk) {
       data += chunk.toString();
     });
 
@@ -39,7 +39,7 @@ module.exports = function(opts) {
           .split('\n')
           .filter(Boolean)
           .map(d => JSON.parse(d))
-          .filter(j => j.type === 'table')[0].outdatedData;
+          .filter(j => j.type === 'table')[0].data;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
