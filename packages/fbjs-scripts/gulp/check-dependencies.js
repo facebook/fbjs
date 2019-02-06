@@ -46,14 +46,19 @@ module.exports = function(opts) {
       }
 
       // Convert ["Package", "Current",...] to {"Package": 0, ...}
-      const name2Idx = {};
-      outdatedData.head.forEach((key, idx) => name2Idx[key] = idx);
+      const name2idx = {};
+      outdatedData.head.forEach((key, idx) => name2idx[key] = idx);
+      const {
+        Package: NAME,
+        Current: CURRENT,
+        "Package Type": TYPE
+      } = name2idx;
 
       var failures = [];
       outdatedData.body.forEach(function(row) {
-        var name = row[name2Idx['Package']];
-        var current = row[name2Idx['Current']];
-        var type = row[name2Idx['Package Type']];
+        var name = row[NAME];
+        var current = row[CURRENT];
+        var type = row[TYPE];
         var requested = pkgData[type][name];
 
         if (!requested) {
