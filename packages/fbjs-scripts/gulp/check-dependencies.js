@@ -26,20 +26,20 @@ module.exports = function(opts) {
       ['outdated', '--json'],
       { cwd: cwd }
     );
-    var input = '';
+    var data = '';
 
-    outdated.stdout.on('data', function(chunk) {
-      input += chunk.toString();
+    outdated.stdout.on('outdatedData', function(chunk) {
+      data += chunk.toString();
     });
 
     outdated.on('exit', function(code) {
       try {
         // Parse the yarn outdated format (http://jsonlines.org/)
-        var data = input
+        var outdatedData = data
           .split('\n')
           .filter(Boolean)
           .map(d => JSON.parse(d))
-          .filter(j => j.type === 'table')[0].data;
+          .filter(j => j.type === 'table')[0].outdatedData;
       } catch (e) {
         console.log('error', e)
         cb(new PluginError(PLUGIN_NAME, 'npm broke'));
@@ -47,10 +47,10 @@ module.exports = function(opts) {
 
       // Convert ["Package", "Current",...] to {"Package": 0, ...}
       const name2Idx = {};
-      data.head.forEach((key, idx) => name2Idx[key] = idx);
+      outdatedData.head.forEach((key, idx) => name2Idx[key] = idx);
 
       var failures = [];
-      data.body.forEach(function(row) {
+      outdatedData.body.forEach(function(row) {
         var name = row[name2Idx['Package']];
         var current = row[name2Idx['Current']];
         var type = row[name2Idx['Package Type']];
