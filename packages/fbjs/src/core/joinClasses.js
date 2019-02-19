@@ -14,7 +14,7 @@
 /**
  * Combines multiple className strings into one.
  */
-function joinClasses(className: mixed): string {
+function _joinClasses(className: mixed): string {
   let newClassName = ((className: any): string) || '';
   const argLength = arguments.length;
 
@@ -28,5 +28,7 @@ function joinClasses(className: mixed): string {
   }
   return newClassName;
 }
+
+const joinClasses: (...classNames: Array<mixed>) => string = (_joinClasses: any);
 
 module.exports = joinClasses;
