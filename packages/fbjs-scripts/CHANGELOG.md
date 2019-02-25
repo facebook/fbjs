@@ -1,3 +1,21 @@
+## master
+
+### Changed
+- Removed `rootDir`, if available, from `createCacheKeyFunction`.
+
+
+## [1.0.1]
+
+### Fixed
+- Fixed `babel-preset-fbjs` dependency
+
+
+## [1.0.0] - 2018-09-18
+
+### Changed
+- Migrated to Babel 7
+
+
 ## [0.8.3] - 2018-04-18
 
 ### Changed
