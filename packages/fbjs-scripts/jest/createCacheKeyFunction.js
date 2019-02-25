@@ -25,7 +25,7 @@ function getGlobalCacheKey(files, values) {
   return chunks
     .reduce(
       (hash, chunk) => hash.update('\0', 'utf-8').update(chunk || ''),
-      crypto.createHash('md5'),
+      crypto.createHash('md5')
     )
     .digest('hex');
 }
