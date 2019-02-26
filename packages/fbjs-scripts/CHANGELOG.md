@@ -1,7 +1,10 @@
 ## master
 
+## [1.1.0]
+
 ### Changed
-- Removed `rootDir`, if available, from `createCacheKeyFunction`.
+- Removed `rootDir` from consideration to compute the cache key in `createCacheKeyFunction`.
+- Added an additional array of values for the cache breaker in `createCacheKeyFunction`.
 
 
 ## [1.0.1]
