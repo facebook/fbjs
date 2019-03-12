@@ -49,7 +49,14 @@ module.exports = function(opts) {
         var name = row[0];
         var current = row[1];
         var type = row[4];
-        var requested = pkgData[type][name];
+        var pkgDeps = pkgData[type];
+
+        if (!pkgDeps) {
+          fancyLog(`Found missing dependency category ${type}.`);
+          return;
+        }
+
+        var requested = pkgDeps[name];
 
         if (!requested) {
           fancyLog('Found extraneous outdated dependency. Consider running `npm prune`');
