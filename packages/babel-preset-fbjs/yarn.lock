@@ -718,10 +718,10 @@ babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0.tgz#aa213c1435e2bffeb6fca842287ef534ad05d5cf"
   integrity sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==
 
-babel-plugin-tester@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-tester/-/babel-plugin-tester-5.5.1.tgz#93648d140e67a81fa8474a73d3382b4fd8e91ca6"
-  integrity sha512-/Sc90Bv2aHGglPkM2Ezw9w/bKMk39h+Dj7G5+Qc9SM2sarnojQhe3NWwZG7cByCXWbp86Gqh4VoYj1YCERFpSg==
+babel-plugin-tester@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-tester/-/babel-plugin-tester-5.5.2.tgz#593ab7978d30450c1b3ebf4aa9c884b04952fe09"
+  integrity sha512-Ycsy0wTxKZtKagDYGzuB5YlaY6nmKmbgOvPoEcrRvDLTpMEQZuD3mc+MZ7pO7TG18E2pEJRjRWv6h7FJmbe6rQ==
   dependencies:
     common-tags "^1.4.0"
     invariant "^2.2.2"
