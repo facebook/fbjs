@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "babel-plugin-tester": "^5.5.1",
+    "babel-plugin-tester": "^5.5.2",
     "jest-cli": "^23.6.0"
   },
   "peerDependencies": {
