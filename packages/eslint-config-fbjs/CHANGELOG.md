@@ -1,7 +1,10 @@
-## [master]
+## [3.0.0] - 2019-03-20
 
 ### Removed
 - Removed peer dependency of `eslint-plugin-relay`.
+
+### Changed
+- Upgraded ESLint and other peer dependencies.
 
 ## [2.0.1] - 2017-11-26
 

@@ -1,13 +1,14 @@
 {
   "name": "eslint-config-fbjs-opensource",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "author": "",
   "repository": "facebook/fbjs",
   "main": "index.js",
   "license": "MIT",
   "files": [
-    "LICENCE",
+    "CHANGELOG.md",
+    "LICENSE",
     "README.md",
     "index.js",
     "warning.js"

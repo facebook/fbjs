@@ -1,4 +1,8 @@
-## master
+## [1.2.0] - 2019-03-20
+
+### Added
+- `check-dependencies` now supports projects using Yarn workspaces.
+- `check-dependencies` now supports Yarn selective dependency resolutions.
 
 ## [1.1.0]
 
