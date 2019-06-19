@@ -11,12 +11,12 @@
 'use strict';
 
 const validateFormat = __DEV__
-  ? function(format: mixed): void {}
-  : function(format: mixed): void {
+  ? function(format: mixed): void {
       if (format === undefined) {
         throw new Error('invariant(...): Second argument must be a string.');
       }
-    };
+    }
+  : function(format: mixed): void {};
 
 /**
  * Use invariant() to assert state which your program assumes to be true.
