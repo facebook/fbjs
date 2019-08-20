@@ -1,4 +1,10 @@
-## [3.0.0] - 2019-03-20
+## [3.1.1] - 2019-08-20
+
+### Changed
+- Added peer dependencies for `eslint` (6.x), `eslint-plugin-flowtype` (3.x, 4.x).
+
+
+## [3.1.0] - 2019-03-20
 
 ### Removed
 - Removed peer dependency of `eslint-plugin-relay`.
