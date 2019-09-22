@@ -19,6 +19,13 @@ test('signFile', () => {
   ).toEqual(
     `# @generated SignedSource<<4c0c1ae4f5863c72731b2f543e830fd5>>\ntest 2`
   );
+
+  // re-sign a file
+  expect(
+    SignedSource.signFile(`# @generated SignedSource<<eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee>>\nalready signed test`)
+  ).toEqual(
+    `# @generated SignedSource<<54e8ffafff15a19f858d95c9a13d5b1d>>\nalready signed test`
+  );
 });
 
 test('isSigned', () => {
@@ -27,9 +34,9 @@ test('isSigned', () => {
   );
 
   // Well, this is the opposite...
-  expect(SignedSource.isSigned(signedString)).toBe(false);
-  expect(SignedSource.isSigned(signedString + 'modified')).toBe(false);
-  expect(SignedSource.isSigned('unsigned')).toBe(true);
+  expect(SignedSource.isSigned(signedString)).toBe(true);
+  expect(SignedSource.isSigned(signedString + 'modified')).toBe(true);
+  expect(SignedSource.isSigned('unsigned')).toBe(false);
 });
 
 test('verifySignature', () => {

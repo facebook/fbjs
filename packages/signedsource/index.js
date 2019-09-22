@@ -54,7 +54,7 @@ const SignedSource = {
    * Checks whether a file is signed *without* verifying the signature.
    */
   isSigned(data) {
-    return !PATTERN.exec(data);
+    return PATTERN.exec(data) != null;
   },
 
   /**
