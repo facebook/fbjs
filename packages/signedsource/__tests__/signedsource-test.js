@@ -33,7 +33,6 @@ test('isSigned', () => {
     `# ${SignedSource.getSigningToken()}\ntest`
   );
 
-  // Well, this is the opposite...
   expect(SignedSource.isSigned(signedString)).toBe(true);
   expect(SignedSource.isSigned(signedString + 'modified')).toBe(true);
   expect(SignedSource.isSigned('unsigned')).toBe(false);
