@@ -1,6 +1,6 @@
 {
   "name": "signedsource",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "This package exports utilities to sign and verify generated files.",
   "main": "index.js",
   "license": "MIT",
