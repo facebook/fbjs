@@ -9,7 +9,7 @@
 
 /* jslint unused:false */
 
-if (global.ErrorUtils) {
+if (typeof global !== 'undefined' && global.ErrorUtils) {
   module.exports = global.ErrorUtils;
 } else {
   var ErrorUtils = {
