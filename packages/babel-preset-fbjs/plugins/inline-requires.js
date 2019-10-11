@@ -68,7 +68,7 @@ module.exports = babel => ({
               if (parseResult == null) {
                 return;
               }
-              const {declarationPath} = parseResult;
+              const {declarationPath, moduleName} = parseResult;
 
               const init = declarationPath.node.init;
               const name = declarationPath.node.id
@@ -88,6 +88,7 @@ module.exports = babel => ({
 
               let thrown = false;
               for (const referencePath of binding.referencePaths) {
+                excludeMemberAssignment(moduleName, referencePath, state);
                 try {
                   referencePath.replaceWith(init);
                 } catch (error) {
@@ -105,12 +106,55 @@ module.exports = babel => ({
           {
             ignoredRequires,
             inlineableCalls,
+            membersAssigned: new Map(),
           },
         );
       },
     },
   },
 });
+
+function excludeMemberAssignment(moduleName, referencePath, state) {
+  const assignment = referencePath.parentPath.parent;
+
+  const isValid =
+    assignment.type === 'AssignmentExpression' &&
+    assignment.left.type === 'MemberExpression' &&
+    assignment.left.object === referencePath.node;
+  if (!isValid) {
+    return;
+  }
+
+  const memberPropertyName = getMemberPropertyName(assignment.left);
+  if (memberPropertyName == null) {
+    return;
+  }
+
+  let membersAssigned = state.membersAssigned.get(moduleName);
+  if (membersAssigned == null) {
+    membersAssigned = new Set();
+    state.membersAssigned.set(moduleName, membersAssigned);
+  }
+  membersAssigned.add(memberPropertyName);
+}
+
+function isExcludedMemberAssignment(moduleName, memberPropertyName, state) {
+  const excludedAliases = state.membersAssigned.get(moduleName);
+  return excludedAliases != null && excludedAliases.has(memberPropertyName);
+}
+
+function getMemberPropertyName(node) {
+  if (node.type !== 'MemberExpression') {
+    return null;
+  }
+  if (node.property.type === 'Identifier') {
+    return node.property.name;
+  }
+  if (node.property.type === 'StringLiteral') {
+    return node.property.value;
+  }
+  return null;
+}
 
 function deleteLocation(node) {
   delete node.start;
@@ -147,7 +191,11 @@ function parseInlineableMemberAlias(path, state) {
     path.parentPath.parentPath.parent.type === 'VariableDeclaration' &&
     path.parentPath.parentPath.parentPath.parent.type === 'Program';
 
-  return !isValid || path.parentPath.parentPath.node == null
+  const memberPropertyName = getMemberPropertyName(path.parent);
+
+  return !isValid ||
+    path.parentPath.parentPath.node == null ||
+    isExcludedMemberAssignment(moduleName, memberPropertyName, state)
     ? null
     : {
         declarationPath: path.parentPath.parentPath,

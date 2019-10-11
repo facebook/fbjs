@@ -10,6 +10,40 @@ var foo = require(\\"foo\\");
 "
 `;
 
+exports[`inline-requires ignores require properties (as identifiers) that are re-assigned: ignores require properties (as identifiers) that are re-assigned 1`] = `
+"
+var X = require(\\"X\\");
+var origA = X.a
+X.a = function() {
+  origA();
+};
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var origA = require(\\"X\\").a;
+require(\\"X\\").a = function () {
+  origA();
+};
+"
+`;
+
+exports[`inline-requires ignores require properties (as strings) that are re-assigned: ignores require properties (as strings) that are re-assigned 1`] = `
+"
+var X = require(\\"X\\");
+var origA = X[\\"a\\"]
+X[\\"a\\"] = function() {
+  origA();
+};
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var origA = require(\\"X\\")[\\"a\\"];
+require(\\"X\\")[\\"a\\"] = function () {
+  origA();
+};
+"
+`;
+
 exports[`inline-requires inlines any number of variable declarations: inlines any number of variable declarations 1`] = `
 "
 var foo = require(\\"foo\\"), bar = require(\\"bar\\"), baz = 4;
@@ -19,24 +53,6 @@ foo.method()
 
 var baz = 4;
 require(\\"foo\\").method();
-"
-`;
-
-exports[`inline-requires inlines destructured require properties: inlines destructured require properties 1`] = `
-"
-var tmp = require(\\"./a\\");
-var a = tmp.a
-var D = {
-  b: function(c) { c ? a(c.toString()) : a(\\"No c!\\"); },
-};
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var D = {
-  b: function (c) {
-    c ? require(\\"./a\\").a(c.toString()) : require(\\"./a\\").a(\\"No c!\\");
-  }
-};
 "
 `;
 
@@ -65,6 +81,24 @@ foo.baz()
 
 require(\\"foo\\").bar();
 require(\\"foo\\").baz();
+"
+`;
+
+exports[`inline-requires inlines require properties: inlines require properties 1`] = `
+"
+var tmp = require(\\"./a\\");
+var a = tmp.a
+var D = {
+  b: function(c) { c ? a(c.toString()) : a(\\"No c!\\"); },
+};
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var D = {
+  b: function (c) {
+    c ? require(\\"./a\\").a(c.toString()) : require(\\"./a\\").a(\\"No c!\\");
+  }
+};
 "
 `;
 
