@@ -36,81 +36,79 @@
  * Is also successfully inlined into:
  *     g(require('foo').Baz);
  */
-module.exports = babel => {
-  return {
-    name: 'inline-requires',
-    visitor: {
-      Program: {
-        exit(path, state) {
-          var ignoredRequires = {};
-          var inlineableCalls = {require: true};
+module.exports = babel => ({
+  name: 'inline-requires',
+  visitor: {
+    Program: {
+      exit(path, state) {
+        const ignoredRequires = new Set();
+        const inlineableCalls = new Set(['require']);
 
-          if (state.opts) {
-            if (state.opts.ignoredRequires) {
-              state.opts.ignoredRequires.forEach(function(name) {
-                ignoredRequires[name] = true;
-              });
-            }
-            if (state.opts.inlineableCalls) {
-              state.opts.inlineableCalls.forEach(function(name) {
-                inlineableCalls[name] = true;
-              });
+        if (state.opts != null) {
+          if (state.opts.ignoredRequires != null) {
+            for (const name of state.opts.ignoredRequires) {
+              ignoredRequires.add(name);
             }
           }
-
-          path.scope.crawl();
-          path.traverse(
-            {CallExpression: call.bind(null, babel)},
-            {
-              ignoredRequires: ignoredRequires,
-              inlineableCalls: inlineableCalls,
+          if (state.opts.inlineableCalls != null) {
+            for (const name of state.opts.inlineableCalls) {
+              inlineableCalls.add(name);
             }
-          );
-        },
+          }
+        }
+
+        path.scope.crawl();
+        path.traverse(
+          {
+            CallExpression(path, state) {
+              const declaratorPath =
+                inlineableAlias(path, state) ||
+                inlineableMemberAlias(path, state);
+
+              const declarator = declaratorPath ? declaratorPath.node : null;
+              if (declarator == null) {
+                return;
+              }
+
+              const init = declarator.init;
+              const name = declarator.id ? declarator.id.name : null;
+
+              const binding = declaratorPath.scope.getBinding(name);
+              if (binding.constantViolations.length > 0) {
+                return;
+              }
+
+              deleteLocation(init);
+              babel.traverse(init, {
+                noScope: true,
+                enter: path => deleteLocation(path.node),
+              });
+
+              let thrown = false;
+              for (const referencePath of binding.referencePaths) {
+                try {
+                  referencePath.replaceWith(init);
+                } catch (error) {
+                  thrown = true;
+                }
+              }
+
+              // If a replacement failed (e.g. replacing a type annotation),
+              // avoid removing the initial require just to be safe.
+              if (!thrown) {
+                declaratorPath.remove();
+              }
+            },
+          },
+          {
+            ignoredRequires,
+            inlineableCalls,
+          },
+        );
       },
     },
-  };
-};
-
-function call(babel, path, state) {
-  var declaratorPath =
-    inlineableAlias(path, state) || inlineableMemberAlias(path, state);
-  var declarator = declaratorPath && declaratorPath.node;
-
-  if (declarator) {
-    var init = declarator.init;
-    var name = declarator.id && declarator.id.name;
-
-    var binding = declaratorPath.scope.getBinding(name);
-    var constantViolations = binding.constantViolations;
-    var thrown = false;
-
-    if (!constantViolations.length) {
-      deleteLocation(init);
-
-      babel.traverse(init, {
-        noScope: true,
-        enter: path => deleteLocation(path.node),
-      });
-
-      binding.referencePaths.forEach(ref => {
-        try {
-          ref.replaceWith(init);
-        } catch (err) {
-          thrown = true;
-        }
-      });
-
-      // If an error was thrown, it's most likely due to an invalid replacement
-      // happening (e.g. trying to replace a type annotation). It would usually
-      // be OK to ignore it, but to be safe, we will avoid removing the initial
-      // require.
-      if (!thrown) {
-        declaratorPath.remove();
-      }
-    }
-  }
-}
+  },
+});
 
 function deleteLocation(node) {
   delete node.start;
@@ -145,14 +143,14 @@ function isInlineableCall(node, state) {
   const isInlineable =
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
-    state.inlineableCalls.hasOwnProperty(node.callee.name) &&
+    state.inlineableCalls.has(node.callee.name) &&
     node['arguments'].length >= 1;
 
   // require('foo');
   const isStandardCall =
     isInlineable &&
     node['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.hasOwnProperty(node['arguments'][0].value);
+    !state.ignoredRequires.has(node['arguments'][0].value);
 
   // require(require.resolve('foo'));
   const isRequireResolveCall =
@@ -160,16 +158,12 @@ function isInlineableCall(node, state) {
     node['arguments'][0].type === 'CallExpression' &&
     node['arguments'][0].callee.type === 'MemberExpression' &&
     node['arguments'][0].callee.object.type === 'Identifier' &&
-    state.inlineableCalls.hasOwnProperty(
-      node['arguments'][0].callee.object.name
-    ) &&
+    state.inlineableCalls.has(node['arguments'][0].callee.object.name) &&
     node['arguments'][0].callee.property.type === 'Identifier' &&
     node['arguments'][0].callee.property.name === 'resolve' &&
     node['arguments'][0]['arguments'].length >= 1 &&
     node['arguments'][0]['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.hasOwnProperty(
-      node['arguments'][0]['arguments'][0].value
-    );
+    !state.ignoredRequires.has(node['arguments'][0]['arguments'][0].value);
 
   return isStandardCall || isRequireResolveCall;
 }
