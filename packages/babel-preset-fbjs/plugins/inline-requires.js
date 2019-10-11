@@ -61,19 +61,21 @@ module.exports = babel => ({
         path.traverse(
           {
             CallExpression(path, state) {
-              const declaratorPath =
-                inlineableAlias(path, state) ||
-                inlineableMemberAlias(path, state);
+              const parseResult =
+                parseInlineableAlias(path, state) ||
+                parseInlineableMemberAlias(path, state);
 
-              const declarator = declaratorPath ? declaratorPath.node : null;
-              if (declarator == null) {
+              if (parseResult == null) {
                 return;
               }
+              const {declarationPath} = parseResult;
 
-              const init = declarator.init;
-              const name = declarator.id ? declarator.id.name : null;
+              const init = declarationPath.node.init;
+              const name = declarationPath.node.id
+                ? declarationPath.node.id.name
+                : null;
 
-              const binding = declaratorPath.scope.getBinding(name);
+              const binding = declarationPath.scope.getBinding(name);
               if (binding.constantViolations.length > 0) {
                 return;
               }
@@ -96,7 +98,7 @@ module.exports = babel => ({
               // If a replacement failed (e.g. replacing a type annotation),
               // avoid removing the initial require just to be safe.
               if (!thrown) {
-                declaratorPath.remove();
+                declarationPath.remove();
               }
             },
           },
@@ -116,54 +118,76 @@ function deleteLocation(node) {
   delete node.loc;
 }
 
-function inlineableAlias(path, state) {
+function parseInlineableAlias(path, state) {
+  const moduleName = getInlineableModule(path.node, state);
+
   const isValid =
-    isInlineableCall(path.node, state) &&
+    moduleName != null &&
     path.parent.type === 'VariableDeclarator' &&
     path.parent.id.type === 'Identifier' &&
     path.parentPath.parent.type === 'VariableDeclaration' &&
     path.parentPath.parentPath.parent.type === 'Program';
 
-  return isValid ? path.parentPath : null;
+  return !isValid || path.parentPath.node == null
+    ? null
+    : {
+        declarationPath: path.parentPath,
+        moduleName,
+      };
 }
 
-function inlineableMemberAlias(path, state) {
+function parseInlineableMemberAlias(path, state) {
+  const moduleName = getInlineableModule(path.node, state);
+
   const isValid =
-    isInlineableCall(path.node, state) &&
+    moduleName != null &&
     path.parent.type === 'MemberExpression' &&
     path.parentPath.parent.type === 'VariableDeclarator' &&
     path.parentPath.parent.id.type === 'Identifier' &&
     path.parentPath.parentPath.parent.type === 'VariableDeclaration' &&
     path.parentPath.parentPath.parentPath.parent.type === 'Program';
 
-  return isValid ? path.parentPath.parentPath : null;
+  return !isValid || path.parentPath.parentPath.node == null
+    ? null
+    : {
+        declarationPath: path.parentPath.parentPath,
+        moduleName,
+      };
 }
 
-function isInlineableCall(node, state) {
+function getInlineableModule(node, state) {
   const isInlineable =
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
     state.inlineableCalls.has(node.callee.name) &&
     node['arguments'].length >= 1;
 
+  if (!isInlineable) {
+    return null;
+  }
+
   // require('foo');
-  const isStandardCall =
-    isInlineable &&
-    node['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.has(node['arguments'][0].value);
+  let moduleName =
+    node['arguments'][0].type === 'StringLiteral'
+      ? node['arguments'][0].value
+      : null;
 
   // require(require.resolve('foo'));
-  const isRequireResolveCall =
-    isInlineable &&
-    node['arguments'][0].type === 'CallExpression' &&
-    node['arguments'][0].callee.type === 'MemberExpression' &&
-    node['arguments'][0].callee.object.type === 'Identifier' &&
-    state.inlineableCalls.has(node['arguments'][0].callee.object.name) &&
-    node['arguments'][0].callee.property.type === 'Identifier' &&
-    node['arguments'][0].callee.property.name === 'resolve' &&
-    node['arguments'][0]['arguments'].length >= 1 &&
-    node['arguments'][0]['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.has(node['arguments'][0]['arguments'][0].value);
+  if (moduleName == null) {
+    moduleName =
+      node['arguments'][0].type === 'CallExpression' &&
+      node['arguments'][0].callee.type === 'MemberExpression' &&
+      node['arguments'][0].callee.object.type === 'Identifier' &&
+      state.inlineableCalls.has(node['arguments'][0].callee.object.name) &&
+      node['arguments'][0].callee.property.type === 'Identifier' &&
+      node['arguments'][0].callee.property.name === 'resolve' &&
+      node['arguments'][0]['arguments'].length >= 1 &&
+      node['arguments'][0]['arguments'][0].type === 'StringLiteral'
+        ? node['arguments'][0]['arguments'][0].value
+        : null;
+  }
 
-  return isStandardCall || isRequireResolveCall;
+  return moduleName == null || state.ignoredRequires.has(moduleName)
+    ? null
+    : moduleName;
 }
