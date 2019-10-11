@@ -65,12 +65,34 @@ pluginTester({
       snapshot: true,
     },
 
-    'inlines destructured require properties': {
+    'inlines require properties': {
       code: [
         'var tmp = require("./a");',
         'var a = tmp.a',
         'var D = {',
         '  b: function(c) { c ? a(c.toString()) : a("No c!"); },',
+        '};',
+      ].join('\n'),
+      snapshot: true,
+    },
+
+    'ignores require properties (as identifiers) that are re-assigned': {
+      code: [
+        'var X = require("X");',
+        'var origA = X.a',
+        'X.a = function() {',
+        '  origA();',
+        '};',
+      ].join('\n'),
+      snapshot: true,
+    },
+
+    'ignores require properties (as strings) that are re-assigned': {
+      code: [
+        'var X = require("X");',
+        'var origA = X["a"]',
+        'X["a"] = function() {',
+        '  origA();',
         '};',
       ].join('\n'),
       snapshot: true,

@@ -36,80 +36,124 @@
  * Is also successfully inlined into:
  *     g(require('foo').Baz);
  */
-module.exports = babel => {
-  return {
-    name: 'inline-requires',
-    visitor: {
-      Program: {
-        exit(path, state) {
-          var ignoredRequires = {};
-          var inlineableCalls = {require: true};
+module.exports = babel => ({
+  name: 'inline-requires',
+  visitor: {
+    Program: {
+      exit(path, state) {
+        const ignoredRequires = new Set();
+        const inlineableCalls = new Set(['require']);
 
-          if (state.opts) {
-            if (state.opts.ignoredRequires) {
-              state.opts.ignoredRequires.forEach(function(name) {
-                ignoredRequires[name] = true;
-              });
-            }
-            if (state.opts.inlineableCalls) {
-              state.opts.inlineableCalls.forEach(function(name) {
-                inlineableCalls[name] = true;
-              });
+        if (state.opts != null) {
+          if (state.opts.ignoredRequires != null) {
+            for (const name of state.opts.ignoredRequires) {
+              ignoredRequires.add(name);
             }
           }
-
-          path.scope.crawl();
-          path.traverse(
-            {CallExpression: call.bind(null, babel)},
-            {
-              ignoredRequires: ignoredRequires,
-              inlineableCalls: inlineableCalls,
+          if (state.opts.inlineableCalls != null) {
+            for (const name of state.opts.inlineableCalls) {
+              inlineableCalls.add(name);
             }
-          );
-        },
+          }
+        }
+
+        path.scope.crawl();
+        path.traverse(
+          {
+            CallExpression(path, state) {
+              const parseResult =
+                parseInlineableAlias(path, state) ||
+                parseInlineableMemberAlias(path, state);
+
+              if (parseResult == null) {
+                return;
+              }
+              const {declarationPath, moduleName} = parseResult;
+
+              const init = declarationPath.node.init;
+              const name = declarationPath.node.id
+                ? declarationPath.node.id.name
+                : null;
+
+              const binding = declarationPath.scope.getBinding(name);
+              if (binding.constantViolations.length > 0) {
+                return;
+              }
+
+              deleteLocation(init);
+              babel.traverse(init, {
+                noScope: true,
+                enter: path => deleteLocation(path.node),
+              });
+
+              let thrown = false;
+              for (const referencePath of binding.referencePaths) {
+                excludeMemberAssignment(moduleName, referencePath, state);
+                try {
+                  referencePath.replaceWith(init);
+                } catch (error) {
+                  thrown = true;
+                }
+              }
+
+              // If a replacement failed (e.g. replacing a type annotation),
+              // avoid removing the initial require just to be safe.
+              if (!thrown) {
+                declarationPath.remove();
+              }
+            },
+          },
+          {
+            ignoredRequires,
+            inlineableCalls,
+            membersAssigned: new Map(),
+          },
+        );
       },
     },
-  };
-};
+  },
+});
 
-function call(babel, path, state) {
-  var declaratorPath =
-    inlineableAlias(path, state) || inlineableMemberAlias(path, state);
-  var declarator = declaratorPath && declaratorPath.node;
+function excludeMemberAssignment(moduleName, referencePath, state) {
+  const assignment = referencePath.parentPath.parent;
 
-  if (declarator) {
-    var init = declarator.init;
-    var name = declarator.id && declarator.id.name;
-
-    var binding = declaratorPath.scope.getBinding(name);
-    var constantViolations = binding.constantViolations;
-    var thrown = false;
-
-    if (!constantViolations.length) {
-      deleteLocation(init);
-
-      babel.traverse(init, {
-        noScope: true,
-        enter: path => deleteLocation(path.node),
-      });
-
-      binding.referencePaths.forEach(ref => {
-        try {
-          ref.replaceWith(init);
-        } catch (err) {
-          thrown = true;
-        }
-      });
-
-      // If an error was thrown, it's most likely due to an invalid replacement
-      // happening (e.g. trying to replace a type annotation). It would usually
-      // be OK to ignore it, but to be safe, we will avoid removing the initial
-      // require.
-      if (!thrown) {
-        declaratorPath.remove();
-      }
-    }
+  const isValid =
+    assignment.type === 'AssignmentExpression' &&
+    assignment.left.type === 'MemberExpression' &&
+    assignment.left.object === referencePath.node;
+  if (!isValid) {
+    return;
   }
+
+  const memberPropertyName = getMemberPropertyName(assignment.left);
+  if (memberPropertyName == null) {
+    return;
+  }
+
+  let membersAssigned = state.membersAssigned.get(moduleName);
+  if (membersAssigned == null) {
+    membersAssigned = new Set();
+    state.membersAssigned.set(moduleName, membersAssigned);
+  }
+  membersAssigned.add(memberPropertyName);
+}
+
+function isExcludedMemberAssignment(moduleName, memberPropertyName, state) {
+  const excludedAliases = state.membersAssigned.get(moduleName);
+  return excludedAliases != null && excludedAliases.has(memberPropertyName);
+}
+
+function getMemberPropertyName(node) {
+  if (node.type !== 'MemberExpression') {
+    return null;
+  }
+  if (node.property.type === 'Identifier') {
+    return node.property.name;
+  }
+  if (node.property.type === 'StringLiteral') {
+    return node.property.value;
+  }
+  return null;
 }
 
 function deleteLocation(node) {
@@ -118,58 +162,80 @@ function deleteLocation(node) {
   delete node.loc;
 }
 
-function inlineableAlias(path, state) {
+function parseInlineableAlias(path, state) {
+  const moduleName = getInlineableModule(path.node, state);
+
   const isValid =
-    isInlineableCall(path.node, state) &&
+    moduleName != null &&
     path.parent.type === 'VariableDeclarator' &&
     path.parent.id.type === 'Identifier' &&
     path.parentPath.parent.type === 'VariableDeclaration' &&
     path.parentPath.parentPath.parent.type === 'Program';
 
-  return isValid ? path.parentPath : null;
+  return !isValid || path.parentPath.node == null
+    ? null
+    : {
+        declarationPath: path.parentPath,
+        moduleName,
+      };
 }
 
-function inlineableMemberAlias(path, state) {
+function parseInlineableMemberAlias(path, state) {
+  const moduleName = getInlineableModule(path.node, state);
+
   const isValid =
-    isInlineableCall(path.node, state) &&
+    moduleName != null &&
     path.parent.type === 'MemberExpression' &&
     path.parentPath.parent.type === 'VariableDeclarator' &&
     path.parentPath.parent.id.type === 'Identifier' &&
     path.parentPath.parentPath.parent.type === 'VariableDeclaration' &&
     path.parentPath.parentPath.parentPath.parent.type === 'Program';
 
-  return isValid ? path.parentPath.parentPath : null;
+  const memberPropertyName = getMemberPropertyName(path.parent);
+
+  return !isValid ||
+    path.parentPath.parentPath.node == null ||
+    isExcludedMemberAssignment(moduleName, memberPropertyName, state)
+    ? null
+    : {
+        declarationPath: path.parentPath.parentPath,
+        moduleName,
+      };
 }
 
-function isInlineableCall(node, state) {
+function getInlineableModule(node, state) {
   const isInlineable =
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
-    state.inlineableCalls.hasOwnProperty(node.callee.name) &&
+    state.inlineableCalls.has(node.callee.name) &&
     node['arguments'].length >= 1;
 
+  if (!isInlineable) {
+    return null;
+  }
+
   // require('foo');
-  const isStandardCall =
-    isInlineable &&
-    node['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.hasOwnProperty(node['arguments'][0].value);
+  let moduleName =
+    node['arguments'][0].type === 'StringLiteral'
+      ? node['arguments'][0].value
+      : null;
 
   // require(require.resolve('foo'));
-  const isRequireResolveCall =
-    isInlineable &&
-    node['arguments'][0].type === 'CallExpression' &&
-    node['arguments'][0].callee.type === 'MemberExpression' &&
-    node['arguments'][0].callee.object.type === 'Identifier' &&
-    state.inlineableCalls.hasOwnProperty(
-      node['arguments'][0].callee.object.name
-    ) &&
-    node['arguments'][0].callee.property.type === 'Identifier' &&
-    node['arguments'][0].callee.property.name === 'resolve' &&
-    node['arguments'][0]['arguments'].length >= 1 &&
-    node['arguments'][0]['arguments'][0].type === 'StringLiteral' &&
-    !state.ignoredRequires.hasOwnProperty(
-      node['arguments'][0]['arguments'][0].value
-    );
+  if (moduleName == null) {
+    moduleName =
+      node['arguments'][0].type === 'CallExpression' &&
+      node['arguments'][0].callee.type === 'MemberExpression' &&
+      node['arguments'][0].callee.object.type === 'Identifier' &&
+      state.inlineableCalls.has(node['arguments'][0].callee.object.name) &&
+      node['arguments'][0].callee.property.type === 'Identifier' &&
+      node['arguments'][0].callee.property.name === 'resolve' &&
+      node['arguments'][0]['arguments'].length >= 1 &&
+      node['arguments'][0]['arguments'][0].type === 'StringLiteral'
+        ? node['arguments'][0]['arguments'][0].value
+        : null;
+  }
 
-  return isStandardCall || isRequireResolveCall;
+  return moduleName == null || state.ignoredRequires.has(moduleName)
+    ? null
+    : moduleName;
 }
