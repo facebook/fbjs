@@ -23,7 +23,7 @@ function printWarning(format, ...args) {
   var argIndex = 0;
   var message = 'Warning: ' + format.replace(/%s/g, () => args[argIndex++]);
   if (typeof console !== 'undefined') {
-    console.error(message);
+    console.warn(message);
   }
   try {
     // --- Welcome to debugging React ---
