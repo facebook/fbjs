@@ -7,4 +7,4 @@
  * @providesModule Map
  */
 
-module.exports = require('core-js/library/es6/map');
+module.exports = require('core-js/es/map');
