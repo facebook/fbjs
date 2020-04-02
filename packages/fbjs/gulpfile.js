@@ -13,7 +13,6 @@ const gulp = require('gulp');
 const gulpBabel = require('gulp-babel');
 const mergeStream = require('merge-stream');
 const rename = require('gulp-rename');
-const runSequence = require('run-sequence');
 
 const fbjsConfigurePreset = require('babel-preset-fbjs/configure');
 const gulpModuleMap = require('fbjs-scripts/gulp/module-map');
@@ -55,11 +54,11 @@ const rewriteOptions = {
   prefix: 'fbjs/lib/',
 };
 
-gulp.task('clean', function() {
+function clean(cb) {
   return del([paths.lib.dest, paths.mocks.dest]);
-});
+}
 
-gulp.task('lib', function() {
+function lib() {
   const libTask = gulp
     .src(paths.lib.src)
     .pipe(gulpModuleMap(rewriteOptions))
@@ -75,9 +74,9 @@ gulp.task('lib', function() {
     .pipe(gulp.dest(paths.mocks.dest));
 
   return mergeStream(libTask, mockTask);
-});
+}
 
-gulp.task('flow', function() {
+function flow() {
   return gulp
     .src(paths.lib.src)
     .pipe(gulpModuleMap(rewriteOptions))
@@ -95,20 +94,25 @@ gulp.task('flow', function() {
     .pipe(flatten())
     .pipe(rename({extname: '.js.flow'}))
     .pipe(gulp.dest(paths.lib.dest));
-});
+}
 
-gulp.task('check-dependencies', function() {
+function checkDependencies() {
   return gulp
     .src('package.json')
     .pipe(gulpCheckDependencies());
-});
+};
 
-gulp.task('watch', function() {
-  gulp.watch(paths.src, ['lib', 'flow']);
-});
+const libAndFlow = gulp.parallel(lib, flow);
 
-gulp.task('build', function(cb) {
-  runSequence('check-dependencies', 'clean', ['lib', 'flow'], cb);
-});
+function watch() {
+  gulp.watch(paths.lib.src, libAndFlow);
+};
 
-gulp.task('default', ['build']);
+const build = gulp.series(checkDependencies, clean, libAndFlow);
+
+exports.clean = clean;
+exports.flow = flow;
+exports['check-dependencies'] = checkDependencies;
+exports.watch = watch;
+exports.build = build;
+exports.default = build;
