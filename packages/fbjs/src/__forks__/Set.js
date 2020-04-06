@@ -7,4 +7,4 @@
  * @providesModule Set
  */
 
-module.exports = require('core-js/library/es6/set');
+module.exports = require('core-js/es/set');
