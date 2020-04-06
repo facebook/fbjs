@@ -24,5 +24,7 @@ jobs:
       run: |
         curl -o- -L https://yarnpkg.com/install.sh | bash
         echo "::set-env name=PATH::$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
     - name: Run ${{ matrix.cmd }}
       run: yarn run ${{ matrix.cmd }}
