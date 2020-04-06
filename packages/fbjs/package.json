@@ -64,8 +64,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "cross-fetch": "^3.0.4",
     "fbjs-css-vars": "^1.0.0",
-    "isomorphic-fetch": "^2.1.1",
     "loose-envify": "^1.0.0",
     "object-assign": "^4.1.0",
     "promise": "^7.1.1",
