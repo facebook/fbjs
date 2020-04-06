@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+        cmd: [lint, "fbjs:build", "fbjs:test", "fbjs:flow", "preset:test", "signedsource:test"]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Yarn
+      run: |
+        curl -o- -L https://yarnpkg.com/install.sh | bash
+        echo "::set-env name=PATH::$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    - name: Run ${{ matrix.cmd }}
+      run: yarn run ${{ matrix.cmd }}
