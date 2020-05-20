@@ -12,4 +12,11 @@
 // setimmediate adds setImmediate to the global. We want to make sure we export
 // the actual function.
 require('setimmediate')
-module.exports = global.setImmediate;
+
+var _global = typeof self === 'undefined'
+  ? typeof global === 'undefined'
+    ? this || globalThis // fallback, which is also used by setimmediate itself
+    : global // the global object in node
+  : self; // the global object in browsers/webworkers
+
+module.exports = _global.setImmediate.bind(_global); // bind to keep the context
