@@ -14,15 +14,15 @@ var partitionObject = require('partitionObject');
 
 /**
  * Partitions the enumerable properties of an object into two objects, given a
- * whitelist `Set` for the first object. This is comparable to
+ * allowlist `Set` for the first object. This is comparable to
  * `whitelistObjectKeys`, but eventually keeping all the keys. Returns a tuple
  * of objects `[first, second]`.
  */
 function partitionObjectByKey(
   source: Object,
-  whitelist: Set<string>
+  allowlist: Set<string>
 ): [Object, Object] {
-  return partitionObject(source, (_, key) => whitelist.has(key));
+  return partitionObject(source, (_, key) => allowlist.has(key));
 }
 
 module.exports = partitionObjectByKey;
