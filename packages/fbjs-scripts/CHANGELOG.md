@@ -1,3 +1,10 @@
+## [2.0.0] - 2020-07-29
+
+### Changed
+- Updated `third-party-module-map.json` to adjust for updated packages used in `fbjs@2.0.0`
+- Updated Jest environment for updated `core-js` version used in `fbjs@2.0.0`
+
+
 ## [1.2.0] - 2019-03-20
 
 ### Added

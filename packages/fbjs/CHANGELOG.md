@@ -1,4 +1,14 @@
-## [Unreleased]
+## [2.0.0] - 2020-07-29
+
+### Changed
+- Upgraded `core-js` dependency to ^3.6.4
+- Replaced `isomorphic-fetch` dependency with `cross-fetch`
+
+### Fixed
+- Fixed `__DEV__` check in `invariant`
+
+
+## [1.0.0] - 2018-09-18
 
 ### Added
 - More modules, primarily focused on the requirements of Fixed Data Table.
