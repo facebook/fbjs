@@ -8,4 +8,9 @@ env:
   - CMD=fbjs:test
   - CMD=fbjs:flow
   - CMD=preset:test
-script: npm run $CMD
+  - CMD=signedsource:test
+script: yarn run $CMD
+before_install:
+  # Install latest yarn (will go to ~/.yarn) and update $PATH for current shell
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

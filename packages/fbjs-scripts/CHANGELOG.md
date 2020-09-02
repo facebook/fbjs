@@ -1,3 +1,45 @@
+## [1.2.0] - 2019-03-20
+
+### Added
+- `check-dependencies` now supports projects using Yarn workspaces.
+- `check-dependencies` now supports Yarn selective dependency resolutions.
+
+## [1.1.0]
+
+### Changed
+- Removed `rootDir` from consideration to compute the cache key in `createCacheKeyFunction`.
+- Added an additional array of values for the cache breaker in `createCacheKeyFunction`.
+
+
+## [1.0.1]
+
+### Fixed
+- Fixed `babel-preset-fbjs` dependency
+
+
+## [1.0.0] - 2018-09-18
+
+### Changed
+- Migrated to Babel 7
+
+
+## [0.8.3] - 2018-04-18
+
+### Changed
+- Dropped use of `gulp-util`
+- Relicensed to MIT
+
+
+## [0.8.2] - 2018-03-27
+- Pulled, mistakenly shipped identical code to v0.8.1
+
+
+## [0.8.1] - 2017-07-25
+
+### Added
+- [jest] New `instrument` flag for `createCacheKeyFunction`
+
+
 ## [0.8.0] - 2017-05-31
 
 ### Added

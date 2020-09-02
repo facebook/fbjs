@@ -1,6 +1,6 @@
 {
   "name": "fbjs",
-  "version": "0.9.0-alpha.2",
+  "version": "1.0.0",
   "description": "A collection of utility libraries used by other Facebook JS projects",
   "main": "index.js",
   "repository": "facebook/fbjs",
@@ -8,23 +8,24 @@
     "build": "gulp build",
     "postbuild": "node node_modules/fbjs-scripts/node/check-lib-requires.js lib",
     "lint": "eslint .",
-    "prepublish": "npm run build",
+    "prepublish": "yarn run build",
     "pretest": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "test": "NODE_ENV=test jest",
-    "test-babel-presets": "cd babel-preset && npm install && npm test",
+    "test-babel-presets": "cd babel-preset && yarn install && yarn test",
     "flow": "flow check src"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "babel-preset-fbjs": "file:../babel-preset-fbjs",
     "del": "^2.2.0",
     "fbjs-scripts": "file:../fbjs-scripts",
-    "flow-bin": "^0.46.0",
+    "flow-bin": "^0.99.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^8.0.0",
     "gulp-flatten": "^0.2.0",
     "gulp-rename": "^1.2.2",
     "immutable": "^3.7.6",
-    "jest-cli": "^17.0.3",
+    "jest-cli": "^23.6.0",
     "merge-stream": "^1.0.0",
     "run-sequence": "^1.1.5"
   },
@@ -43,15 +44,20 @@
       "/lib/",
       "/node_modules/"
     ],
-    "persistModuleRegistryBetweenSpecs": true,
     "rootDir": "",
-    "setupFiles": ["node_modules/fbjs-scripts/jest/environment.js"],
-    "testPathDirs": [
+    "setupFiles": [
+      "fbjs-scripts/jest/environment.js"
+    ],
+    "roots": [
       "<rootDir>/src"
     ],
     "timers": "fake",
-    "transform": {".*": "node_modules/fbjs-scripts/jest/preprocessor.js"},
-    "transformIgnorePatterns": ["/node_modules/"],
+    "transform": {
+      ".*": "fbjs-scripts/jest/preprocessor.js"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/src/(?!(__forks__/fetch.js$|fetch/))"
@@ -65,7 +71,7 @@
     "object-assign": "^4.1.0",
     "promise": "^7.1.1",
     "setimmediate": "^1.0.5",
-    "ua-parser-js": "^0.7.9"
+    "ua-parser-js": "^0.7.18"
   },
   "devEngines": {
     "node": ">=4.x",

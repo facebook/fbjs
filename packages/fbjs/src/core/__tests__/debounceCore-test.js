@@ -45,7 +45,7 @@ describe('debounceCore', function() {
     debounced(1, 'a');
     expect(func1).not.toBeCalled();
 
-    mockRunTimersToTime(wait + BUFFER);
+    jest.advanceTimersByTime(wait + BUFFER);
     assertCalledWith(1, 'a');
 
     // make sure that subsequent function isn't called right away
@@ -59,20 +59,20 @@ describe('debounceCore', function() {
     const debounced = debounce(func1, wait);
     debounced(1, 'a');
     expect(func1).not.toBeCalled();
-    mockRunTimersToTime(100);
+    jest.advanceTimersByTime(100);
     debounced(2, 'a');
-    mockRunTimersToTime(100);
+    jest.advanceTimersByTime(100);
     debounced(3, 'a');
-    mockRunTimersToTime(100);
+    jest.advanceTimersByTime(100);
     debounced(4, 'a');
-    mockRunTimersToTime(100);
+    jest.advanceTimersByTime(100);
     debounced(5, 'a');
     expect(mockGetTimersCount()).toBe(1);
-    mockRunTimersToTime(wait + BUFFER);
+    jest.advanceTimersByTime(wait + BUFFER);
     assertCalledWith(5, 'a');
     debounced(6, 'a');
     debounced(7, 'a');
-    mockRunTimersToTime(wait + BUFFER);
+    jest.advanceTimersByTime(wait + BUFFER);
     assertCalledWith(7, 'a');
     expect(func1.mock.calls.length).toBe(2);
   });

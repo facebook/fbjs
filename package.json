@@ -1,21 +1,31 @@
 {
   "name": "fbjs-build",
   "private": true,
+  "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^4.2.0",
-    "eslint-plugin-babel": "^4.1.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.1.0",
     "eslint-config-fbjs": "0.0.0",
-    "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-relay": "0.0.8"
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-flowtype": "^2.43.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.6.1",
+    "prettier": "^1.16.4"
   },
   "scripts": {
+    "prettier": "find . -name node_modules -prune -or -name dist -prune -or -name '*.js' -print | xargs prettier --write",
     "lint": "eslint .",
-    "fbjs:build": "cd packages/fbjs && npm install && npm run build",
-    "fbjs:test": "cd packages/fbjs && npm install && npm run test",
-    "fbjs:flow": "cd packages/fbjs && npm install && npm run flow",
-    "preset:test": "cd packages/babel-preset-fbjs && npm install && npm run test"
+    "fbjs:build": "cd packages/fbjs && yarn && yarn run build",
+    "fbjs:test": "cd packages/fbjs && yarn && yarn run test",
+    "fbjs:flow": "cd packages/fbjs && yarn && yarn run flow",
+    "preset:test": "cd packages/babel-preset-fbjs && yarn && yarn run test",
+    "signedsource:test": "cd packages/signedsource && yarn && yarn run test"
+  },
+  "prettier": {
+    "requirePragma": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true
   }
 }

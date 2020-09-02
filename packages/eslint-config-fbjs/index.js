@@ -45,7 +45,6 @@ function getBaseConfig() {
       'flowtype',
       'jsx-a11y',
       'react',
-      'relay',
     ],
 
     // Tries to match the jshint configuration as closely as possible, with the
@@ -557,11 +556,6 @@ function getBaseConfig() {
       // annotations.
       'flowtype/define-flow-type': WARNING,
       'flowtype/use-flow-type': WARNING,
-
-
-      'relay/graphql-syntax': ERROR,
-      'relay/graphql-naming': ERROR,
-      'relay/compat-uses-vars': WARNING,
     },
 
     // Defines a basic set of globals

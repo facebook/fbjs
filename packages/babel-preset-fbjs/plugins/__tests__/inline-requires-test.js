@@ -1,114 +1,182 @@
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ *
+ * @format
  */
 
 'use strict';
 
-jest.autoMockOff();
+const babel = require('@babel/core');
+const inlineRequiresPlugin = require('../inline-requires');
+const pluginTester = require('babel-plugin-tester');
 
-var babel = require('babel-core');
+pluginTester({
+  plugin: inlineRequiresPlugin,
+  pluginOptions: {
+    ignoredRequires: ['CommonFoo'],
+    inlineableCalls: ['customStuff'],
+  },
+  tests: {
+    'inlines single usage': {
+      code: ['var foo = require("foo");', 'foo.bar()'].join('\n'),
+      snapshot: true,
+    },
 
-describe('inline-requires', function() {
-  it('should inline single usage', function() {
-    compare([
-      'var foo = require("foo");',
-      'foo.bar()',
-    ], [
-      'require("foo").bar();',
-    ]);
-  });
+    'inlines multiple usages': {
+      code: ['var foo = require("foo");', 'foo.bar()', 'foo.baz()'].join('\n'),
+      snapshot: true,
+    },
 
-  it('should inline requires that are not assigned', function() {
-    compare([
-      'require("foo");',
-    ], [
-      'require("foo");',
-    ]);
-  });
+    'inlines any number of variable declarations': {
+      code: [
+        'var foo = require("foo"), bar = require("bar"), baz = 4;',
+        'foo.method()',
+      ].join('\n'),
+      snapshot: true,
+    },
 
-  it('should delete unused requires', function() {
-    compare([
-      'var foo = require("foo");',
-    ], [
-      '',
-    ]);
-  });
+    'ignores requires that are not assigned': {
+      code: ['require("foo");'].join('\n'),
+      snapshot: false,
+    },
 
-  it('should throw when assigning to a require', function() {
-    expect(function() {
-      transform([
-        'var foo = require("foo");',
-        'foo = "bar";',
-      ]);
-    }).toThrow();
-  });
+    'delete unused requires': {
+      code: ['var foo = require("foo");'].join('\n'),
+      snapshot: true,
+    },
 
-  it('should properly handle identifiers declared before their corresponding require statement', function() {
-    compare([
-      'function foo() {',
-      '  bar();',
-      '}',
-      'var bar = require("baz");',
-      'foo();',
-      'bar();',
-    ], [
-      'function foo() {',
-      '  require("baz")();',
-      '}',
-      'foo();',
-      'require("baz")();',
-    ]);
-  });
+    'ignores requires that are re-assigned': {
+      code: ['var foo = require("foo");', 'foo = "bar";'].join('\n'),
+      snapshot: false,
+    },
 
-  it('should be compatible with other transforms like transform-es2015-modules-commonjs', function() {
-    compare([
-      'import Imported from "foo";',
-      'console.log(Imported);',
-    ], [
-      'var _foo2 = _interopRequireDefault(require(\"foo\"));',
-      'function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }',
-      'console.log(_foo2.default);',
-    ]);
-  });
+    'inlines requires that are referenced before the require statement': {
+      code: [
+        'function foo() {',
+        '  bar();',
+        '}',
+        'var bar = require("baz");',
+        'foo();',
+        'bar();',
+      ].join('\n'),
+      snapshot: true,
+    },
 
-  it('should be compatible with `transform-es2015-modules-commonjs` when using named imports', function() {
-    compare(`
-      import { a } from './a';
+    'inlines destructured require properties': {
+      code: [
+        'var tmp = require("./a");',
+        'var a = tmp.a',
+        'var D = {',
+        '  b: function(c) { c ? a(c.toString()) : a("No c!"); },',
+        '};',
+      ].join('\n'),
+      snapshot: true,
+    },
 
-      var D = {
-        b: function(c) { c ? a(c.toString()) : a('No c!'); },
-      };`, [
-      'var D = {',
-      '  b: function (c) {',
-      `    c ? (0, require('./a').a)(c.toString()) : (0, require('./a').a)('No c!');`,
-      '  }',
-      '};',
-    ]);
-  });
+    'inlines functions provided via `inlineableCalls`': {
+      code: [
+        'const inlinedCustom = customStuff("foo");',
+        'const inlinedRequire = require("bar");',
+        '',
+        'inlinedCustom();',
+        'inlinedRequire();',
+      ].join('\n'),
+      snapshot: true,
+    },
+
+    'ignores requires in `ignoredRequires`': {
+      code: [
+        'const CommonFoo = require("CommonFoo");',
+        '',
+        'CommonFoo();',
+      ].join('\n'),
+      snapshot: false,
+    },
+
+    'ignores destructured properties of requires in `ignoredRequires`': {
+      code: [
+        'const tmp = require("CommonFoo");',
+        'const a = require("CommonFoo").a;',
+        '',
+        'a();',
+      ].join('\n'),
+      snapshot: false,
+    },
+
+    'inlines require.resolve calls': {
+      code: ['const a = require(require.resolve("Foo")).bar;', '', 'a();'].join(
+        '\n'
+      ),
+      snapshot: true,
+    },
+
+    'inlines with multiple arguments': {
+      code: ['const a = require("Foo", "Bar", 47);', '', 'a();'].join('\n'),
+      snapshot: true,
+    },
+  },
 });
 
-function transform(input) {
-  return babel.transform(normalise(input), {
-    plugins: [
-      [require('babel-plugin-transform-es2015-modules-commonjs'), {strict: false}],
-      require('../inline-requires.js')
-    ],
-  }).code;
-}
+describe('inline-requires', () => {
+  const transform = (source, options) =>
+    babel.transform(source.join('\n'), {
+      ast: true,
+      compact: true,
+      plugins: [
+        [require('@babel/plugin-transform-modules-commonjs'), {strict: false}],
+        [inlineRequiresPlugin, options],
+      ],
+    });
 
-function normalise(input) {
-  return Array.isArray(input) ? input.join('\n') : input;
-}
+  const compare = (input, output, options) => {
+    expect(transform(input, options).code).toBe(
+      transform(output, options).code
+    );
+  };
 
-function compare(input, output) {
-  var compiled = transform(input);
-  output = normalise(output);
-  expect(strip(compiled)).toEqual(strip(output));
-}
+  it('should be compatible with other transforms like transform-modules-commonjs', function() {
+    compare(
+      ['import Imported from "foo";', 'console.log(Imported);'],
+      [
+        'var _foo = _interopRequireDefault(require("foo"));',
+        'function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }',
+        'console.log(_foo.default);',
+      ]
+    );
+  });
 
-function strip(input) {
-  return input.trim().replace(/\n\n/g, '\n');
-}
+  it('should be compatible with `transform-modules-commonjs` when using named imports', function() {
+    compare(
+      [
+        'import {a} from "./a";',
+        'var D = {',
+        '  b: function(c) { c ? a(c.toString()) : a("No c!"); },',
+        '};',
+      ],
+      [
+        'var D = {',
+        '  b: function (c) {',
+        '    c ? (0, require("./a").a)(c.toString()) : (0, require("./a").a)("No c!");',
+        '  }',
+        '};',
+      ]
+    );
+  });
+
+  it('should remove loc information from nodes', function() {
+    const ast = transform(['var x = require("x"); x']).ast;
+    const expression = ast.program.body[0].expression;
+
+    function expectNoLocation(node) {
+      expect(node.start).toBeUndefined();
+      expect(node.end).toBeUndefined();
+      expect(node.loc).toBeUndefined();
+    }
+
+    expectNoLocation(expression);
+    expectNoLocation(expression.arguments[0]);
+  });
+});
