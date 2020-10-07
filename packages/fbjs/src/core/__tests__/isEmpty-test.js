@@ -9,9 +9,6 @@
 
 jest.mock('_shouldPolyfillES6Collection');
 
-const Map = require('Map');
-const Set = require('Set');
-
 const isEmpty = require('isEmpty');
 const _shouldPolyfillES6Collection = require('_shouldPolyfillES6Collection');
 

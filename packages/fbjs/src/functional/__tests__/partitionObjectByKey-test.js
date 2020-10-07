@@ -8,8 +8,6 @@ jest
   .unmock('partitionObject')
   .unmock('partitionObjectByKey');
 
-var Set = require('Set');
-
 var partitionObjectByKey = require('partitionObjectByKey');
 
 describe('partitionObjectByKey', function() {

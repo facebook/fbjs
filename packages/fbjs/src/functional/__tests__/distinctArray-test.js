@@ -9,8 +9,7 @@
 'use strict';
 
 jest
-  .unmock('distinctArray')
-  .unmock('Set');
+  .unmock('distinctArray');
 
 var distinctArray = require('distinctArray');
 

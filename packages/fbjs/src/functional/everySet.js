@@ -11,8 +11,6 @@
 
 'use strict';
 
-import type Set from 'Set';
-
 /**
  * The everySet() method tests whether all elements in the given Set pass the
  * test implemented by the provided function.

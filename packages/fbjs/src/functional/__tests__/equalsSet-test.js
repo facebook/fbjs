@@ -11,7 +11,6 @@
 
 jest.unmock('equalsSet');
 
-var Set = require('Set');
 var equalsSet = require('equalsSet');
 
 describe('equalsSet', () => {

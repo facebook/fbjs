@@ -5,6 +5,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-require('core-js/es');
-
 global.__DEV__ = true;

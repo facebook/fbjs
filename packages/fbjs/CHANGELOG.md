@@ -1,3 +1,8 @@
+## [3.0.0] - 2020-10-07
+
+### Breaking
+- Removed `core-js` from `fbjs`. Please use your own Map/Set polyfills in older browsers.
+
 ## [2.0.0] - 2020-07-29
 
 ### Changed

@@ -11,7 +11,6 @@
 
 jest.unmock('everySet');
 
-var Set = require('Set');
 var everySet = require('everySet');
 
 describe('everySet', () => {
