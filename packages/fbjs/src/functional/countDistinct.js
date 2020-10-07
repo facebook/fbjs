@@ -10,8 +10,6 @@
 
 'use strict';
 
-var Set = require('Set');
-
 var emptyFunction = require('emptyFunction');
 
 /**

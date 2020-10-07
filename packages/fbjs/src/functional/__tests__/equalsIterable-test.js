@@ -12,8 +12,6 @@
 jest.unmock('equalsIterable');
 
 var Immutable = require('immutable');
-var Map = require('Map');
-var Set = require('Set');
 var equalsIterable = require('equalsIterable');
 
 describe('equalsIterable', () => {

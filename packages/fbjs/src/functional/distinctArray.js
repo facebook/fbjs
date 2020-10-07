@@ -8,8 +8,6 @@
  * @flow
  */
 
-var Set = require('Set');
-
 /**
  * Returns the distinct elements of an iterable. The result is an array whose
  * elements are ordered by first occurrence.

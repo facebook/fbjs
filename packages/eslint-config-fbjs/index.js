@@ -186,7 +186,7 @@ function getBaseConfig() {
       // equivalent to jshint multistr, consider using es6 template strings
       'no-multi-str': ERROR,
       // equivalent to jshint W02OFF, similar to no-extend-native
-      'no-native-reassign': [ERROR, {exceptions: ['Map', 'Set']}],
+      'no-native-reassign': ERROR,
       // equivalent to jshint evil/W054
       'no-new-func': ERROR,
       // don't use constructors for side-effects, equivalent to jshint nonew

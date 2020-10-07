@@ -104,7 +104,7 @@ module.exports = {
     'no-extra-label': 1,
     'no-fallthrough': 1,
     'no-floating-decimal': 2,
-    'no-global-assign': [2, {exceptions: ['Map', 'Set']}],
+    'no-global-assign': [2],
     'no-implicit-coercion': 0,
     'no-implicit-globals': 0,
     'no-implied-eval': 2,

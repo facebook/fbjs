@@ -11,8 +11,6 @@
 
 'use strict';
 
-import type Set from 'Set';
-
 var everySet = require('everySet');
 
 /**
