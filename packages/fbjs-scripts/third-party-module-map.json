@@ -1,8 +1,4 @@
 {
-  "core-js/es/map": "core-js/es/map",
-  "core-js/es/set": "core-js/es/set",
-  "core-js/library/es6/map": "core-js/library/es6/map",
-  "core-js/library/es6/set": "core-js/library/es6/set",
   "cross-fetch": "cross-fetch",
   "fbjs-css-vars": "fbjs-css-vars",
   "isomorphic-fetch": "isomorphic-fetch",
