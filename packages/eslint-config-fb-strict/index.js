@@ -25,10 +25,9 @@ delete fbjsConfig.rules['babel/flow-object-type'];
 module.exports = Object.assign({}, fbjsConfig, {
   env: {
     es6: true,
-    'jest/globals': true,
     node: true,
   },
-  plugins: fbjsConfig.plugins.concat(['jest']),
+  plugins: fbjsConfig.plugins,
   rules: Object.assign({}, fbjsConfig.rules, {
     'array-bracket-spacing': [2, 'never'],
     'arrow-parens': [2, 'as-needed'],
@@ -47,9 +46,6 @@ module.exports = Object.assign({}, fbjsConfig, {
     'eol-last': [2],
     'flowtype/object-type-delimiter': [2, 'comma'],
     indent: [0],
-    'jest/no-focused-tests': [2],
-    'jest/no-identical-title': [2],
-    'jest/valid-expect': [2],
     'max-len': [
       2,
       {
