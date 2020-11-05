@@ -39,6 +39,15 @@
 module.exports = babel => ({
   name: 'inline-requires',
   visitor: {
+    CallExpression(path, state) {
+      const node = path.node;
+      // Rename an existing require function to make sure any inserted `require` calls point to the
+      // global CommonJS require function.
+      const requireBinding = path.scope.getBinding('require');
+      if (requireBinding != null && requireBinding.scope.parent != null) {
+        path.scope.rename('require');
+      }
+    },
     Program: {
       exit(path, state) {
         const ignoredRequires = new Set();
@@ -68,8 +77,14 @@ module.exports = babel => ({
               if (parseResult == null) {
                 return;
               }
-              const {declarationPath, moduleName} = parseResult;
 
+              // Do not transform require calls if require is redeclared in global scope
+              const requireBinding = path.scope.getBinding('require');
+              if (requireBinding != null && requireBinding.scope.parent == null) {
+                return;
+              }
+
+              const {declarationPath, moduleName} = parseResult;
               const init = declarationPath.node.init;
               const name = declarationPath.node.id
                 ? declarationPath.node.id.name

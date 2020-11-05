@@ -10,6 +10,62 @@ var foo = require(\\"foo\\");
 "
 `;
 
+exports[`inline-requires ensures that the inlined require still points to the global require function even if local require is not called: ensures that the inlined require still points to the global require function even if local require is not called 1`] = `
+"
+const foo = require('foo');
+
+function test() {
+  function require(condition) {
+    if (!condition) {
+      throw new Error('Condition is falsy');
+    }
+  }
+
+  foo.isOnline();
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+function test() {
+  function _require(condition) {
+    if (!condition) {
+      throw new Error('Condition is falsy');
+    }
+  }
+
+  require('foo').isOnline();
+}
+"
+`;
+
+exports[`inline-requires ensures that the inlined require still points to the global require function: ensures that the inlined require still points to the global require function 1`] = `
+"
+const foo = require('foo');
+
+function test() {
+  function require(condition) {
+    if (!condition) {
+      throw new Error('Condition is falsy');
+    }
+  }
+
+  require(foo.isOnline());
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+function test() {
+  function _require(condition) {
+    if (!condition) {
+      throw new Error('Condition is falsy');
+    }
+  }
+
+  _require(require('foo').isOnline());
+}
+"
+`;
+
 exports[`inline-requires ignores require properties (as identifiers) that are re-assigned: ignores require properties (as identifiers) that are re-assigned 1`] = `
 "
 var X = require(\\"X\\");

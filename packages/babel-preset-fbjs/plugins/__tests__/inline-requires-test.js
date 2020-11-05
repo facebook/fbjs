@@ -53,6 +53,56 @@ pluginTester({
       snapshot: false,
     },
 
+    'ensures that the inlined require still points to the global require function': {
+      code: `
+        const foo = require('foo');
+
+        function test() {
+          function require(condition) {
+            if (!condition) {
+              throw new Error('Condition is falsy');
+            }
+          }
+
+          require(foo.isOnline());
+        }
+        `,
+        snapshot: true
+    },
+
+    'ensures that the inlined require still points to the global require function even if local require is not called': {
+      code: `
+        const foo = require('foo');
+
+        function test() {
+          function require(condition) {
+            if (!condition) {
+              throw new Error('Condition is falsy');
+            }
+          }
+
+          foo.isOnline();
+        }
+        `,
+        snapshot: true
+    },
+
+
+    'does not transform require calls if require is redeclared in the global scope': {
+      code: `
+        function require(condition) {
+          if (!condition) {
+            throw new Error('Condition is falsy');
+          }
+        }
+
+        const foo = require('foo');
+
+        console.log(foo.test);
+      `,
+      snapshot: false
+    },
+
     'inlines requires that are referenced before the require statement': {
       code: [
         'function foo() {',
