@@ -39,15 +39,6 @@
 module.exports = babel => ({
   name: 'inline-requires',
   visitor: {
-    CallExpression(path, state) {
-      const node = path.node;
-      // Rename an existing require function to make sure any inserted `require` calls point to the
-      // global CommonJS require function.
-      const requireBinding = path.scope.getBinding('require');
-      if (requireBinding != null && requireBinding.scope.parent != null) {
-        path.scope.rename('require');
-      }
-    },
     Program: {
       exit(path, state) {
         const ignoredRequires = new Set();
@@ -77,14 +68,8 @@ module.exports = babel => ({
               if (parseResult == null) {
                 return;
               }
+              const { declarationPath, moduleName } = parseResult;
 
-              // Do not transform require calls if require is redeclared in global scope
-              const requireBinding = path.scope.getBinding('require');
-              if (requireBinding != null && requireBinding.scope.parent == null) {
-                return;
-              }
-
-              const {declarationPath, moduleName} = parseResult;
               const init = declarationPath.node.init;
               const name = declarationPath.node.id
                 ? declarationPath.node.id.name
@@ -101,10 +86,19 @@ module.exports = babel => ({
                 enter: path => deleteLocation(path.node),
               });
 
+              const requireName = path.node.callee.name;
               let thrown = false;
               for (const referencePath of binding.referencePaths) {
                 excludeMemberAssignment(moduleName, referencePath, state);
                 try {
+                  const requireBinding = referencePath.scope.getBinding(requireName);
+                  if (requireBinding != null) {
+                    if (requireBinding.scope === declarationPath.scope) {
+                      thrown = true;
+                      continue;
+                    }
+                    requireBinding.scope.rename(requireName);
+                  }
                   referencePath.replaceWith(init);
                 } catch (error) {
                   thrown = true;
@@ -190,9 +184,9 @@ function parseInlineableAlias(path, state) {
   return !isValid || path.parentPath.node == null
     ? null
     : {
-        declarationPath: path.parentPath,
-        moduleName,
-      };
+      declarationPath: path.parentPath,
+      moduleName,
+    };
 }
 
 function parseInlineableMemberAlias(path, state) {
@@ -213,9 +207,9 @@ function parseInlineableMemberAlias(path, state) {
     isExcludedMemberAssignment(moduleName, memberPropertyName, state)
     ? null
     : {
-        declarationPath: path.parentPath.parentPath,
-        moduleName,
-      };
+      declarationPath: path.parentPath.parentPath,
+      moduleName,
+    };
 }
 
 function getInlineableModule(node, state) {
@@ -239,13 +233,13 @@ function getInlineableModule(node, state) {
   if (moduleName == null) {
     moduleName =
       node['arguments'][0].type === 'CallExpression' &&
-      node['arguments'][0].callee.type === 'MemberExpression' &&
-      node['arguments'][0].callee.object.type === 'Identifier' &&
-      state.inlineableCalls.has(node['arguments'][0].callee.object.name) &&
-      node['arguments'][0].callee.property.type === 'Identifier' &&
-      node['arguments'][0].callee.property.name === 'resolve' &&
-      node['arguments'][0]['arguments'].length >= 1 &&
-      node['arguments'][0]['arguments'][0].type === 'StringLiteral'
+        node['arguments'][0].callee.type === 'MemberExpression' &&
+        node['arguments'][0].callee.object.type === 'Identifier' &&
+        state.inlineableCalls.has(node['arguments'][0].callee.object.name) &&
+        node['arguments'][0].callee.property.type === 'Identifier' &&
+        node['arguments'][0].callee.property.name === 'resolve' &&
+        node['arguments'][0]['arguments'].length >= 1 &&
+        node['arguments'][0]['arguments'][0].type === 'StringLiteral'
         ? node['arguments'][0]['arguments'][0].value
         : null;
   }
