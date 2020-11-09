@@ -69,6 +69,13 @@ module.exports = babel => ({
                 return;
               }
               const {declarationPath, moduleName} = parseResult;
+              const requireName = path.node.callee.name || path.node.callee.property.name;
+
+              // If declaration path has require binding in the scope then
+              // don't inline calls
+              if(declarationPath.scope.getBinding(requireName) != null) {
+                return;
+              }
 
               const init = declarationPath.node.init;
               const name = declarationPath.node.id
@@ -86,7 +93,6 @@ module.exports = babel => ({
                 enter: path => deleteLocation(path.node),
               });
 
-              const requireName = path.node.callee.name;
               let thrown = false;
               for (const referencePath of binding.referencePaths) {
                 excludeMemberAssignment(moduleName, referencePath, state);
@@ -95,10 +101,6 @@ module.exports = babel => ({
                     requireName
                   );
                   if (requireBinding != null) {
-                    if (requireBinding.scope === declarationPath.scope) {
-                      thrown = true;
-                      continue;
-                    }
                     requireBinding.scope.rename(requireName);
                   }
                   referencePath.replaceWith(init);
