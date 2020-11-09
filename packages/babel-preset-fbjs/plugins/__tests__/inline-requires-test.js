@@ -67,7 +67,7 @@ pluginTester({
           require(foo.isOnline());
         }
         `,
-      snapshot: true
+      snapshot: true,
     },
 
     'ensures that the inlined require still points to the global require function with inlineableCalls options': {
@@ -84,7 +84,7 @@ pluginTester({
           customStuff(foo.isOnline());
         }
         `,
-      snapshot: true
+      snapshot: true,
     },
 
     'ensures that the inlined require still points to the global require function even if local require is not called': {
@@ -101,7 +101,7 @@ pluginTester({
           foo.isOnline();
         }
         `,
-      snapshot: true
+      snapshot: true,
     },
 
     'does not transform require calls if require is redeclared in the same declaration scope': {
@@ -116,7 +116,7 @@ pluginTester({
 
         console.log(foo.test);
       `,
-      snapshot: false
+      snapshot: false,
     },
 
     'does not transform require calls if require is redeclared in the global scope': {
@@ -132,7 +132,7 @@ pluginTester({
           console.log(foo.test);
         }
       `,
-      snapshot: false
+      snapshot: false,
     },
 
     'does not transform require calls if its not needed': {
@@ -147,7 +147,7 @@ pluginTester({
           require('test');
         }
       `,
-      snapshot: true
+      snapshot: true,
     },
 
     'inlines requires that are referenced before the require statement': {
@@ -245,7 +245,7 @@ describe('inline-requires', () => {
       ast: true,
       compact: true,
       plugins: [
-        [require('@babel/plugin-transform-modules-commonjs'), { strict: false }],
+        [require('@babel/plugin-transform-modules-commonjs'), {strict: false}],
         [inlineRequiresPlugin, options],
       ],
     });
@@ -256,7 +256,7 @@ describe('inline-requires', () => {
     );
   };
 
-  it('should be compatible with other transforms like transform-modules-commonjs', function () {
+  it('should be compatible with other transforms like transform-modules-commonjs', function() {
     compare(
       ['import Imported from "foo";', 'console.log(Imported);'],
       [
@@ -267,7 +267,7 @@ describe('inline-requires', () => {
     );
   });
 
-  it('should be compatible with `transform-modules-commonjs` when using named imports', function () {
+  it('should be compatible with `transform-modules-commonjs` when using named imports', function() {
     compare(
       [
         'import {a} from "./a";',
@@ -285,7 +285,7 @@ describe('inline-requires', () => {
     );
   });
 
-  it('should remove loc information from nodes', function () {
+  it('should remove loc information from nodes', function() {
     const ast = transform(['var x = require("x"); x']).ast;
     const expression = ast.program.body[0].expression;
 
