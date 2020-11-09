@@ -186,9 +186,9 @@ function parseInlineableAlias(path, state) {
   return !isValid || path.parentPath.node == null
     ? null
     : {
-        declarationPath: path.parentPath,
-        moduleName,
-      };
+      declarationPath: path.parentPath,
+      moduleName,
+    };
 }
 
 function parseInlineableMemberAlias(path, state) {
@@ -209,9 +209,9 @@ function parseInlineableMemberAlias(path, state) {
     isExcludedMemberAssignment(moduleName, memberPropertyName, state)
     ? null
     : {
-        declarationPath: path.parentPath.parentPath,
-        moduleName,
-      };
+      declarationPath: path.parentPath.parentPath,
+      moduleName,
+    };
 }
 
 function getInlineableModule(node, state) {
