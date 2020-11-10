@@ -10,7 +10,7 @@ var foo = require(\\"foo\\");
 "
 `;
 
-exports[`inline-requires does not transform require calls if its not needed: does not transform require calls if its not needed 1`] = `
+exports[`inline-requires does not transform require calls if it is not needed: does not transform require calls if it is not needed 1`] = `
 "
 function test () {
   function require(condition) {
