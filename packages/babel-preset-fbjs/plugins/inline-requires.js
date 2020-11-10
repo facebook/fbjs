@@ -97,12 +97,7 @@ module.exports = babel => ({
               for (const referencePath of binding.referencePaths) {
                 excludeMemberAssignment(moduleName, referencePath, state);
                 try {
-                  const requireBinding = referencePath.scope.getBinding(
-                    requireName
-                  );
-                  if (requireBinding != null) {
-                    requireBinding.scope.rename(requireName);
-                  }
+                  referencePath.scope.rename(requireName);
                   referencePath.replaceWith(init);
                 } catch (error) {
                   thrown = true;
@@ -120,7 +115,7 @@ module.exports = babel => ({
             ignoredRequires,
             inlineableCalls,
             membersAssigned: new Map(),
-          }
+          },
         );
       },
     },

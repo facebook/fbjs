@@ -136,7 +136,7 @@ pluginTester({
       snapshot: false,
     },
 
-    'does not transform require calls if its not needed': {
+    'does not transform require calls if it is not needed': {
       code: `
         function test () {
           function require(condition) {
