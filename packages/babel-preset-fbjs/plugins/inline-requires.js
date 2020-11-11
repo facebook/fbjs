@@ -250,16 +250,8 @@ function getInlineableModule(path, state) {
   }
 
   // Check if require is in any parent scope
-  let parentPath = path.parentPath;
-  let isRequireInScope = false;
   const fnName = node.callee.name;
-  while (parentPath) {
-    if (parentPath.scope.getBinding(fnName) != null) {
-      isRequireInScope = true;
-      break;
-    }
-    parentPath = parentPath.parentPath;
-  }
+  const isRequireInScope = path.scope.getBinding(fnName) != null;
 
   return moduleName == null ||
     state.ignoredRequires.has(moduleName) ||
