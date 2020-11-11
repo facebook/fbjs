@@ -68,8 +68,12 @@ module.exports = babel => ({
               if (parseResult == null) {
                 return;
               }
-              const {declarationPath, moduleName} = parseResult;
 
+              const {
+                declarationPath,
+                moduleName,
+                requireFnName,
+              } = parseResult;
               const init = declarationPath.node.init;
               const name = declarationPath.node.id
                 ? declarationPath.node.id.name
@@ -90,6 +94,7 @@ module.exports = babel => ({
               for (const referencePath of binding.referencePaths) {
                 excludeMemberAssignment(moduleName, referencePath, state);
                 try {
+                  referencePath.scope.rename(requireFnName);
                   referencePath.replaceWith(init);
                 } catch (error) {
                   thrown = true;
@@ -163,10 +168,13 @@ function deleteLocation(node) {
 }
 
 function parseInlineableAlias(path, state) {
-  const moduleName = getInlineableModule(path.node, state);
+  const module = getInlineableModule(path, state);
+  if (module == null) {
+    return null;
+  }
 
+  const { moduleName, requireFnName } = module;
   const isValid =
-    moduleName != null &&
     path.parent.type === 'VariableDeclarator' &&
     path.parent.id.type === 'Identifier' &&
     path.parentPath.parent.type === 'VariableDeclaration' &&
@@ -175,16 +183,20 @@ function parseInlineableAlias(path, state) {
   return !isValid || path.parentPath.node == null
     ? null
     : {
-        declarationPath: path.parentPath,
-        moduleName,
-      };
+      declarationPath: path.parentPath,
+      moduleName,
+      requireFnName,
+    };
 }
 
 function parseInlineableMemberAlias(path, state) {
-  const moduleName = getInlineableModule(path.node, state);
+  const module = getInlineableModule(path, state);
+  if (module == null) {
+    return null;
+  }
 
+  const { moduleName, requireFnName } = module;
   const isValid =
-    moduleName != null &&
     path.parent.type === 'MemberExpression' &&
     path.parentPath.parent.type === 'VariableDeclarator' &&
     path.parentPath.parent.id.type === 'Identifier' &&
@@ -198,12 +210,14 @@ function parseInlineableMemberAlias(path, state) {
     isExcludedMemberAssignment(moduleName, memberPropertyName, state)
     ? null
     : {
-        declarationPath: path.parentPath.parentPath,
-        moduleName,
-      };
+      declarationPath: path.parentPath.parentPath,
+      moduleName,
+      requireFnName,
+    };
 }
 
-function getInlineableModule(node, state) {
+function getInlineableModule(path, state) {
+  const node = path.node;
   const isInlineable =
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
@@ -235,7 +249,13 @@ function getInlineableModule(node, state) {
         : null;
   }
 
-  return moduleName == null || state.ignoredRequires.has(moduleName)
+  // Check if require is in any parent scope
+  const fnName = node.callee.name;
+  const isRequireInScope = path.scope.getBinding(fnName) != null;
+
+  return moduleName == null ||
+    state.ignoredRequires.has(moduleName) ||
+    isRequireInScope
     ? null
-    : moduleName;
+    : { moduleName, requireFnName: fnName };
 }
