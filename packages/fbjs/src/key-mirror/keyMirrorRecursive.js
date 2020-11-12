@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @providesModule keyMirrorRecursive
- * @flow weak
+ * @flow
  * @typechecks
  */
 
@@ -29,7 +29,8 @@ var invariant = require('invariant');
  *   var CONSTANTS = keyMirror({FOO: {BAR: null}}, 'NameSpace');
  *   console.log(CONSTANTS.FOO.BAR); // NameSpace.FOO.BAR
  */
-function keyMirrorRecursive<T>(obj: T, prefix?: ?string): T {
+function keyMirrorRecursive<T: {...}>(obj: T, prefix?: ?string): T {
+  // $FlowFixMe
   return keyMirrorRecursiveInternal(obj, prefix);
 }
 
