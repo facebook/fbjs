@@ -62,17 +62,17 @@ const SignedSource = {
    * the signing token, so the token should be placed inside a comment in order
    * for signing to not change code semantics.
    */
-  signFile(data) {
-    if (!data.includes(NEWTOKEN)) {
-      if (SignedSource.isSigned(data)) {
-        // Signing a file that was previously signed.
-        data = data.replace(PATTERN, SignedSource.getSigningToken());
-      } else {
-        throw TokenNotFoundError;
-      }
-    }
-    return data.replace(NEWTOKEN, `SignedSource<<${hash(data, 'utf8')}>>`);
-  },
+  // signFile(data) {
+  //   if (!data.includes(NEWTOKEN)) {
+  //     if (SignedSource.isSigned(data)) {
+  //       // Signing a file that was previously signed.
+  //       data = data.replace(PATTERN, SignedSource.getSigningToken());
+  //     } else {
+  //       throw TokenNotFoundError;
+  //     }
+  //   }
+  //   return data.replace(NEWTOKEN, `SignedSource<<${hash(data, 'utf8')}>>`);
+  // },
 
   /**
    * Verifies the signature in a signed file.
