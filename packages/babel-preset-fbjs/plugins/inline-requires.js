@@ -41,6 +41,7 @@ module.exports = babel => ({
   visitor: {
     Program: {
       exit(path, state) {
+        const t = babel.types;
         const ignoredRequires = new Set();
         const inlineableCalls = new Set(['require']);
 
@@ -95,7 +96,7 @@ module.exports = babel => ({
                 excludeMemberAssignment(moduleName, referencePath, state);
                 try {
                   referencePath.scope.rename(requireFnName);
-                  referencePath.replaceWith(init);
+                  referencePath.replaceWith(t.cloneDeep(init));
                 } catch (error) {
                   thrown = true;
                 }
