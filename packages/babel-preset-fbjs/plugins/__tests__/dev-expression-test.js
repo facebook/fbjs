@@ -11,11 +11,14 @@
 
 let babel = require('@babel/core');
 let devExpression = require('../dev-expression');
+const validateOutputAst = require('../test-utils/validateOutputAst');
 
 function transform(input) {
-  return babel.transform(input, {
+  const result = babel.transform(input, {
     plugins: [devExpression],
-  }).code;
+  });
+  validateOutputAst(result.ast);
+  return result.code;
 }
 
 function compare(input, output) {

@@ -13,6 +13,7 @@ jest.dontMock('../rewrite-modules');
 describe('rewrite-modules', function() {
   let babel = require('@babel/core');
   let rewriteModules = require('../rewrite-modules');
+  const validateOutputAst = require('../test-utils/validateOutputAst');
 
   function normalizeResults(code) {
     return code && code.replace(/\s/g, '');
@@ -27,7 +28,8 @@ describe('rewrite-modules', function() {
             plugins: [[rewriteModules, {map: {'test': 'test/test'}}]],
           }
         );
-
+        
+        validateOutputAst(result.ast);
         expect(result.code).toEqual('require("test/test");');
       });
 
@@ -42,6 +44,7 @@ describe('rewrite-modules', function() {
           }
         );
 
+        validateOutputAst(result.ast);
         expect(result.code).toEqual('import type Test from "test/test";');
       });
 
@@ -58,6 +61,7 @@ describe('rewrite-modules', function() {
           }
         );
 
+        validateOutputAst(result.ast);
         expect(result.code).toEqual(expected);
       });
 
@@ -105,6 +109,7 @@ describe('rewrite-modules', function() {
           }
         );
 
+        validateOutputAst(result.ast);
         expect(normalizeResults(result.code))
           .toEqual(normalizeResults(expected));
       });

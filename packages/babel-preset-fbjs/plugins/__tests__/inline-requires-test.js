@@ -13,6 +13,7 @@
 const babel = require('@babel/core');
 const inlineRequiresPlugin = require('../inline-requires');
 const pluginTester = require('babel-plugin-tester');
+const validateOutputAst = require('../test-utils/validateOutputAst');
 
 pluginTester({
   plugin: inlineRequiresPlugin,
@@ -299,4 +300,9 @@ describe('inline-requires', () => {
     expectNoLocation(expression);
     expectNoLocation(expression.arguments[0]);
   });
+
+  it('should not emit duplicate nodes', function () {
+    const ast = transform(['var foo = require("foo");', 'foo.bar()', 'foo.baz()']).ast;
+    validateOutputAst(ast);
+  })
 });
