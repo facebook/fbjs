@@ -32,6 +32,8 @@ function getGlobalCacheKey(files, values) {
 
 function getCacheKeyFunction(globalCacheKey) {
   return (src, file, configString, options) => {
+    // Jest 27 passes a single options bag which contains `configString` rather than as a separate argument
+    options = options || configString;
     const {instrument, config} = options;
     const rootDir = config && config.rootDir;
 
