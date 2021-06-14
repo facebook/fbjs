@@ -29,7 +29,7 @@ function cx(classNames) {
       .map(replace)
       .join(' ');
   }
-  return Array.prototype.map.call(arguments, replace).join(' ');
+  return Array.prototype.map.call(Array.from(arguments), replace).join(' ');
 }
 
 function replace(str) {
