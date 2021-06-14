@@ -42,7 +42,7 @@ function getByPath(
     const segment = path[i];
     // Use 'in' to check entire prototype chain since immutable js records
     // use prototypes
-    if (current && segment in current) {
+    if (typeof(current) == "object" && segment in current) {
       current = current[segment];
     } else {
       return fallbackValue;
