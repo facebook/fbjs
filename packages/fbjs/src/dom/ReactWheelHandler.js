@@ -63,8 +63,8 @@ class ReactWheelHandler {
     const normalizedEvent = normalizeWheel(event);
     const deltaX = this._deltaX + normalizedEvent.pixelX;
     const deltaY = this._deltaY + normalizedEvent.pixelY;
-    const handleScrollX = this._handleScrollX(deltaX, deltaY);
-    const handleScrollY = this._handleScrollY(deltaY, deltaX);
+    const handleScrollX = this._handleScrollX(deltaX, deltaY, event);
+    const handleScrollY = this._handleScrollY(deltaY, deltaX, event);
     if (!handleScrollX && !handleScrollY) {
       return;
     }
