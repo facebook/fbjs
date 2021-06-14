@@ -11,7 +11,7 @@
 'use strict';
 
 const isWebkit =
-  typeof navigator !== 'undefined' &&
+  typeof navigator !== 'undefined' && typeof navigator.userAgent === 'string' &&
   navigator.userAgent.indexOf('AppleWebKit') > -1;
 
 /**
