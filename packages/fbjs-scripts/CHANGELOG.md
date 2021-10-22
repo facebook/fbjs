@@ -1,3 +1,9 @@
+## [3.0.1] - 2021-10-22
+
+### Fixed
+- Fixed issue preventing compatibility with Jest v27 cache key (#408)
+
+
 ## [3.0.0] - 2020-10-07
 
 ### Breaking
