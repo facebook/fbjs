@@ -1,3 +1,9 @@
+## [3.0.1]
+
+### Fixed
+- Upgraded ua-parser-js dependency
+
+
 ## [3.0.0] - 2020-10-07
 
 ### Breaking
