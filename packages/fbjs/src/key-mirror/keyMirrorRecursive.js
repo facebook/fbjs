@@ -15,19 +15,19 @@ var invariant = require('invariant');
 
 export type KeyMirrorRecursive<O> = $ObjMapi<
   O,
-  (<O: {...}>(mixed, O) => KeyMirrorRecursive<O>) & (<K>(K) => K),
+  (<O: {}>(mixed, O) => KeyMirrorRecursive<O>) & (<K>(K) => K),
 >;
 
 export type KeyMirrorRecursiveWithPrefix<O> = $ObjMapi<
   O,
-  (<O: {...}>(mixed, O) => KeyMirrorRecursiveWithPrefix<O>) & (mixed => string),
+  (<O: {}>(mixed, O) => KeyMirrorRecursiveWithPrefix<O>) & (mixed => string),
 >;
 
-type keyMirrorRecursiveFn = (<O: {...}>(
+type keyMirrorRecursiveFn = (<O: {}>(
   obj: O,
   _: void,
 ) => KeyMirrorRecursive<O>) &
-  (<O: {...}>(obj: O, prefix: string) => KeyMirrorRecursiveWithPrefix<O>);
+  (<O: {}>(obj: O, prefix: string) => KeyMirrorRecursiveWithPrefix<O>);
 
 /**
  * Constructs an enumeration with keys equal to their value. If the value is an
@@ -47,7 +47,7 @@ type keyMirrorRecursiveFn = (<O: {...}>(
  *   var CONSTANTS = keyMirror({FOO: {BAR: ''}}, 'NameSpace');
  *   console.log(CONSTANTS.FOO.BAR); // NameSpace.FOO.BAR
  */
-const keyMirrorRecursive: keyMirrorRecursiveFn = (obj: {...}, prefix) => {
+const keyMirrorRecursive: keyMirrorRecursiveFn = (obj: {}, prefix) => {
   const ret: {[string]: KeyMirrorRecursiveWithPrefix<$FlowFixMe> | string} = {};
   invariant(
     isObject(obj),
@@ -73,7 +73,7 @@ const keyMirrorRecursive: keyMirrorRecursiveFn = (obj: {...}, prefix) => {
   return ret;
 };
 
-function isObject<T: {...}>(obj: T): boolean {
+function isObject<T: {}>(obj: T): boolean {
   return obj instanceof Object && !Array.isArray(obj);
 }
 
