@@ -5,7 +5,7 @@
   "repository": "facebook/fbjs",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.1.5",
     "ansi-colors": "^1.0.1",
     "babel-preset-fbjs": "^3.2.0",
     "cross-spawn": "^5.1.0",
