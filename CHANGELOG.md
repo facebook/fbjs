@@ -1,6 +1,13 @@
 ## [Unreleased]
 
 
+## [0.8.18] - 2021-10-23
+
+### Fixed
+- Upgraded `ua-parser-js` dependency
+
+
+
 ## [0.8.17] - 2018-06-11
 
 ### Fixed

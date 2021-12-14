@@ -108,7 +108,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', function(cb) {
-  runSequence('check-dependencies', 'clean', ['lib', 'flow'], cb);
+  runSequence('clean', ['lib', 'flow'], cb);
 });
 
 gulp.task('default', ['build']);

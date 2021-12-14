@@ -1,6 +1,6 @@
 {
   "name": "fbjs",
-  "version": "0.8.17",
+  "version": "0.8.18",
   "description": "A collection of utility libraries used by other Facebook JS projects",
   "main": "index.js",
   "repository": "facebook/fbjs",
@@ -66,7 +66,7 @@
     "object-assign": "^4.1.0",
     "promise": "^7.1.1",
     "setimmediate": "^1.0.5",
-    "ua-parser-js": "^0.7.18"
+    "ua-parser-js": "^0.7.30"
   },
   "devEngines": {
     "node": ">=4.x",
