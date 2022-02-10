@@ -1,3 +1,8 @@
+## [3.0.4]
+
+### Fixed
+- Fixed missing `lib` folder
+
 ## [3.0.3]
 
 ### Fixed
