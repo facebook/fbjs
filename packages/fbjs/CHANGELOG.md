@@ -1,3 +1,9 @@
+## [3.0.3]
+
+### Fixed
+- Updated cross-fetch to resolve CVE-2022-0235
+- Bump copy-props from 2.0.4 to 2.0.5
+
 ## [3.0.2]
 
 ### Fixed
