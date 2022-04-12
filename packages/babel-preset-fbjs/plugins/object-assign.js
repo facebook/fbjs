@@ -19,6 +19,7 @@ module.exports = function autoImporter(babel) {
           t.identifier('require'),
           [t.stringLiteral('object-assign')]
         ),
+        files: file,
       });
     }
     return state.id;
