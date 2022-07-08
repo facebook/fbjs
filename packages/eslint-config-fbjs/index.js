@@ -34,7 +34,7 @@ const INDENT_SIZE = 2;
 
 function getBaseConfig() {
   return {
-    parser: 'babel-eslint',
+    parser: 'hermes-eslint',
     parserOptions: {
       ecmaVersion: 6,
       sourceType: 'module',
@@ -42,7 +42,7 @@ function getBaseConfig() {
 
     plugins: [
       'babel',
-      'flowtype',
+      'ft-flow',
       'jsx-a11y',
       'react',
     ],
@@ -550,12 +550,12 @@ function getBaseConfig() {
       'jsx-a11y/scope': OFF,
       'jsx-a11y/tabindex-no-positive': WARNING,
 
-      // eslint-plugin-flowtype
+      // eslint-plugin-ft-flow
       // These don't actually result in warnings. Enabling them ensures they run
       // and mark variables as used, avoiding false positives with Flow
       // annotations.
-      'flowtype/define-flow-type': WARNING,
-      'flowtype/use-flow-type': WARNING,
+      'ft-flow/define-flow-type': WARNING,
+      'ft-flow/use-flow-type': WARNING,
     },
 
     // Defines a basic set of globals
@@ -592,7 +592,7 @@ var extendedConfig = {
     // To keep base config in sync with internal codebase but still make
     // open source happy, disable a deprecated rule and enable different one.
     'babel/flow-object-type': OFF,
-    'flowtype/object-type-delimiter': [WARNING, 'comma'],
+    'ft-flow/object-type-delimiter': [WARNING, 'comma'],
   },
 };
 

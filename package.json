@@ -3,13 +3,13 @@
   "private": true,
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.1.0",
+    "hermes-eslint": "^0.8.0",
+    "eslint": "^8.19.0",
     "eslint-config-fbjs": "0.0.0",
     "eslint-plugin-babel": "^5.2.1",
-    "eslint-plugin-flowtype": "^2.43.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1",
+    "eslint-plugin-ft-flow": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-react": "^7.30.1",
     "prettier": "^1.16.4"
   },
   "scripts": {

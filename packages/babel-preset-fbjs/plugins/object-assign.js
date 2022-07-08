@@ -25,13 +25,13 @@ module.exports = function autoImporter(babel) {
   }
 
   return {
-    pre: function() {
+    pre() {
       // map from module to generated identifier
       this.id = null;
     },
 
     visitor: {
-      CallExpression: function(path, file) {
+      CallExpression(path, file) {
         if (path.get('callee').matchesPattern('Object.assign')) {
           // generate identifier and require if it hasn't been already
           var id = getAssignIdent(path, file, this);
@@ -39,7 +39,7 @@ module.exports = function autoImporter(babel) {
         }
       },
 
-      MemberExpression: function(path, file) {
+      MemberExpression(path, file) {
         if (path.matchesPattern('Object.assign')) {
           var id = getAssignIdent(path, file, this);
           path.replaceWith(id);

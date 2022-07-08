@@ -14,7 +14,7 @@ const maxLenIgnorePattern = require('fbjs-eslint-utils/shared').maxLenIgnorePatt
 
 module.exports = {
 
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 
   parserOptions: {
     ecmaVersion: 7,
@@ -298,28 +298,28 @@ module.exports = {
     'babel/no-invalid-this': 0,
     'babel/no-await-in-loop': 0, // deprecated; now using 'no-await-in-loop' from eslint core
 
-    // flowtype (https://github.com/gajus/eslint-plugin-flowtype)
-    'flowtype/boolean-style': 1,
-    'flowtype/define-flow-type': 1,
-    'flowtype/delimiter-dangle': [1, 'always-multiline'],
-    'flowtype/generic-spacing': 1,
-    'flowtype/no-dupe-keys': 1,
-    'flowtype/no-primitive-constructor-types': 1,
-    'flowtype/no-weak-types': 1,
-    'flowtype/object-type-delimiter': 1,
-    'flowtype/require-parameter-type': 0,
-    'flowtype/require-return-type': 0,
-    'flowtype/require-valid-file-annotation': 0,
-    'flowtype/require-variable-type': 0,
-    'flowtype/semi': 1,
-    'flowtype/sort-keys': 0,
-    'flowtype/space-after-type-colon': [1, 'always'],
-    'flowtype/space-before-generic-bracket': 1,
-    'flowtype/space-before-type-colon': 1,
-    'flowtype/type-id-match': 0,
-    'flowtype/union-intersection-spacing': 1,
-    'flowtype/use-flow-type': 1,
-    'flowtype/valid-syntax': 0,
+    // ft-flow (https://github.com/flow-typed/eslint-plugin-ft-flow)
+    'ft-flow/boolean-style': 1,
+    'ft-flow/define-flow-type': 1,
+    'ft-flow/delimiter-dangle': [1, 'always-multiline'],
+    'ft-flow/generic-spacing': 1,
+    'ft-flow/no-dupe-keys': 1,
+    'ft-flow/no-primitive-constructor-types': 1,
+    'ft-flow/no-weak-types': 1,
+    'ft-flow/object-type-delimiter': 1,
+    'ft-flow/require-parameter-type': 0,
+    'ft-flow/require-return-type': 0,
+    'ft-flow/require-valid-file-annotation': 0,
+    'ft-flow/require-variable-type': 0,
+    'ft-flow/semi': 1,
+    'ft-flow/sort-keys': 0,
+    'ft-flow/space-after-type-colon': [1, 'always'],
+    'ft-flow/space-before-generic-bracket': 1,
+    'ft-flow/space-before-type-colon': 1,
+    'ft-flow/type-id-match': 0,
+    'ft-flow/union-intersection-spacing': 1,
+    'ft-flow/use-flow-type': 1,
+    'ft-flow/valid-syntax': 0,
 
     // Jasmine (https://github.com/tlvince/eslint-plugin-jasmine)
     'jasmine/missing-expect': 0,
@@ -394,7 +394,7 @@ module.exports = {
 
   plugins: [
     'babel',
-    'flowtype',
+    'ft-flow',
     'jasmine',
     'prefer-object-spread',
     'react',
