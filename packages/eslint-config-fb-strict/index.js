@@ -44,7 +44,7 @@ module.exports = Object.assign({}, fbjsConfig, {
     'comma-style': [2, 'last'],
     'computed-property-spacing': [2, 'never'],
     'eol-last': [2],
-    'flowtype/object-type-delimiter': [2, 'comma'],
+    'ft-flow/object-type-delimiter': [2, 'comma'],
     indent: [0],
     'max-len': [
       2,

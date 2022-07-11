@@ -26,14 +26,14 @@ module.exports = function autoImporter(babel) {
   }
 
   return {
-    pre: function() {
+    pre() {
       // Cache per file to avoid calling `scope.hasBinding` several
       // times for the same module, which has already been auto-imported.
       this.autoImported = {};
     },
 
     visitor: {
-      ReferencedIdentifier: function(path) {
+      ReferencedIdentifier(path) {
         const node = path.node;
         const scope = path.scope;
 

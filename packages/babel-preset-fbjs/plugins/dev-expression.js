@@ -29,7 +29,7 @@ module.exports = function(babel) {
   return {
     visitor: {
       Identifier: {
-        enter: function(path) {
+        enter(path) {
           // Do nothing when testing
           if (process.env.NODE_ENV === 'test') {
             return;
@@ -41,7 +41,7 @@ module.exports = function(babel) {
         },
       },
       CallExpression: {
-        exit: function(path) {
+        exit(path) {
           var node = path.node;
           // Do nothing when testing
           if (process.env.NODE_ENV === 'test') {

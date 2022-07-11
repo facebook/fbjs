@@ -16,11 +16,11 @@ There are several exceptions:
 npm install --save-dev \
   eslint-config-fbjs \
   eslint-plugin-babel \
-  eslint-plugin-flowtype \
+  eslint-plugin-ft-flow \
   eslint-plugin-jsx-a11y \
   eslint-plugin-react \
   eslint \
-  babel-eslint
+  hermes-eslint
 ```
 
 #### `yarn`
@@ -28,11 +28,11 @@ npm install --save-dev \
 yarn add --dev \
   eslint-config-fbjs \
   eslint-plugin-babel \
-  eslint-plugin-flowtype \
+  eslint-plugin-ft-flow \
   eslint-plugin-jsx-a11y \
   eslint-plugin-react \
   eslint \
-  babel-eslint
+  hermes-eslint
 ```
 
 ### Configure
