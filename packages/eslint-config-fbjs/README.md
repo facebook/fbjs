@@ -20,7 +20,7 @@ npm install --save-dev \
   eslint-plugin-jsx-a11y \
   eslint-plugin-react \
   eslint \
-  @babel/eslint-parser
+  hermes-eslint
 ```
 
 #### `yarn`
@@ -32,7 +32,7 @@ yarn add --dev \
   eslint-plugin-jsx-a11y \
   eslint-plugin-react \
   eslint \
-  @babel/eslint-parser
+  hermes-eslint
 ```
 
 ### Configure

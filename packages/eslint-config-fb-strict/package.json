@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-fb-strict",
-  "version": "27.0.0",
+  "version": "26.0.0",
   "description": "",
   "repository": "facebook/fbjs",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "eslint-config-fbjs": "^4.0.0"
   },
   "peerDependencies": {
-    "hermes-eslint": "^0.8.0",
+    "hermes-eslint": ">=0.8.0",
     "eslint": "^8.0.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-ft-flow": "^2.0.1",
