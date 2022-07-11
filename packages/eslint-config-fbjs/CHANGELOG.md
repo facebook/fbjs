@@ -1,3 +1,10 @@
+## [4.0.0] - 2022-07-11
+
+### Changed
+- Updated dependencies
+- Switch `babel-eslint` for `hermes-eslint`
+- Switch `eslint-plugin-flowtype` for `eslint-plugin-ft-flow`
+
 ## [3.1.1] - 2019-08-20
 
 ### Changed
