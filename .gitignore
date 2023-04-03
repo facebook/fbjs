@@ -2,3 +2,4 @@ node_modules
 npm-debug.log
 packages/fbjs/lib/*
 packages/fbjs/module-map.json
+.tool-versions
