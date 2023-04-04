@@ -1,3 +1,6 @@
+## [3.0.5]
+- Upgrade ua-parser-js dependency to 0.7.35 to resolve [CVE-2022-25927](https://www.tenable.com/cve/CVE-2022-25927)
+
 ## [3.0.4]
 
 ### Fixed
