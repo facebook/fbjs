@@ -1,3 +1,8 @@
+## [3.0.5]
+
+### Fixed
+- Upgraded ua-parser-js dependency
+
 ## [3.0.4]
 
 ### Fixed
