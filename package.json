@@ -21,6 +21,7 @@
     "preset:test": "cd packages/babel-preset-fbjs && yarn && yarn run test",
     "signedsource:test": "cd packages/signedsource && yarn && yarn run test"
   },
+  "packageManager": "yarn@1.22.19",
   "prettier": {
     "requirePragma": true,
     "singleQuote": true,
