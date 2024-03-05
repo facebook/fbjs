@@ -60,7 +60,7 @@ module.exports = function(options) {
       require('@babel/plugin-transform-function-name'),
       require('@babel/plugin-transform-arrow-functions'),
       require('@babel/plugin-transform-block-scoped-functions'),
-      require('@babel/plugin-proposal-class-properties'),
+      require('@babel/plugin-transform-class-properties'),
       [require('@babel/plugin-transform-classes'), {loose: true}],
       require('@babel/plugin-transform-object-super'),
       require('@babel/plugin-transform-shorthand-properties'),
@@ -74,7 +74,7 @@ module.exports = function(options) {
       require('@babel/plugin-transform-member-expression-literals'),
       require('@babel/plugin-transform-property-literals'),
       require('@babel/plugin-transform-flow-strip-types'),
-      require('@babel/plugin-proposal-object-rest-spread'),
+      require('@babel/plugin-transform-object-rest-spread'),
       require('@babel/plugin-transform-react-display-name'),
       require('@babel/plugin-transform-react-jsx'),
       // Don't enable this plugin unless we're compiling JS, even if the option is true
