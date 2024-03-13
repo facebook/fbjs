@@ -1,5 +1,4 @@
 {
-  "cross-fetch": "cross-fetch",
   "fbjs-css-vars": "fbjs-css-vars",
   "isomorphic-fetch": "isomorphic-fetch",
   "object-assign": "object-assign",
