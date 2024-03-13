@@ -9,8 +9,8 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-class-properties": "^7.0.0",
+    "@babel/plugin-transform-object-rest-spread": "^7.0.0",
     "@babel/plugin-syntax-class-properties": "^7.0.0",
     "@babel/plugin-syntax-flow": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.0.0",
