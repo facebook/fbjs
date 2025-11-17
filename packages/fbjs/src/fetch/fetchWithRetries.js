@@ -26,10 +26,12 @@ export type InitWithRetries = {
   method?: ?string,
   mode?: ?string,
   retryDelays?: ?Array<number>,
+  onError?(error: any, initConfig: any): ?boolean,
 };
 
 const DEFAULT_TIMEOUT = 15000;
 const DEFAULT_RETRIES = [1000, 3000];
+const DEFAULT_ONERROR = function(error, init) { return false; };
 
 /**
  * Makes a POST request to the server with the given data as the payload.
@@ -39,9 +41,10 @@ function fetchWithRetries(
   uri: string,
   initWithRetries?: ?InitWithRetries
 ): Promise<any> {
-  const {fetchTimeout, retryDelays, ...init} = initWithRetries || {};
+  const {fetchTimeout, retryDelays, onError, ...init} = initWithRetries || {};
   const _fetchTimeout = fetchTimeout != null ? fetchTimeout : DEFAULT_TIMEOUT;
   const _retryDelays = retryDelays != null ? retryDelays : DEFAULT_RETRIES;
+  const _onError = onError ? onError : DEFAULT_ONERROR;
 
   let requestsAttempted = 0;
   let requestStartTime = 0;
@@ -80,7 +83,7 @@ function fetchWithRetries(
             // Fetch was not successful, retrying.
             // TODO(#7595849): Only retry on transient HTTP errors.
             warning(false, 'fetchWithRetries: HTTP error, retrying.'),
-            retryRequest();
+            retryRequest(_onError(response, init));
           } else {
             // Request was not successful, giving up.
             const error: any = new Error(sprintf(
@@ -95,7 +98,7 @@ function fetchWithRetries(
       }).catch(error => {
         clearTimeout(requestTimeout);
         if (shouldRetry(requestsAttempted)) {
-          retryRequest();
+          retryRequest(_onError(response, init));
         } else {
           reject(error);
         }
@@ -106,11 +109,16 @@ function fetchWithRetries(
      * Schedules another run of sendTimedRequest based on how much time has
      * passed between the time the last request was sent and now.
      */
-    function retryRequest(): void {
-      const retryDelay = _retryDelays[requestsAttempted - 1];
-      const retryStartTime = requestStartTime + retryDelay;
-      // Schedule retry for a configured duration after last request started.
-      setTimeout(sendTimedRequest, retryStartTime - Date.now());
+    function retryRequest(retryDirectly: boolean = false): void {
+        if(retryDirectly) {
+            sendTimedRequest();
+        }
+        else {
+            const retryDelay = _retryDelays[requestsAttempted - 1];
+            const retryStartTime = requestStartTime + retryDelay;
+            // Schedule retry for a configured duration after last request started.
+            setTimeout(sendTimedRequest, retryStartTime - Date.now());
+        }
     }
 
     /**
