@@ -75,7 +75,7 @@ class DataTransfer {
   getText() {
     var text;
     if (this.data.getData) {
-      if (!this.types.length) {
+      if (!this.types.length || this.types.indexOf('Text') != -1) {
         text = this.data.getData('Text');
       } else if (this.types.indexOf('text/plain') != -1) {
         text = this.data.getData('text/plain');
