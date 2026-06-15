@@ -27,5 +27,12 @@
     "trailingComma": "es5",
     "bracketSpacing": false,
     "jsxBracketSameLine": true
+  },
+  "bugs": {
+    "url": "https://github.com/owner/repo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
   }
 }
