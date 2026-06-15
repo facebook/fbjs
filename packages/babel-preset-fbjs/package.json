@@ -3,6 +3,10 @@
   "version": "3.4.0",
   "description": "Babel preset for Facebook projects.",
   "repository": "facebook/fbjs",
+  "homepage": "https://github.com/facebook/fbjs/tree/main/packages/babel-preset-fbjs#readme",
+  "bugs": {
+    "url": "https://github.com/facebook/fbjs/issues"
+  },
   "license": "MIT",
   "main": "index.js",
   "scripts": {
